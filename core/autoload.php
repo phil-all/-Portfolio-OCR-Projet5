@@ -1,9 +1,8 @@
 <?php
-namespace P5;
 
 class Autoloader
 {
-    static function call()
+    public static function call()
     {
         spl_autoload_register([__CLASS__, 'autoload']);
     }
