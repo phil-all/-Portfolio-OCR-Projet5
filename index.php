@@ -1,16 +1,11 @@
 <?php
 
-// Root folder project definition
-// ------------------------------
-define ('ROOT', __DIR__);
+// Root site definition
+define('ROOT', __DIR__);
 
-// Autoloder
-// ---------
-require_once(ROOT . '/core/autoload.php');
+// Load application configuration
+require_once(ROOT . '/config/config.php');
 
-Autoloader::call();
+Config::run();
 
-
-// Twig autoload
-// -------------
-require_once(ROOT . '/vendor/autoload.php');
+require_once(ROOT . 'vendor/autoload.php');
