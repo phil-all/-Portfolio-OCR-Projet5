@@ -1,6 +1,6 @@
 db/*
 public/images/avatar/pack.txt
 test/*
-/vendor/
+vendor/*
 composer.json
 composer.lock
