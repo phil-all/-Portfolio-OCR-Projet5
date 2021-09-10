@@ -1,3 +1,6 @@
 db/*
 public/images/avatar/pack.txt
 test/*
+/vendor/
+composer.json
+composer.lock
