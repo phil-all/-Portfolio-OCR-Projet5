@@ -50,15 +50,15 @@ class Config
 
     private static function load($class)
     {
-        // Delete P5\ from $class, Replace \ by / and export result in an array
-        $class = str_replace('P5\\', '', $class);
-        $class = str_replace('\\', '/', $class);
-        $array = explode('/', $class);
+        // $class is like : P5\Folder\Sub-folder\ClassName
+        // Export $class in an array, and delete P5
+        $array = explode('\\', $class);
+        unset($array[0]);
 
-        // Get the last array entry in a new array and apply lcfirst
-        $last = array_map('lcfirst', array_slice($array, -1        ));
+        // Get the ClassName in a new array and apply lcfirst
+        $last = array_map('lcfirst', array_slice($array, -1));
 
-        // Get the last key number of array, and replace in $file
+        // Create new key with last $arrey key number, and delete firt one
         $last[array_key_last($array)] = $last[0];
         unset($last[0]);
 

@@ -1,14 +1,14 @@
 <?php
-//
-//namespace P5\Controllers\Admin;
+
+//namespace P5\Controllers\Visitor;
 //
 //class Controller
 //{
 //    function __construct()
 //    {
-//        echo 'admin Controller';
+//        echo 'home Controller';
 //    }
 //    
 //}
 
-//echo 'admin';
+echo 'home';

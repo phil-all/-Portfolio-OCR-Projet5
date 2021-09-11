@@ -1,13 +1,22 @@
 <?php
-// mainController va déterminer quels autres controllers appeler
+// Instantiate the controller class and call method based on URL
 
 namespace P5\Core;
 
 class MainController
 {
-    function __construct()
+    public static function run()
     {
-        echo 'mainController';
+        // visiteurs et membres
+        require_once(CONTROLLERS_PATH . 'visitor' . DS . 'controller.php');
+
+        //admin
+        require_once(CONTROLLERS_PATH . 'admin' . DS . 'controller.php');
     }
     
 }
+
+
+
+// si ROOT/index.php on renvoie vers le controlleur homme/controlleur
+//var_dump($url);
