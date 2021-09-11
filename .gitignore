@@ -1,6 +1,10 @@
-db/*
+# own
+db/
 public/images/avatar/pack.txt
-test/*
-vendor/*
+test/
+
+# third
+composer.phar
+vendor/
 composer.json
 composer.lock

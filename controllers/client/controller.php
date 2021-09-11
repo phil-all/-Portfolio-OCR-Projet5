@@ -1,6 +1,6 @@
 <?php
 
-//namespace P5\Controllers\Visitor;
+//namespace P5\Controllers\Client;
 //
 //class Controller
 //{

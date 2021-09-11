@@ -8,7 +8,7 @@ class MainController
     public static function run()
     {
         // visiteurs et membres
-        require_once(CONTROLLERS_PATH . 'visitor' . DS . 'controller.php');
+        require_once(CONTROLLERS_PATH . 'client' . DS . 'controller.php');
 
         //admin
         require_once(CONTROLLERS_PATH . 'admin' . DS . 'controller.php');
