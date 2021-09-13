@@ -2,6 +2,8 @@
 db/
 public/images/avatar/pack.txt
 test/
+.env
+core/mainController*
 
 # third
 composer.phar
