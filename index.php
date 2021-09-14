@@ -1,23 +1,30 @@
 <?php
 
+USE P5\Config\Init;
+USE P5\Config\Router;
+USE P5\Config\Autoloader;
 USE Symfony\Component\Dotenv\Dotenv;
-USE P5\Config\Config;
-USE P5\Core\MainController;
 
-// Define necessary constants
+// Define needed constants
 define('DS', DIRECTORY_SEPARATOR);
-
 define('ROOT_DS', __DIR__ . DS);
 
 
 // Load application configuration
+require_once(ROOT_DS . 'config' . DS .'autoloader.php');
+require_once(ROOT_DS . 'config'. DS . 'init.php');
 require_once(ROOT_DS . 'vendor' . DS . 'autoload.php');
 
-require_once(ROOT_DS . 'config'. DS . 'config.php');
+// Start own services
+Autoloader::run();
+Init::run();
+Router::run();
 
+//Start third party services
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__.'/.env');
 
-Config::run();
-
-MainController::run();
+$loader = new \Twig\Loader\FilesystemLoader(ROOT_DS . 'views' . DS . 'client');
+$twig = new \Twig\Environment($loader, [
+    'cache' => false,
+]);

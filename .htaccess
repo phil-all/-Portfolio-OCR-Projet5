@@ -1,0 +1,11 @@
+# source : http://www.zzzen.net/comprendre-et-utiliser-htaccess/
+# source : https://www.danielmorell.com/guides/htaccess-seo/redirects/https-www-and-trailing-slash
+
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+
+    # put in $_GET['p'] string following the $_SERVER['SCRIPT_FILENAME'] in URL
+    RewriteRule ^([a-zA-Z0-9\-\_\/]*)$ index.php?route=$1
+
+</IfModule>

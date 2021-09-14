@@ -3,7 +3,8 @@ db/
 public/images/avatar/pack.txt
 test/
 .env
-core/mainController*
+views/client/*twig
+doc/
 
 # third
 composer.phar
