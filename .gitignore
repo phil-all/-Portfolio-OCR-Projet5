@@ -4,7 +4,6 @@ public/images/avatar/pack.txt
 test/
 .env
 views/client/*twig
-doc/
 
 # third
 composer.phar
