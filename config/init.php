@@ -7,7 +7,7 @@ class Init
     static function run()
     {
         // Define site name
-        define('SITE_NAME', 'myblog');
+        define('SITE_NAME', 'OverZeCode');
         
         // Define path constants
         define('CONTROLLERS_PATH', ROOT_DS . 'controllers' . DS);

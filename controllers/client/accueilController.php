@@ -2,10 +2,10 @@
 
 namespace P5\Controllers\Client;
 
-class AccueilController
+class AccueilController extends \P5\Controllers\MainController
 {
-    public static function run()
+    public function display()
     {
-        echo 'ceci est la page d\'accueil client';
+        echo $this->twig->twigRender($this->action, $this->params);
     }
 }

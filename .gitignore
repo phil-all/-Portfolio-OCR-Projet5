@@ -1,11 +1,21 @@
-# own
+#---own---
 db/
 public/images/avatar/pack.txt
 test/
 .env
-views/client/*twig
 
-# third
+#---last---
+public/images/logo3.png
+public/images/logo60px.png
+controllers/client/articlesController.php
+controllers/client/articleController.php
+controllers/client/portfolioController.php
+public/uploads/*.jpg
+views/client/article*
+views/client/portfolio*
+public/css/*.css
+
+#---third---
 composer.phar
 vendor/
 composer.json

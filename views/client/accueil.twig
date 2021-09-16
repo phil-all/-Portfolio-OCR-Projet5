@@ -1,0 +1,74 @@
+{% extends 'layouts/bootstrapp5-layout.twig' %}
+
+{% block title %}
+    <title>{{ constant('SITE_NAME') }} - Accueil</title>
+{% endblock %}
+
+{% block content %}
+    <div class="bg-roy">
+        <div class="container">
+            <div class="row"  style="padding-top: 30px; padding-bottom: 30px;">
+                <div class="col-12 col-lg-8 col-xl-10  text-white">
+                    <h1>Vers l'infini et au delà...</h1>
+                    <br>
+                    <p>Piqué au virus de l'informatique dès l'enfance, j'ai saisi mes premières lignes de code en visual basic sur un bon vieux CPC 464 Schneider avec chargement à bande (ersatz de l'Amstrad de même référence).<br><br>
+                    Ces dernières années j'ai peu à peu délaissé la galaxie Windows, pour me plonger avec délectation dans la nébuleuse Linux. Ah! Les joies de la ligne de commande..<br><br>
+                    Polyvalent et pris d'intérêt par le développement web, je me suis tout d'abord attelé aux bases du front-end, puis des différentes étapes techniques de création d'un site web ou d'une application web, pour finalement étudier aujourd'hui le back-end au travers du SQL, du langage PHP et de son framework Symfony.</p>
+                </div>
+                <div class="col-12 col-lg-4 col-xl-2 d-flex justify-content-center align-items-center">
+                    <div class="card text-center">
+                        <img src="./public/images/trombi.jpg" class="card-img-top" alt="Photo">
+                        <div class="card-body">
+                            <p class="card-title">Philippe<br>Allard-Latour</p>
+                            <a href="#" class="btn btn-primary">consulter CV</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row"  style="margin-top: 30px; margin-bottom: 30px;">
+            <h3>Last news</h3>
+            <div class="card mb-3 col-12 col-md-6 border-none">
+                <img src="./public/uploads/article-0001.jpg" class="card-img-top" alt="...">
+                <div class="card-body bg-marine text-white">
+                  <h5 class="card-title">mon premier article</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+              <div class="card mb-3 col-12 col-md-6 border-none">
+                <img src="./public/uploads/article-0001.jpg" class="card-img-top" alt="...">
+                <div class="card-body bg-marine text-white">
+                  <h5 class="card-title">un article</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+              <div class="card mb-3 col-12 col-md-6 border-none">
+                <img src="./public/uploads/article-0001.jpg" class="card-img-top" alt="...">
+                <div class="card-body bg-marine text-white">
+                  <h5 class="card-title">un autre article</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+              <div class="card mb-3 col-12 col-md-6 border-none">
+                <img src="./public/uploads/article-0001.jpg" class="card-img-top" alt="...">
+                <div class="card-body bg-marine text-white">
+                  <h5 class="card-title">un dernier article</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+        </div>
+        <div class="row"  style="margin-top: 30px; margin-bottom: 30px;">
+            <h3>Me contacter</h3>
+            <p>nom - prenom</p>
+            <p>email</p>
+            <p>message</p>
+            <p>envoyer</p>
+        </div>
+    </div>
+{% endblock %}
