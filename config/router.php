@@ -2,7 +2,6 @@
 
 namespace P5\Config;
 
-use P5\Controllers\MainController;
 /**
  * Instantiate the controller class and call method based on URL
  */
@@ -15,36 +14,31 @@ class Router
      */
     public static function run()
     {
-        // Define Class Routing Variables
-        $route = $_GET['route']; // Due to rewrite rule in .htacces : $_GET['route'] don't need isset
+        // Define variables
+        $route = (isset($_GET['route'])) ? $_GET['route'] : '';
 
-        $routeInArray = explode('/', $route);
+        $params = explode('/', $route);
 
-        $exitFirst = array_shift($routeInArray);
+        $action = array_shift($params);        
 
-        $hub = (isset($_SESSION['hub']) && $_SESSION['hub'] === 'admin') ? 'Admin' : 'Client';
+        $action = ($route === '') ? 'accueil' : lcfirst($action);
 
-        $classAction = ($route === '') ? 'accueil' : lcfirst($exitFirst);
+        $hub = (isset($_SESSION['hub']) && $_SESSION['hub'] === 'admin') ? 'admin' : 'client';
         
-        $file = 'controllers' . DS . lcfirst($hub) . DS . $classAction . 'Controller.php';
+        $file = 'controllers' . DS . $hub . DS . $action . 'Controller.php';
 
-        // Define Twig Routing Variables
-        // action(template, ex accueil) + parametres array( hub, param1, param 2)
-        $action = lcfirst($hub) . DS . $classAction . '.twig';
-        $params = $routeInArray; // route in array after shifting class action
+        $template = $hub . DS . $action . '.twig';
 
-        //var_dump($routeInArray);die;
-
-        
-        // File Control
+        // File control
         if (!file_exists($file)) {
             header('HTTP/1.0 404 Not Found');
             exit;
         }
 
-        $controller = '\\P5\\Controllers\\' . $hub . '\\' . $classAction . 'Controller';
+        // Loads the template and renders it
+        $controller = '\\P5\\Controllers\\' . ucfirst($hub) . '\\' . $action . 'Controller';
 
-        $controller = new $controller($action, $params);
+        $controller = new $controller($template, $params);
 
         return $controller->display();
     }

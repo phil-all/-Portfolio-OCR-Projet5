@@ -3,7 +3,7 @@
 namespace P5\Config;
 
 /**
- * Project Initialisation: Define constants & Start session
+ * Define constants & Start session
  */
 class Init
 {
@@ -15,7 +15,7 @@ class Init
     static function run(): void
     {
         // Define site name
-        define('SITE_NAME', 'OverZeCode');
+        define('SITE_NAME', 'OverCode');
         
         // Define path constants
         define('CONTROLLERS_PATH', ROOT_DS . 'controllers' . DS);

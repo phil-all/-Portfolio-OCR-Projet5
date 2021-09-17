@@ -2,7 +2,7 @@
 
 namespace P5\Controllers;
 
-use P5\Libraries\twig;
+use P5\Libraries\Twig;
 
 /**
  * Generals  functions for specialised controllers

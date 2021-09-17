@@ -8,7 +8,7 @@ use Twig\Loader\FilesystemLoader;
 /**
  * Renders a template based on params from router
  */
-class twig
+class Twig
 {
     /**
      * Twig environment object: template to load & twig configuration
@@ -23,9 +23,6 @@ class twig
     public function __construct()
     {
         $loader = new FilesystemLoader(VIEWS_PATH);
-        // rechercher doc sur addPath
-        //$loader->addPath(VIEWS_PATH . 'admin', 'admin');
-        //$loader->addPath(VIEWS_PATH . 'client', 'client');
 
         $twig = new \Twig\Environment($loader, [
             'debug' => true,
@@ -42,6 +39,7 @@ class twig
      *
      * @param string $template
      * @param array $params
+     * 
      * @return void
      */
     public function twigRender($template, $params = [])
