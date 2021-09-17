@@ -12,7 +12,7 @@ class Init
      *
      * @return void
      */
-    static function run(): void
+    static function start(): void
     {
         // Define site name
         define('SITE_NAME', 'OverCode');

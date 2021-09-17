@@ -16,6 +16,6 @@ require_once(ROOT_DS . 'vendor' . DS . 'autoload.php');
 require_once(CONFIG_PATH . 'thirdParty.php');
 
 // Start own services
-Autoloader::run();
-Init::run();
-Router::run();
+Autoloader::start();
+Init::start();
+Router::start();

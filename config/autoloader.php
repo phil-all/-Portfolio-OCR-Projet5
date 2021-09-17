@@ -12,7 +12,7 @@ class Autoloader
      * 
      * @return void
      */
-    static function run(): void
+    static function start(): void
     {
         spl_autoload_register(array(
             __CLASS__,

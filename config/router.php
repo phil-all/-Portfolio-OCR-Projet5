@@ -3,7 +3,7 @@
 namespace P5\Config;
 
 /**
- * Instantiate the controller class and call method based on URL
+ * Instantiate the controller class and call method based on $_GET['route']
  */
 class Router
 {
@@ -12,10 +12,11 @@ class Router
      *
      * @return object $controller for displaying twig file
      */
-    public static function run()
+    public static function start()
     {
         // Define variables
-        $route = (isset($_GET['route'])) ? $_GET['route'] : '';
+        //$route = (isset($_GET['route'])) ? filter_var($_GET['route'], FILTER_SANITIZE_URL) : '';
+        $route = (isset($_GET['route'])) ? htmlspecialchars($_GET['route']) : '';
 
         $params = explode('/', $route);
 
@@ -32,7 +33,7 @@ class Router
         // File control
         if (!file_exists($file)) {
             header('HTTP/1.0 404 Not Found');
-            exit;
+            exit('code 404');
         }
 
         // Loads the template and renders it
