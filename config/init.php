@@ -2,9 +2,17 @@
 
 namespace P5\Config;
 
+/**
+ * Project Initialisation: Define constants & Start session
+ */
 class Init
 {
-    static function run()
+    /**
+     * Run initialisation
+     *
+     * @return void
+     */
+    static function run(): void
     {
         // Define site name
         define('SITE_NAME', 'OverZeCode');

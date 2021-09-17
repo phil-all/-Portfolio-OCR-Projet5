@@ -1,12 +1,18 @@
-<?php
-// Instantiate the controller class and call method based on URL
+<?php 
 
 namespace P5\Config;
 
 use P5\Controllers\MainController;
-
+/**
+ * Instantiate the controller class and call method based on URL
+ */
 class Router
 {
+    /**
+     * Run the routing
+     *
+     * @return object $controller for displaying twig file
+     */
     public static function run()
     {
         // Define Class Routing Variables

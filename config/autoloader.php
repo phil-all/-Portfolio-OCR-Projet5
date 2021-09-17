@@ -1,10 +1,17 @@
 <?php
 
 namespace P5\Config;
-
+/**
+ * Autoloader class
+ */
 class Autoloader
 {
-    static function run()
+    /**
+     * Run the autoload register
+     * 
+     * @return void
+     */
+    static function run(): void
     {
         spl_autoload_register(array(
             __CLASS__,
@@ -12,7 +19,13 @@ class Autoloader
         ));
     }
 
-    static function load($class)
+    /**
+     * Require called class file
+     *
+     * @param string $class
+     * @return void
+     */
+    static function load($class): void
     {
         // $class is like : P5\Folder\Sub-folder\ClassName
         // Export $class in an array, and delete P5
