@@ -4,9 +4,9 @@ Create your first blog with PHP
 
 ## Built with
 
-* [Dia](https://wiki.gnome.org/Apps/Dia/) - UML : class diagram
-* [visual-paradigm](https://online.visual-paradigm.com) - UML : user case & sequence diagrams
-* [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) - Database modelisation
+  * [Dia](https://wiki.gnome.org/Apps/Dia/) - UML : class diagram
+  * [visual-paradigm](https://online.visual-paradigm.com) - UML : user case & sequence diagrams
+  * [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) - Database modelisation
 
 ## Contributing
 
@@ -18,8 +18,8 @@ No versionning
 
 ## Author
 
-* **Philippe Allard-Latour** - *Main* - [Github](https://github.com/phil-all)
-* *Other repositeries* - [Github](https://github.com/phil-all?tab=repositories)
+  * **Philippe Allard-Latour** - *Main* - [Github](https://github.com/phil-all)
+  * *Other repositeries* - [Github](https://github.com/phil-all?tab=repositories)
 
 ## Licence
 
