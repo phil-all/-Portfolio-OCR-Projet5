@@ -44,6 +44,6 @@ class Twig
      */
     public function twigRender($template, $params = [])
     {
-        return $this->twig->render($template, $params);
+        echo $this->twig->render($template, $params);
     }
 }

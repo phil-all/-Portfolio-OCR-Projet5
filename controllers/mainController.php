@@ -5,16 +5,16 @@ namespace P5\Controllers;
 use P5\Libraries\Twig;
 
 /**
- * Generals  functions for specialised controllers
+ * Generals methods for specialised controllers
  */
-class MainController
+abstract class MainController
 {
     protected $action;
     protected $params = [];
     protected $twig;
 
     /**
-     * Construct magic method
+     * Construct magic method: Set values to attributes
      *
      * @param string $action
      * @param array $params
@@ -24,7 +24,9 @@ class MainController
     public function __construct($action, $params = [])
     {
         $this->action = $action;
+
         $this->params = $params;
+        
         $this->twig = new Twig;
     }
 
@@ -35,6 +37,6 @@ class MainController
      */
     public function display()
     {
-        echo $this->twig->twigRender($this->atcion, $this->params);
+        echo $this->twig->twigRender($this->action, $this->params);
     }
 }

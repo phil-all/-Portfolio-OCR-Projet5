@@ -27,7 +27,7 @@ class Autoloader
      * 
      * @return void
      */
-    static function load($class): void
+    public static function load($class): void
     {
         // Export $class in an array, and delete P5
         $array = explode('\\', $class);

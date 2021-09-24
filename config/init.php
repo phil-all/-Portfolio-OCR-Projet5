@@ -12,10 +12,12 @@ class Init
      *
      * @return void
      */
-    static function start(): void
+    public static function start(): void
     {
-        // Define site name
+        // Define site
         define('SITE_NAME', 'OverCode');
+
+        define('SITE_ADRESS' , $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['SCRIPT_NAME']));
         
         // Define path constants
         define('CONTROLLERS_PATH', ROOT_DS . 'controllers' . DS);
@@ -23,6 +25,8 @@ class Init
         define('ADMIN_CONTROLLERS', CONTROLLERS_PATH . 'admin' . DS);
 
         define('CLIENT_CONTROLLERS', CONTROLLERS_PATH . 'client' . DS);
+
+        define('DB_PATH', ROOT_DS . 'db' . DS);
 
         define('LIB_PATH', ROOT_DS . 'libraries' . DS);
 

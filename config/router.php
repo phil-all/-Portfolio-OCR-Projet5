@@ -1,6 +1,8 @@
-<?php 
+<?php
 
 namespace P5\Config;
+
+use P5\Libraries\Helpers;
 
 /**
  * Instantiate the controller class and call method based on $_GET['route']
@@ -20,24 +22,19 @@ class Router
 
         $params = explode('/', $route);
 
-        $action = array_shift($params);        
+        $action = array_shift($params);
 
         $action = ($route === '') ? 'accueil' : lcfirst($action);
 
         $hub = (isset($_SESSION['hub']) && $_SESSION['hub'] === 'admin') ? 'admin' : 'client';
-        
-        $file = 'controllers' . DS . $hub . DS . $action . 'Controller.php';
 
+        $action = (file_exists('controllers' . DS . $hub . DS . $action . 'Controller.php')) ? $action : 'pageNotFound';
+        
         $template = $hub . DS . $action . '.twig';
 
-        // File control
-        if (!file_exists($file)) {
-            header('HTTP/1.0 404 Not Found');
-            exit('code 404');
-        }
-
         // Loads the template and renders it
-        $controller = '\\P5\\Controllers\\' . ucfirst($hub) . '\\' . $action . 'Controller';
+        
+        $controller = '\\P5\\Controllers\\' . ucfirst($hub) . '\\' . ucfirst($action) . 'Controller';
 
         $controller = new $controller($template, $params);
 

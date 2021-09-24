@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use P5\Config\Init;
 use P5\Config\Router;
 use P5\Config\Autoloader;
 
-// Define needed constants
+// Define constants
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT_DS', __DIR__ . DS);
 define('CONFIG_PATH', ROOT_DS . 'config' . DS);

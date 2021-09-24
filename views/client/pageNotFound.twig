@@ -1,0 +1,16 @@
+{% extends 'layouts/layout.twig' %}
+
+{% block title %}
+    <title>Page inexistante - {{ constant('SITE_NAME') }}</title>
+{% endblock %}
+
+{% block content %}
+    <main class="container text-center">
+        <h1>Ooops!</h1>
+        <h3>404 - PAGE INTROUVABLE</h3>
+        <p>Il semble que vous vous soyez égarés : la page que vous recherchez n'existe pas, a été dépplacée ou est temporairement indisponible.</p>
+        {% autoescape %}
+        <p><a href="{{ constant('SITE_ADRESS') }}">Retour à l'accueil</a></p>    
+        {% endautoescape %} 
+    </main>
+{% endblock %}

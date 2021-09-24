@@ -1,0 +1,26 @@
+{% extends 'layouts/layout.twig' %}
+
+{% block title %}
+    <title>{{ title }} - {{ constant('SITE_NAME') }}</title>
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <h1>{{ title }}</h1>
+        <h3>{{ chapo }}</h3>
+        <p>Auteur : {{ first_name }} {{ last_name }}</p>
+        <p>Date : {{ created_at }}</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam maiores, laborum vitae est animi velit blanditiis
+            cum incidunt eum rem ipsa magnam suscipit iure! Harum voluptatem numquam magnam consectetur, temporibus ex
+            officia aperiam impedit accusamus quibusdam sint odit a molestias fugit animi non assumenda ad velit? Minus
+            ratione ipsum officia quis esse ullam magni doloremque eos unde porro cumque soluta quos accusantium quod quas
+            modi amet voluptatum, quibusdam commodi odit sequi blanditiis. Vel dolore accusantium earum necessitatibus
+            tempora! Tenetur dolorum beatae dolor quis, sequi laboriosam provident voluptatum. Minus nesciunt officiis
+            assumenda doloribus dicta hic veritatis alias incidunt earum repudiandae, ducimus soluta voluptatem. Non
+            consectetur quibusdam laboriosam officia itaque accusamus soluta facilis cumque in maxime vel dolorum molestiae,
+            beatae perspiciatis earum.</p>
+        {% autoescape %}
+        <a href="{{ constant('SITE_ADRESS') }}/articles/page-1">Tous les articles</a>     
+        {% endautoescape %}        
+    </main>
+{% endblock %}
