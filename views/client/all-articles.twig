@@ -1,0 +1,51 @@
+{% extends 'layouts/layout.twig' %}
+
+{% block title %}
+    <title>Tous les articles - {{ constant('SITE_NAME') }}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="text-center">Archives des articles</h1>
+        <p>page {{ page }} / {{ totalPages }}</p>
+        <table class="table table-striped">
+            <thead>
+                <th>Numéro</th>
+                <th>Auteur</th>
+                <th>titre</th>
+                <th>categorie</th>
+                <th>lien vers l'article</th>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td>{{ article.id }}</td>
+                        <td>{{ article.first_name }} {{ article.last_name }}</td>
+                        <td>{{ article.title }}</td>
+                        {% autoescape %}
+                        <td><a href="{{ constant('SITE_ADRESS') }}/articles/{{ article.category }}/page-1">{{ article.category }}</a></td>
+                        <td><a href="{{ constant('SITE_ADRESS') }}/articles/{{ article.id }}/{{article.slug}}"><i class="bi bi-book"></i> lire...</a></td>
+                        {% endautoescape %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table><!--End articles list-->
+        <nav aria-label="Articles list pages">
+            <ul class="pagination justify-content-center">
+                {% autoescape %}
+                <li class="page-item {{ statePrev }}">
+                    <a href="{{ constant('SITE_ADRESS') }}/articles/page-{{ prev }}" class="page-link"><i class="bi bi-caret-left-fill"></i></i></a>
+                </li>
+                {% for i in 1.. totalPages %}
+                    <li class="page-item {% if i == page %} active{% endif %}">
+                        <a href="{{ constant('SITE_ADRESS') }}/articles/page-{{ i }}" class="page-link">{{ i }}</a>
+                    </li>
+                {% endfor %}
+                <li class="page-item {{ stateNext }}">
+                    <a href="{{ constant('SITE_ADRESS') }}/articles/page-{{ next }}" class="page-link"><i class="bi bi-caret-right-fill"></i></i></a>
+                </li>                    
+                {% endautoescape %}
+            </ul>
+        </nav><!--End pagination-->
+    </div>
+{% endblock %}

@@ -8,12 +8,12 @@ README.md
 #---last---
 public/images/logo3.png
 public/images/logo60px.png
-#controllers/client/articlesController.php
-#controllers/client/articleController.php
 controllers/client/portfolioController.php
 public/uploads/*.jpg
 views/client/portfolio*
 #public/css/*.css
+doc/*
+controllers/client/userController.php
 
 #---third---
 #composer.phar

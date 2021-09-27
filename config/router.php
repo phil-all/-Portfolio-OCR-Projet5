@@ -5,7 +5,8 @@ namespace P5\Config;
 use P5\Libraries\Helpers;
 
 /**
- * Instantiate the controller class and call method based on $_GET['route']
+ * Instantiate the controller class , based on $_GET['route']
+ * and call display method of this controller
  */
 class Router
 {
@@ -18,7 +19,7 @@ class Router
     {
         // Define variables
         //$route = (isset($_GET['route'])) ? filter_var($_GET['route'], FILTER_SANITIZE_URL) : '';
-        $route = (isset($_GET['route'])) ? htmlspecialchars($_GET['route']) : '';
+        $route = (isset($_GET['route'])) ? htmlentities($_GET['route']) : '';
 
         $params = explode('/', $route);
 

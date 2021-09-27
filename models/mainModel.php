@@ -2,6 +2,7 @@
 
 namespace P5\Models;
 
+use PDO;
 use P5\Db\DbConnect;
 
 abstract class MainModel
@@ -9,7 +10,7 @@ abstract class MainModel
     protected $pdo;
     
     /**
-     * Construct magic method: instantiate db connection
+     * Main manager
      */
     public function __construct()
     {

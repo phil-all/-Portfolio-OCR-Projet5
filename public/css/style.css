@@ -1,3 +1,7 @@
+/*--- fonts ---*/
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Roboto+Slab:wght@700&display=swap');
+
+/*--- colors ---*/
 .bg-marine {
     background-color: #05224e;
 }
@@ -6,4 +10,38 @@
 }
 .border-none {
     border: none;
+}
+
+/*--- html ---*/
+h1 {
+    font-family: 'Roboto Slab', serif;
+    text-transform: uppercase;
+}
+
+/*--- header ---*/
+header .navbar-dark .navbar-brand{
+    font-family: 'Carter One', cursive;
+    font-size: 50px;
+}
+header nav .navbar-collapse {
+    flex-grow: 0;
+}
+header .navbar-dark .navbar-nav .nav-link {
+    color: #fff;
+    font-size: 22px;
+    padding: 0 25px;
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: wheat;
+}
+
+/*--- footer ---*/
+footer .social p {
+    margin-top: 35px;
+    margin-bottom: 30px;
+}
+footer .social p a {
+    padding: 0 30px;
+    font-size: 28px;
+    color: #fff;
 }
