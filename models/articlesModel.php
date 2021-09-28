@@ -12,17 +12,17 @@ class ArticlesModel extends MainModel
     /**
      * Get Title from article by id
      *
-     * @param int $id
+     * @param int $int : article id
      * 
      * @return string
      */
-    public function getTitle($id)
+    public function getTitle($int)
     {
         $query = 'SELECT title from article WHERE id = :id';
 
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $int, PDO::PARAM_INT);
 
         $stmt->execute();
 
@@ -32,11 +32,11 @@ class ArticlesModel extends MainModel
     /**
      * Get one article details from its id
      *
-     * @param int $id
+     * @param int $int : article id
      * 
      * @return array
      */
-    public function getSingleArticle($id)
+    public function getSingleArticle($int)
     {
         $query = 'SELECT a.id, u.first_name, u.last_name, a.title, a.created_at, a.last_update, a.chapo, a.content, a.img_path
         FROM article AS a
@@ -46,7 +46,7 @@ class ArticlesModel extends MainModel
 
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', (int)$int, PDO::PARAM_INT);
 
         $stmt->execute();
 
@@ -122,18 +122,18 @@ class ArticlesModel extends MainModel
      * - id is integer
      * - id exist in table
      *
-     * @param mixed $id : id to check
+     * @param mixed $int : article id to check
      * @param object $object : object corresponding to Model instance, for exemple: $this->articles
      * 
      * @return boolean
      */
-    public static function idExist($id, $object)
+    public static function idExist($int, $object)
     {
         $query = 'SELECT EXISTS (SELECT * from article WHERE id = :id)';
         
         $stmt = $object->pdo->prepare($query);
 
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $int, PDO::PARAM_INT);
 
         $stmt->execute();
 

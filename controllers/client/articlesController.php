@@ -59,6 +59,8 @@ class articlesController extends MainController
 
                         $this->action = 'client' . DS . 'articles-by-category.twig';
 
+                        $this->params['category'] = $params[0];
+
                         break;
                 }
 
@@ -76,7 +78,7 @@ class articlesController extends MainController
 
                 $this->nextLink = ($this->page === $this->totalPages) ? $this->totalPages : $this->page + 1;
 
-                $this->params = array(
+                $this->params = array_merge($this->params, array(
                     'page'       => $this->page,
                     'totalPages' => (int)$this->totalPages,
                     'articles'   => $this->articles,
@@ -84,13 +86,7 @@ class articlesController extends MainController
                     'stateNext'  => $this->stateNextLink,
                     'prev'       => $this->prevLink,
                     'next'       => $this->nextLink
-                );
-//var_dump($this->params['totalPages']);exit;
-                if ($dispatch[1] = 'Category') {
-
-                    $this->params['category'] = $params[0];
-
-                }
+                ));
 
                 break;
 
@@ -190,7 +186,7 @@ class articlesController extends MainController
     {
         $explode = explode('-', $uriPart);
 
-        $test1 = (count($explode) === 2) ? true : false; //echo $test1;exit;
+        $test1 = (count($explode) === 2) ? true : false;
 
         switch ($test1) {
 
@@ -202,22 +198,8 @@ class articlesController extends MainController
 
                 $test3 = (empty($deleteInt) && $explode[1] != '') ? true : false;
                 
-                switch ($test2 && $test3) {
+                return ($test2 && $test3) ? ($explode[1] <= $total) : false;
 
-                    case true:
-
-                        $test4 = ($explode[1] <= $total) ? true : false;
-
-                        return $test4;
-
-                        break;
-
-                    case false:
-
-                        return false;
-
-                        break;
-                }
                 break;
 
             case false:

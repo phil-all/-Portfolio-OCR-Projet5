@@ -112,14 +112,14 @@ class Superglobals
      *
      * @return mixed
      */
-    public function collect_superglobals()
+    private function collect_superglobals()
     {
-        $this->GET = (isset($_GET)) ? filter_input_array(INPUT_GET) : [];
+        $this->GET = (!isset($_GET)) ? [] : filter_input_array(INPUT_GET);
 
-        $this->POST = (isset($_POST)) ? filter_input_array(INPUT_POST) : [];
+        $this->POST = (!isset($_POST)) ? [] : filter_input_array(INPUT_POST);
 
-        $this->SERVER = (isset($_SERVER)) ? filter_input_array(INPUT_SERVER) : [];
+        $this->SERVER = (!isset($_SERVER)) ? [] : filter_input_array(INPUT_SERVER);
 
-        $this->SESSION = (isset($_SESSION)) ? filter_var_array($_SESSION, FILTER_SANITIZE_STRING) : [];
+        $this->SESSION = (!isset($_SESSION)) ? [] : filter_var_array($_SESSION, FILTER_SANITIZE_STRING);
     }
 }
