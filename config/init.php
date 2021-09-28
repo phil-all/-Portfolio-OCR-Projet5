@@ -2,6 +2,8 @@
 
 namespace P5\Config;
 
+use P5\Libraries\Superglobals;
+
 /**
  * Define constants & Start session
  */
@@ -10,14 +12,22 @@ class Init
     /**
      * Run initialisation
      *
-     * @return void
+     * @return mixed
      */
-    public static function start(): void
+    public static function start()
     {
+        $superGlobals = new Superglobals;
+
+        $requestScheme = $superGlobals->get_SERVER('REQUEST_SCHEME');
+
+        $serverName = $superGlobals->get_SERVER('SERVER_NAME');
+
+        $scriptName = $superGlobals->get_SERVER('SCRIPT_NAME');
+
         // Define site
         define('SITE_NAME', 'OverCode');
 
-        define('SITE_ADRESS' , $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['SCRIPT_NAME']));
+        define('SITE_ADRESS' , $requestScheme . '://' . $serverName . dirname($scriptName));
         
         // Define path constants
         define('CONTROLLERS_PATH', ROOT_DS . 'controllers' . DS);

@@ -3,6 +3,7 @@
 namespace P5\Config;
 
 use P5\Libraries\Helpers;
+use P5\Libraries\Superglobals;
 
 /**
  * Instantiate the controller class , based on $_GET['route']
@@ -17,9 +18,15 @@ class Router
      */
     public static function start()
     {
+        $superGlobals = new Superglobals;
+
+        $route = $superGlobals->get_GET('route');
+
+        $hub = $superGlobals->get_SESSION('hub');
+
         // Define variables
         //$route = (isset($_GET['route'])) ? filter_var($_GET['route'], FILTER_SANITIZE_URL) : '';
-        $route = (isset($_GET['route'])) ? htmlentities($_GET['route']) : '';
+        $route = strip_tags($route);
 
         $params = explode('/', $route);
 
@@ -27,7 +34,7 @@ class Router
 
         $action = ($route === '') ? 'accueil' : lcfirst($action);
 
-        $hub = (isset($_SESSION['hub']) && $_SESSION['hub'] === 'admin') ? 'admin' : 'client';
+        $hub = ($hub === 'admin') ? 'admin' : 'client';
 
         $action = (file_exists('controllers' . DS . $hub . DS . $action . 'Controller.php')) ? $action : 'pageNotFound';
         

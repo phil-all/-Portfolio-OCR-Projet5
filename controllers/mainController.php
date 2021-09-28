@@ -26,7 +26,7 @@ abstract class MainController
         $this->action = $action;
 
         $this->params = $params;
-        
+
         $this->twig = new Twig;
     }
 
