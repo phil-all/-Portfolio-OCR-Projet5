@@ -47,7 +47,11 @@ class Autoloader
         $class = implode('/', array_replace($array, $last));
 
         if (file_exists(ROOT_DS . $class . '.php')) {
-            require(ROOT_DS . $class . '.php');
+
+            $classPath = ROOT_DS . $class . '.php';
+
+            require_once $classPath;
+
         }
     }
 }

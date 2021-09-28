@@ -9,7 +9,7 @@ namespace P5\Libraries;
 class Superglobals
 {
     private array $GET;
-    private array $POST;
+    private mixed $POST;
     private array $SERVER;
     private array $SESSION;
 

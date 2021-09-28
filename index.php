@@ -12,10 +12,10 @@ define('ROOT_DS', __DIR__ . DS);
 define('CONFIG_PATH', ROOT_DS . 'config' . DS);
 
 // Load application configuration
-require_once(CONFIG_PATH . 'autoloader.php');
-require_once(CONFIG_PATH . 'init.php');
-require_once(ROOT_DS . 'vendor' . DS . 'autoload.php');
-require_once(CONFIG_PATH . 'thirdParty.php');
+require_once CONFIG_PATH . 'autoloader.php';
+require_once CONFIG_PATH . 'init.php';
+require_once ROOT_DS . 'vendor' . DS . 'autoload.php';
+require_once CONFIG_PATH . 'thirdParty.php';
 
 // Start own services
 Autoloader::start();
