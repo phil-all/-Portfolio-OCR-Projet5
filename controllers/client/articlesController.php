@@ -45,7 +45,7 @@ class articlesController extends MainController
 
                         $this->articles = $articles->getAllArticles($this->page, $this->perPage);
 
-                        $this->action = 'client' . DS . 'all-articles.twig';
+                        $this->action = $action;
 
                         break;
 
@@ -65,8 +65,10 @@ class articlesController extends MainController
                 }
 
                 foreach($this->articles as $key) { 
-                    $key['slug'] = Helpers::slugedLink($key['title']);
-                    array_shift($this->articles);                
+                    $key['slug'] = Helpers::toSlug($key['title']);
+                    
+                    array_shift($this->articles);
+
                     array_push($this->articles, $key);
                 }
 
@@ -154,7 +156,7 @@ class articlesController extends MainController
                 // --- params[0] is an article id ---
                 } elseif (ArticlesModel::idExist($params[0], $object)) {
 
-                    $slug = Helpers::slugedLink($object->getTitle((int)$params[0]));
+                    $slug = Helpers::toSlug($object->getTitle((int)$params[0]));
 
                     if ($slug != $params[1]) {
 

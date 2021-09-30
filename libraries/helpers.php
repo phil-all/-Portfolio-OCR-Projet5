@@ -11,7 +11,7 @@ abstract class Helpers
      * 
      * @return string
      */
-    public static function slugedLink($string)
+    public static function toSlug($string)
     {
         // delete spaces from start and end string
         $string = trim($string);

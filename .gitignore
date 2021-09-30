@@ -13,7 +13,7 @@ public/uploads/*.jpg
 views/client/portfolio*
 #public/css/*.css
 doc/*
-controllers/client/userController.php
+#controllers/client/userController.php
 
 #---third---
 #composer.phar
