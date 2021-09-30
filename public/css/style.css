@@ -1,13 +1,6 @@
-/* --- fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Roboto+Slab:wght@700&display=swap');
-
 /* --- colors --- */
-.bg-marine {
-  background-color: #05224e;
-}
-
 .bg-roy {
-  background-color: #284572;
+  background-color: #22324b;
 }
 
 .border-none {
@@ -15,15 +8,24 @@
 }
 
 /* --- html --- */
+body {
+  background-color: #444444;
+  color: #fff;
+}
+
 h1 {
-  font-family: 'Roboto Slab', serif;
   text-transform: uppercase;
 }
 
 /* --- header --- */
 header .navbar-dark .navbar-brand {
-  font-family: 'Carter One', cursive;
-  font-size: 50px;
+  color: #1ABC9C;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+header .navbar-dark .navbar-brand img {
+  padding: 10px;
 }
 
 header nav .navbar-collapse {
@@ -31,13 +33,23 @@ header nav .navbar-collapse {
 }
 
 header .navbar-dark .navbar-nav .nav-link {
-  color: #fff;
-  font-size: 22px;
-  padding: 0 25px;
+  color: #1ABC9C;
+  padding: 0 35px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+header .log-btn:hover {
+  color: #2C2C2C !important;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover {
-  color: wheat;
+  color: #fff;
+}
+
+.navbar-dark .navbar-nav .nav-link .bi {
+  padding-right: 10px;
 }
 
 /* --- footer --- */
@@ -49,5 +61,75 @@ footer .social p {
 footer .social p a {
   padding: 0 30px;
   font-size: 28px;
+  color: #1ABC9C;
+}
+
+/* --- bootstrap elements --- */
+.page-item.active .page-link {
+  color: #2C2C2C;
+  background-color: #1ABC9C;
+  border-color: #1ABC9C;
+}
+
+.page-link {
+  color: #1f927b;
+}
+
+.page-link:hover {
+  color: #1ABC9C;
+}
+
+.bg-dark {
+  background-color: #2C2C2C !important;
+}
+
+/* --- header nav user button --- */
+header .navbar-nav a .btn {
+  padding: 5px 35px;
+}
+
+header .btn-success {
+  color: #1ABC9C;
+  background-color: transparent;
+  border-color: #1ABC9C;
+  border-radius: 25px;
+}
+
+header .btn-success:hover {
+  background-color: #1ABC9C;
+  border-color: #1ABC9C;
+  color: #2C2C2C ;
+}
+
+/* --- card : articles --- */
+.card {
+  background-color: transparent;
+}
+
+.card-body {
+  color: #555555;
+  background-color: #fff;
+  border-bottom-left-radius: calc(.25rem - 1px) !important;
+  border-bottom-right-radius: calc(.25rem - 1px) !important;
+}
+
+.card-title {
+  text-transform: uppercase;
+  letter-spacing: -0.062em;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* --- card button --- */
+.card .btn-light {
+  background-color: transparent;
+  color: #555555;
+  border: 2px solid #555555;
+  border-radius: 0;
+  transition: color .22s ease-in-out,background-color .22s ease-in-out,border-color .22s ease-in-out,box-shadow .22s ease-in-out;
+}
+
+.card .btn-light:hover {
+  background-color: #555555;
   color: #fff;
 }
