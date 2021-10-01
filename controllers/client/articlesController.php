@@ -7,7 +7,7 @@ use P5\Libraries\Helpers;
 use P5\Models\ArticlesModel;
 use P5\Controllers\MainController;
 
-class articlesController extends MainController
+class ArticlesController extends MainController
 {
     private array $articles;
     private int $perPage = 4;
@@ -100,6 +100,7 @@ class articlesController extends MainController
 
                 break;
         }
+
         $this->twig = new Twig;
     }
 

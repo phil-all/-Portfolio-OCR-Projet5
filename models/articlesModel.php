@@ -97,7 +97,7 @@ class ArticlesModel extends MainModel
      */
     public function getAllArticles($currentPage, $perPage)
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category
+        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at
         FROM article AS a 
         JOIN user as u 
             ON a.author_id = u.id
@@ -111,6 +111,32 @@ class ArticlesModel extends MainModel
 
         $stmt->bindValue(':firstArticle', $firstArticle, PDO::PARAM_INT);    
         $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Returns the x last articles
+     *
+     * @param integer $countNews : count of articles to retrun
+     * 
+     * @return array
+     */
+    public function getNews(int $countNews): array
+    {
+        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at
+        FROM article AS a 
+        JOIN user as u 
+            ON a.author_id = u.id
+        JOIN category AS c
+            ON a.category_id = c.id
+        ORDER BY id DESC LIMIT 0, :count_articles';
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':count_articles', $countNews, PDO::PARAM_INT);
 
         $stmt->execute();
 
