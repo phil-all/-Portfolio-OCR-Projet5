@@ -1,1 +1,87 @@
-ici la page d'incription - connexion
+{% extends 'layouts/layout.twig' %}
+
+{% block title %}
+    <title>inscription-connexion</title>
+{% endblock %}
+
+{% block body_class %} class="user-landing"{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="container mb-5 mt-5">
+            <div class="row">
+                <!-- Start register form -->
+                <section class="col-md-6">
+                    <div class="m-1 p-3 user-landing-form">
+                        <h2>Nouveau sur le site ?</h2>
+                        <p>inscrivez-vous gratuitement</p>
+                        <form action="#" method="POST" class="row g-3 form-dark">
+                            <div class="col-lg-6">
+                                <input  class="form-control" type="text" placeholder="Prénom" aria-label="Prénom" name="first_name">
+                            </div>
+                            <div class="col-lg-6">
+                                <input class="form-control" type="text" placeholder="Nom de famille" aria-label="Nom de famille" name="last_name">
+                            </div>
+                            <div class="col-12">
+                                <input class="form-control" type="text" placeholder="Veuillez choisir un pseudo" aria-label="Pseudo" name="peudo">
+                            </div>
+                            <div class="col-12">
+                                <input class="form-control" type="text" placeholder="e-mail" aria-label="e-mail" name="email">
+                            </div>
+                            <div class="col-12">
+                                <input class="form-control" type="text" placeholder="Mot de passe" aria-label="Mot de passe" name="password">
+                            </div>
+                            <fielset class="row mb-3">
+                                <legend class="col-form-label col-12">Choisissez un avavtar</legend>
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="woman" name="avatar_id" value="2">
+                                        <label class="form-check-label" for="woman">Femme</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="man" name="avatar_id" value="3">
+                                        <label class="form-check-label" for="man">Homme</label>
+                                    </div>
+                                </div>
+                            </fielset>
+                            <p>
+                                En cliquant sur inscription, vous acceptez nos <a href="#">Conditions générales</a>. 
+                                Découvrez comment nous recueillons vos données en lisant notre <a href="#">Politique d'utilisation des données</a>.
+                                <br/>
+                                Vous pouvez également avoir accès à nos <a href="#">mentions légales</a>.
+                            </p>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-success col-lg-6">Inscription</button>
+                            </div>
+                        </form>
+                    </div>
+                </section><!-- End register form -->
+                <!-- Start login form -->
+                <section class="col-md-6">
+                    <div class="m-1 p-3 user-landing-form">
+                        <h2>De retour parmis nous</h2>
+                        <p>connexion à votre compte</p>
+                        <form action="#" method="POST" class="row g-3">
+                            <div class="col-12">
+                                <label for="logmail" class="form-label">E-mail</label>
+                                <input type="text" class="form-control" id="logmail">
+                            </div>
+                            <div class="col-12">
+                                <label for="logpass" class="form-label">Mot de passe</label>
+                                <input type="text" class="form-control" id="logpass">
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="#">Mot de passe oublié ?</a>
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="submit" class="btn btn-success col-12">Se connecter</button>
+                            </div>
+                        </form>
+                    </div>
+                </section><!-- End login form -->
+            </div>
+        </div>
+    </main>
+{% endblock %}

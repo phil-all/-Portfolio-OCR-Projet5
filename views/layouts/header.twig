@@ -4,7 +4,8 @@
                 {% autoescape %}
                 <a class="navbar-brand" href="{{ constant('SITE_ADRESS') }}">
                     <img src="{{ constant('SITE_ADRESS') }}/public/images/logo80px.png" alt="Logo" width="55" height="55">
-                    {{ constant('SITE_NAME') }}
+                    &lt; <span style="color: #fff;">{{ constant('SITE_NAME') }}</span> &gt;
+
                 </a>
                 {% endautoescape %}
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
