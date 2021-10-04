@@ -46,7 +46,7 @@ class Autoloader
         // Replace last $array entry by $last entry, and implode it in $class
         $class = implode('/', array_replace($array, $last));
 
-        if (file_exists(ROOT_DS . $class . '.php')) {
+        if (is_file(ROOT_DS . $class . '.php')) {
 
             $classPath = ROOT_DS . $class . '.php';
 

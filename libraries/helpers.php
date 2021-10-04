@@ -34,4 +34,17 @@ abstract class Helpers
 
         return $string;
     }
+
+    /**
+     * Redirect and exit
+     *
+     * @param string $url destination of redirection
+     * @return void
+     */
+    public static function redirect(string $url): void
+    {
+        header('Location: ' . $url);
+
+        exit();
+    }
 }

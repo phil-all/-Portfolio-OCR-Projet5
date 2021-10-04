@@ -122,8 +122,10 @@ class ArticlesController extends MainController
         switch ($count) {
             case 0: // --- Redirect to .../articles/pages-1 ---
 
-                header('Location: ' . SITE_ADRESS . '/articles/page-1');
-
+                $url = SITE_ADRESS . '/articles/page-1';
+                
+                Helpers::redirect($url);
+                
                 break;
 
             case 1: // --- All articles ---
@@ -161,8 +163,9 @@ class ArticlesController extends MainController
 
                     if ($slug != $params[1]) {
 
-                        header('Location: ' . SITE_ADRESS . DS . 'article' . DS . $params[0] . DS . $slug);
-                        exit();
+                        $url = SITE_ADRESS . DS . 'article' . DS . $params[0] . DS . $slug;
+
+                        Helpers::redirect($url);
 
                     }
 

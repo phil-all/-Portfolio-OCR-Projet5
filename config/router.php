@@ -36,7 +36,7 @@ class Router
 
         $hub = ($hub === 'admin') ? 'admin' : 'client';
 
-        $action = (file_exists('controllers' . DS . $hub . DS . $action . 'Controller.php')) ? $action : 'pageNotFound';
+        $action = (is_file('controllers' . DS . $hub . DS . $action . 'Controller.php')) ? $action : 'pageNotFound';
         
         $template = $hub . DS . $action . '.twig';
 
