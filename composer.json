@@ -1,0 +1,35 @@
+{
+    "name": "phil-all/over_code",
+    "description": "School project: blog web site - Studies: web application developper PHP/Symfony - School: Openclassrooms",
+    "type": "project",
+    "keywords": ["PHP", "MVC", "OOP", "database"],
+    "homepage": "https://github.com/phil-all/Portfolio-OCR-Projet5",
+    "authors": [
+        {
+            "name": "Philippe Allard-Latour",
+            "email": "allard.latour.philippe@gmail.com",
+            "role": "Developer"
+        }
+    ],    
+    "require": {
+        "php": "^8.0",
+        "twig/twig": "^3.0",
+        "symfony/dotenv": "^5.3"
+    },
+    "config": {
+        "platform": {
+            "php": "8.0.9"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Over_Code\\Config\\": "config/",
+            "Over_Code\\Controllers\\": "controllers/",
+            "Over_Code\\Controllers\\Client\\": "controllers/client/",
+            "Over_Code\\Db\\": "db/",
+            "Over_Code\\Libraries\\": "libraries/",
+            "Over_Code\\Models\\": "models/"
+        }
+    },
+    "minimum-stability": "dev"
+}

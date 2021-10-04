@@ -15,5 +15,4 @@ doc/*
 
 #---third---
 vendor/
-composer.json
 composer.lock
