@@ -1,11 +1,11 @@
 <?php
 
-namespace P5\Controllers\Client;
+namespace Over_Code\Controllers\Client;
 
-use P5\Libraries\Twig;
-use P5\Libraries\Helpers;
-use P5\Models\ArticlesModel;
-use P5\Controllers\MainController;
+use Over_Code\Libraries\Twig;
+use Over_Code\Libraries\Helpers;
+use Over_Code\Models\ArticlesModel;
+use Over_Code\Controllers\MainController;
 
 class ArticlesController extends MainController
 {

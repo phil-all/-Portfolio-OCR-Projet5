@@ -1,9 +1,9 @@
 <?php
 
-namespace P5\Config;
+namespace Over_Code\Config;
 
-use P5\Libraries\Helpers;
-use P5\Libraries\Superglobals;
+use Over_Code\Libraries\Helpers;
+use Over_Code\Libraries\Superglobals;
 
 /**
  * Instantiate the controller class , based on $_GET['route']
@@ -42,7 +42,7 @@ class Router
 
         // Loads the template and renders it
         
-        $controller = '\\P5\\Controllers\\' . ucfirst($hub) . '\\' . ucfirst($action) . 'Controller';
+        $controller = '\\Over_Code\\Controllers\\' . ucfirst($hub) . '\\' . ucfirst($action) . 'Controller';
 
         $controller = new $controller($template, $params);
 

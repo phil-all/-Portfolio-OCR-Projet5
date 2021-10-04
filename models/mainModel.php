@@ -1,9 +1,9 @@
 <?php
 
-namespace P5\Models;
+namespace Over_Code\Models;
 
 use PDO;
-use P5\Db\DbConnect;
+use Over_Code\Db\DbConnect;
 
 abstract class MainModel
 {

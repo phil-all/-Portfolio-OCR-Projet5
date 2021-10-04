@@ -1,6 +1,6 @@
 <?php
 
-namespace P5\Config;
+namespace Over_Code\Config;
 
 /**
  * Autoloader class
@@ -23,13 +23,13 @@ class Autoloader
     /**
      * Require called class file
      *
-     * @param string $class called class with namespace, ex: P5\Folder\Sub-folder\ClassName
+     * @param string $class called class with namespace, ex: Over_Code\Folder\Sub-folder\ClassName
      * 
      * @return void
      */
     public static function load($class): void
     {
-        // Export $class in an array, and delete P5
+        // Export $class in an array, and delete Over_Code
         $array = explode('\\', $class);
         unset($array[0]);
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace P5\Db;
+namespace Over_Code\Db;
 
 use PDO;
 //use Exception;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use P5\Config\Init;
-use P5\Config\Router;
-use P5\Config\Autoloader;
+use Over_Code\Config\Init;
+use Over_Code\Config\Router;
+use Over_Code\Config\Autoloader;
 
 // Define constants
 define('DS', DIRECTORY_SEPARATOR);

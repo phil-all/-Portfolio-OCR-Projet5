@@ -1,8 +1,8 @@
 <?php
 
-namespace P5\Controllers\Client;
+namespace Over_Code\Controllers\Client;
 
-use P5\Controllers\MainController;
+use Over_Code\Controllers\MainController;
 
 class PageNotFoundController extends MainController
 {

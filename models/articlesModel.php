@@ -1,6 +1,6 @@
 <?php
 
-namespace P5\Models;
+namespace Over_Code\Models;
 
 use PDO;
 

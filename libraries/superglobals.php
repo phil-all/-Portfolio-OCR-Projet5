@@ -1,7 +1,7 @@
 <?php
 //source : https://beamtic.com/avoid-superglobals-oop-php
 
-namespace P5\Libraries;
+namespace Over_Code\Libraries;
 
 /**
  * Super globals variables manipulation

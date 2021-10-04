@@ -1,9 +1,9 @@
 <?php
 
-namespace P5\Controllers\Client;
+namespace Over_Code\Controllers\Client;
 
-use P5\Libraries\Twig;
-use P5\Controllers\MainController;
+use Over_Code\Libraries\Twig;
+use Over_Code\Controllers\MainController;
 
 /**
  * Manage resgistration and log-in / out

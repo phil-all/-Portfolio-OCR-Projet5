@@ -1,8 +1,8 @@
 <?php
 
-namespace P5\Config;
+namespace Over_Code\Config;
 
-use P5\Libraries\Superglobals;
+use Over_Code\Libraries\Superglobals;
 
 /**
  * Define constants & Start session
