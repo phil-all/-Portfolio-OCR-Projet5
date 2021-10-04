@@ -39,10 +39,8 @@ class Twig
      *
      * @param string $template
      * @param array $params
-     * 
-     * @return void
      */
-    public function twigRender($template, $params = [])
+    public function twigRender(string $template, array $params = [])
     {
         echo $this->twig->render($template, $params);
     }

@@ -13,6 +13,11 @@ class Superglobals
     private array $SERVER;
     private array $SESSION;
 
+    /**
+     * Use collect_superglobals method
+     * to collect PHP superglobals and
+     * create a local copy
+     */
     public function __construct()
     {
         $this->collect_superglobals();
@@ -25,7 +30,7 @@ class Superglobals
      * 
      * @return mixed
      */
-    public function get_GET($key = NULL)
+    public function get_GET(string $key = NULL): mixed
     {
         switch ($key) {
             case NULL:
@@ -47,7 +52,7 @@ class Superglobals
      * 
      * @return mixed
      */
-    public function get_POST($key = NULL)
+    public function get_POST(string $key = NULL): mixed
     {
         switch ($key) {
             case NULL:
@@ -69,7 +74,7 @@ class Superglobals
      * 
      * @return mixed
      */
-    public function get_SERVER($key = NULL)
+    public function get_SERVER(string $key = NULL): mixed
     {
         switch ($key) {
             case NULL:
@@ -91,7 +96,7 @@ class Superglobals
      * 
      * @return mixed
      */
-    public function get_SESSION($key = NULL)
+    public function get_SESSION(string $key = NULL): mixed
     {
         switch ($key) {
             case NULL:
@@ -109,8 +114,6 @@ class Superglobals
     /**
      * Collect PHP superglobals and
      * create a local copy
-     *
-     * @return mixed
      */
     private function collect_superglobals()
     {

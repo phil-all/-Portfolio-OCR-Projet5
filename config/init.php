@@ -12,9 +12,9 @@ class Init
     /**
      * Run initialisation
      *
-     * @return mixed
+     * @return void
      */
-    public static function start()
+    public static function start(): void
     {
         $superGlobals = new Superglobals;
 

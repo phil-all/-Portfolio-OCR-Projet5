@@ -12,7 +12,14 @@ use Over_Code\Controllers\MainController;
  */
 class AccueilController extends MainController
 {
-    public function __construct($action, $params = [])
+    private array $lastNews;
+
+    /**
+     * Defines parameters to send to display method
+     *
+     * @param string $action
+     */
+    public function __construct(string $action)
     {
         $this->action = $action;
         

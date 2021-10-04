@@ -5,13 +5,16 @@ namespace Over_Code\Libraries;
 abstract class Helpers
 {
     /**
-     * Slug a string to be linked
+     * Slug a string
+     * exemple:
+     * string to slug: "Hello World I'm happy"
+     * result: "hello-world-i-m-happy"
      *
      * @param string $string
      * 
      * @return string
      */
-    public static function toSlug($string)
+    public static function toSlug(string $string): string
     {
         // delete spaces from start and end string
         $string = trim($string);

@@ -27,7 +27,7 @@ class Autoloader
      * 
      * @return void
      */
-    public static function load($class): void
+    public static function load(string $class): void
     {
         // Export $class in an array, and delete Over_Code
         $array = explode('\\', $class);

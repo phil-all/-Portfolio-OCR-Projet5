@@ -9,19 +9,19 @@ use Over_Code\Libraries\Twig;
  */
 abstract class MainController
 {
-    protected $action;
-    protected $params = [];
-    protected $twig;
+    protected string $action;
+    protected array $params = [];
+    protected object $twig;
 
     /**
-     * Construct magic method: Set values to attributes
+     * Defines parameters to send to display method
      *
      * @param string $action
      * @param array $params
      * 
      * @return void
      */
-    public function __construct($action, $params = [])
+    public function __construct(string $action, array $params = [])
     {
         $this->action = $action;
 
@@ -35,7 +35,7 @@ abstract class MainController
      * 
      * @return void
      */
-    public function display()
+    public function display(): void
     {
         echo $this->twig->twigRender($this->action, $this->params);
     }

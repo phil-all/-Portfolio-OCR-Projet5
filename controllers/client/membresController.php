@@ -16,7 +16,7 @@ class MembresController extends MainController
      * @param string $action : is the twig template
      * @param array $params : parameters in URI after .../membres/
      */
-    public function __construct($action, $params = [])
+    public function __construct(string $action, array $params = [])
     {
         $this->params = $params;
 

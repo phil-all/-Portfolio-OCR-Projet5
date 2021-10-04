@@ -19,7 +19,13 @@ class ArticlesController extends MainController
     private string $nextLink;
     
 
-    public function __construct($action, $params = [])
+    /**
+     * Defines parameters to send to display method
+     *
+     * @param string $action
+     * @param array $params
+     */
+    public function __construct(string $action, array $params = [])
     {
         $articles = new ArticlesModel;
 
@@ -113,7 +119,7 @@ class ArticlesController extends MainController
      * 
      * @return array
      */
-    public static function articlesDispatcher($params, $total, $object)
+    public static function articlesDispatcher(array $params, int $total, object $object): array
     {
         $result[0] = '404';
 
@@ -183,12 +189,12 @@ class ArticlesController extends MainController
      * - syntax have to be like page-1
      * - the number of the page have to be less or equal to the totalpage
      *
-     * @param string $uriPart : for example page-1
-     * @param int $total : count of all pages or a single category
+     * @param string $uriPart for example page-1
+     * @param int $total count of all pages or a single category
      * 
      * @return boolean
      */
-    public static function uriPaginationTest($uriPart, $total)
+    public static function uriPaginationTest(string $uriPart, int $total): bool
     {
         $explode = explode('-', $uriPart);
 

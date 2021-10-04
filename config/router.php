@@ -14,9 +14,9 @@ class Router
     /**
      * Run the routing
      *
-     * @return object $controller for displaying twig file
+     * @return mixed
      */
-    public static function start()
+    public static function start(): mixed
     {
         $superGlobals = new Superglobals;
 

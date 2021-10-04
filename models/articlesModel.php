@@ -12,17 +12,17 @@ class ArticlesModel extends MainModel
     /**
      * Get Title from article by id
      *
-     * @param int $int : article id
+     * @param int $articleId : article id
      * 
      * @return string
      */
-    public function getTitle($int)
+    public function getTitle(int $articleId): string
     {
         $query = 'SELECT title from article WHERE id = :id';
 
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindValue(':id', $int, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
 
         $stmt->execute();
 
@@ -32,11 +32,11 @@ class ArticlesModel extends MainModel
     /**
      * Get one article details from its id
      *
-     * @param int $int : article id
+     * @param int $articleId : article id
      * 
      * @return array
      */
-    public function getSingleArticle($int)
+    public function getSingleArticle(int $articleId): array
     {
         $query = 'SELECT a.id, u.first_name, u.last_name, a.title, a.created_at, a.last_update, a.chapo, a.content, a.img_path
         FROM article AS a
@@ -46,7 +46,7 @@ class ArticlesModel extends MainModel
 
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindValue(':id', (int)$int, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
 
         $stmt->execute();
 
@@ -62,7 +62,7 @@ class ArticlesModel extends MainModel
      * 
      * @return array
      */
-    public function getCategoryArticles($currentPage, $perPage, $category)
+    public function getCategoryArticles(int $currentPage, int $perPage, int $category): array
     {
         $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category
         FROM article AS a 
@@ -95,7 +95,7 @@ class ArticlesModel extends MainModel
      * 
      * @return array
      */
-    public function getAllArticles($currentPage, $perPage)
+    public function getAllArticles(int $currentPage, int $perPage): array
     {
         $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at
         FROM article AS a 
@@ -148,18 +148,18 @@ class ArticlesModel extends MainModel
      * - id is integer
      * - id exist in table
      *
-     * @param mixed $int : article id to check
+     * @param mixed $articleId : article id to check
      * @param object $object : object corresponding to Model instance, for exemple: $this->articles
      * 
      * @return boolean
      */
-    public static function idExist($int, $object)
+    public static function idExist(int $articleId, object $object): bool
     {
         $query = 'SELECT EXISTS (SELECT * from article WHERE id = :id)';
         
         $stmt = $object->pdo->prepare($query);
 
-        $stmt->bindValue(':id', $int, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
 
         $stmt->execute();
 
@@ -173,7 +173,7 @@ class ArticlesModel extends MainModel
     * 
     * @return integer
     */
-    public function getCount()
+    public function getCount(): int
     {
         $query = 'SELECT COUNT(*) FROM article';
 
@@ -191,7 +191,7 @@ class ArticlesModel extends MainModel
      * 
      * @return integer
      */
-    public function getCategoryCount($category)
+    public function getCategoryCount(string $category): int
     {
         $query = 'SELECT COUNT(*) 
         FROM article AS a 
@@ -215,7 +215,7 @@ class ArticlesModel extends MainModel
      * 
      * @return boolean
      */
-    public function categoryExist($value)
+    public function categoryExist(string $value): bool
     {
         $query = 'SELECT EXISTS (
                     SELECT * 
