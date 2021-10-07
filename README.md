@@ -1,3 +1,5 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f05cd994261045b99622abf7a8d7ccbf)](https://www.codacy.com/gh/phil-all/Portfolio-OCR-Projet5/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=phil-all/Portfolio-OCR-Projet5&amp;utm_campaign=Badge_Grade)
+
 Project 5 - Study :  PHP & Symfony, by Openclassrooms.
 
 Create your first blog with PHP
