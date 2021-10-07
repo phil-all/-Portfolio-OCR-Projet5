@@ -32,17 +32,13 @@ class Superglobals
      */
     public function get_GET(string $key = NULL): mixed
     {
-        switch ($key) {
-            case NULL:
+        if ($key !== NULL) {
 
-                return $this->GET;
+            return $this->$_GET[$key] ?? NULL;
 
-                break;
-
-            default:
-
-                return (isset($this->GET[$key])) ?  $this->GET[$key] : NULL;
         }
+
+        return $this->GET;
     }
 
     /**
@@ -54,17 +50,13 @@ class Superglobals
      */
     public function get_POST(string $key = NULL): mixed
     {
-        switch ($key) {
-            case NULL:
+        if ($key !== NULL) {
 
-                return $this->POST;
+            return $this->$_POST[$key] ?? NULL;
 
-                break;
-
-            default:
-
-                return (isset($this->POST[$key])) ?  $this->POST[$key] : NULL;
         }
+
+        return $this->POST;
     }
 
     /**
@@ -76,17 +68,13 @@ class Superglobals
      */
     public function get_SERVER(string $key = NULL): mixed
     {
-        switch ($key) {
-            case NULL:
+        if ($key !== NULL) {
 
-                return $this->SERVER;
+            return $this->$_SERVER[$key] ?? NULL;
 
-                break;
-
-            default:
-
-                return (isset($this->SERVER[$key])) ?  $this->SERVER[$key] : NULL;
         }
+
+        return $this->SERVER;
     }
 
     /**
@@ -98,17 +86,13 @@ class Superglobals
      */
     public function get_SESSION(string $key = NULL): mixed
     {
-        switch ($key) {
-            case NULL:
+        if ($key !== NULL) {
 
-                return $this->SESSION;
+            return $this->$_SESSION[$key] ?? NULL;
 
-                break;
-
-            default:
-
-                return (isset($this->SESSION[$key])) ?  $this->SESSION[$key] : NULL;
         }
+
+        return $this->SESSION;
     }
 
     /**
@@ -117,12 +101,12 @@ class Superglobals
      */
     private function collect_superglobals()
     {
-        $this->GET = (!isset($_GET)) ? [] : filter_input_array(INPUT_GET);
+        $this->GET = filter_input_array(INPUT_GET) ?? NULL;
 
-        $this->POST = (!isset($_POST)) ? [] : filter_input_array(INPUT_POST);
+        $this->POST = filter_input_array(INPUT_POST) ?? NULL;
 
-        $this->SERVER = (!isset($_SERVER)) ? [] : filter_input_array(INPUT_SERVER);
+        $this->SERVER = filter_input_array(INPUT_SERVER) ?? NULL;
 
-        $this->SESSION = (!isset($_SESSION)) ? [] : filter_var_array($_SESSION, FILTER_SANITIZE_STRING);
+        $this->SESSION = filter_var_array($_SESSION, FILTER_SANITIZE_STRING) ?? NULL;
     }
 }
