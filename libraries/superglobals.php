@@ -34,7 +34,7 @@ class Superglobals
     {
         if ($key !== NULL) {
 
-            return $this->$_GET[$key] ?? NULL;
+            return $this->GET[$key] ?? NULL;
 
         }
 
@@ -52,7 +52,7 @@ class Superglobals
     {
         if ($key !== NULL) {
 
-            return $this->$_POST[$key] ?? NULL;
+            return $this->POST[$key] ?? NULL;
 
         }
 
@@ -70,7 +70,7 @@ class Superglobals
     {
         if ($key !== NULL) {
 
-            return $this->$_SERVER[$key] ?? NULL;
+            return $this->SERVER[$key] ?? NULL;
 
         }
 
@@ -88,7 +88,7 @@ class Superglobals
     {
         if ($key !== NULL) {
 
-            return $this->$_SESSION[$key] ?? NULL;
+            return $this->SESSION[$key] ?? NULL;
 
         }
 
