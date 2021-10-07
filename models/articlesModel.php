@@ -58,11 +58,11 @@ class ArticlesModel extends MainModel
      *
      * @param int $currentPage
      * @param int $perPage
-     * @param int $categoryId
+     * @param string $category_name 
      * 
      * @return array
      */
-    public function getCategoryArticles(int $currentPage, int $perPage, int $category): array
+    public function getCategoryArticles(int $currentPage, int $perPage, string $category_name): array
     {
         $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category
         FROM article AS a 
@@ -79,7 +79,7 @@ class ArticlesModel extends MainModel
 
         $stmt->bindValue(':firstArticle', $firstArticle, PDO::PARAM_INT);    
         $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
-        $stmt->bindValue(':category', $category, PDO::PARAM_STR);
+        $stmt->bindValue(':category', $category_name, PDO::PARAM_STR);
 
         $stmt->execute();
 
