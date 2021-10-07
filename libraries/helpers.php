@@ -2,7 +2,7 @@
 
 namespace Over_Code\Libraries;
 
-abstract class Helpers
+trait Helpers
 {
     /**
      * Slug a string

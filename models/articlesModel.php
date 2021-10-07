@@ -153,7 +153,7 @@ class ArticlesModel extends MainModel
      * 
      * @return boolean
      */
-    public static function idExist(int $articleId, object $object): bool
+    public function idExist(int $articleId, object $object): bool
     {
         $query = 'SELECT EXISTS (SELECT * from article WHERE id = :id)';
         

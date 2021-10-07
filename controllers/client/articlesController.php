@@ -3,12 +3,13 @@
 namespace Over_Code\Controllers\Client;
 
 use Over_Code\Libraries\Twig;
-use Over_Code\Libraries\Helpers;
 use Over_Code\Models\ArticlesModel;
 use Over_Code\Controllers\MainController;
 
 class ArticlesController extends MainController
 {
+    use \Over_Code\Libraries\Helpers;
+
     private array $articles;
     private int $perPage = 4;
     private int $totalPages;
@@ -31,7 +32,7 @@ class ArticlesController extends MainController
 
         $this->totalPages = (int)ceil($articles->getCount('article') / $this->perPage);
 
-        $dispatch = self::articlesDispatcher($params, $this->totalPages, $articles);
+        $dispatch = $this->articlesDispatcher($params, $this->totalPages, $articles);
 
         switch ($dispatch[0]) {
             case '404':
@@ -71,7 +72,7 @@ class ArticlesController extends MainController
                 }
 
                 foreach($this->articles as $key) { 
-                    $key['slug'] = Helpers::toSlug($key['title']);
+                    $key['slug'] = $this->toSlug($key['title']);
                     
                     array_shift($this->articles);
 
@@ -119,7 +120,7 @@ class ArticlesController extends MainController
      * 
      * @return array
      */
-    public static function articlesDispatcher(array $params, int $total, object $object): array
+    public function articlesDispatcher(array $params, int $total, object $object): array
     {
         $result[0] = '404';
 
@@ -130,7 +131,7 @@ class ArticlesController extends MainController
 
                 $url = SITE_ADRESS . '/articles/page-1';
                 
-                Helpers::redirect($url);
+                $this->redirect($url);
                 
                 break;
 
@@ -163,15 +164,15 @@ class ArticlesController extends MainController
                     }
 
                 // --- params[0] is an article id ---
-                } elseif (ArticlesModel::idExist($params[0], $object)) {
+                } elseif ($object->idExist($params[0], $object)) {
 
-                    $slug = Helpers::toSlug($object->getTitle((int)$params[0]));
+                    $slug = $this->toSlug($object->getTitle((int)$params[0]));
 
                     if ($slug != $params[1]) {
 
                         $url = SITE_ADRESS . DS . 'article' . DS . $params[0] . DS . $slug;
 
-                        Helpers::redirect($url);
+                        $this->redirect($url);
 
                     }
 

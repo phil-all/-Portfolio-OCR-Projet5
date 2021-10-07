@@ -3,7 +3,6 @@
 namespace Over_Code\Controllers\Client;
 
 use Over_Code\Libraries\Twig;
-use Over_Code\Libraries\Helpers;
 use Over_Code\Models\ArticlesModel;
 use Over_Code\Controllers\MainController;
 
@@ -12,6 +11,8 @@ use Over_Code\Controllers\MainController;
  */
 class AccueilController extends MainController
 {
+    use \Over_Code\Libraries\Helpers;
+
     private array $lastNews;
 
     /**
@@ -28,7 +29,7 @@ class AccueilController extends MainController
         $this->lastNews = $lastNews->getNews(4);
 
         foreach($this->lastNews as $key) { 
-            $key['slug'] = Helpers::toSlug($key['title']);
+            $key['slug'] = $this->toSlug($key['title']);
             
             array_shift($this->lastNews);
 
