@@ -5,7 +5,7 @@
 
     RewriteEngine On
 
-    # put in $_GET['p'] string following the $_SERVER['SCRIPT_FILENAME'] in URL
-    RewriteRule ^([a-zA-Z0-9\-\_\/]*)$ index.php?route=$1
+    # put in $_GET['url_params'] string following index.php in URL
+    RewriteRule ^([\w\-\/]*)$ index.php?url_params=$1
 
 </IfModule>
