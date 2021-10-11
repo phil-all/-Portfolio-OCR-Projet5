@@ -1,10 +1,10 @@
 <?php
 
-namespace Over_Code\Controllers\Client;
+namespace Over_Code\Controllers;
 
 use Over_Code\Controllers\MainController;
 
 class PageNotFoundController extends MainController
 {
-
+    public function index(){}
 }
