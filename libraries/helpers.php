@@ -2,6 +2,9 @@
 
 namespace Over_Code\Libraries;
 
+use ReflectionClass;
+use Over_Code\Libraries\Superglobals;
+
 trait Helpers
 {
     /**
@@ -39,7 +42,7 @@ trait Helpers
     }
 
     /**
-     * Redirect and exit
+     * Redirect to a given url
      *
      * @param string $url destination of redirection
      * @return void
@@ -49,5 +52,41 @@ trait Helpers
         header('Location: ' . $url);
 
         exit();
+    }
+
+    /**
+     * Return hub plateform: admin or client
+     *
+     * @return string
+     */
+    public static function hubFinder(): string
+    {
+        $globals = new Superglobals;
+
+        return ($globals->get_SESSION('hub') === 'admin') ? 'admin' : 'client';
+    }
+
+    /**
+     * Check if a string contain only numbers
+     *
+     * @param string $param
+     * 
+     * @return boolean
+     */
+    public function onlyInteger(string $param): bool
+    {
+        return (preg_replace('~([0-9]*)~', '', $param) === '');
+    }
+
+    /**
+     * Return a reflection class instance
+     *
+     * @param string $class
+     * 
+     * @return mixed
+     */
+    public function getReflection(string $class): mixed
+    {
+        return new ReflectionClass($class);
     }
 }
