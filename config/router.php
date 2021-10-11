@@ -2,22 +2,64 @@
 
 namespace Over_Code\Config;
 
-use Over_Code\Libraries\Helpers;
-use Over_Code\Libraries\Superglobals;
+use \Over_Code\Libraries\Routes\UrlChecker;
 
 /**
- * Instantiate the controller class , based on $_GET['route']
- * and call display method of this controller
+ * Instantiate the good controller
+ * call method corresponding to action
+ * pass attributes needed with good type 
  */
 class Router
 {
     /**
-     * Run the routing
+     * Run the routing, in finding the good controller, the good method and
+     * passing the good attributes
      *
      * @return mixed
      */
-    public static function start(): mixed
+    public function __construct()
     {
+        $this->match = new UrlChecker;
         
+        $controller = $this->getClass();
+
+        $controller = new $controller($this->getMethod(), $this->getParams());
+    }
+
+    /**
+     * Return class for routing
+     *
+     * @param boolean $test
+     * 
+     * @return string
+     */
+
+    private function getClass(): string
+    {
+        if (!$this->match->controllerCheck() || !$this->match->methodCheck()) {
+            return '\Over_Code\controllers\PageNotFoundController';
+        }
+
+        return $this->match->class;
+    }
+
+    /**
+     * Retrun method for routing
+     *
+     * @return string
+     */
+    private function getMethod(): string
+    {
+        return $this->match->method;
+    }
+
+    /**
+     * Return attributes for routing
+     *
+     * @return array
+     */
+    private function getParams(): array
+    {
+        return $this->match->params;
     }
 }
