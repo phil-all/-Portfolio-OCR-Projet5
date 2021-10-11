@@ -54,6 +54,16 @@ trait Helpers
         exit();
     }
 
+    public static function getGlobals()
+    {
+        return new Superglobals;
+    }
+
+    public static function GET(string $param)
+    {
+        return self::getGlobals()->get_GET($param);
+    }
+
     /**
      * Return hub plateform: admin or client
      *
