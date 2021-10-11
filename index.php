@@ -16,8 +16,8 @@ require_once CONFIG_PATH . 'autoloader.php';
 require_once CONFIG_PATH . 'init.php';
 require_once ROOT_DS . 'vendor' . DS . 'autoload.php';
 require_once CONFIG_PATH . 'thirdParty.php';
-//var_dump(SITE_ADRESS);exit;
+
 // Start own services
 Autoloader::start();
 Init::start();
-Router::start();
+$router = new Router;
