@@ -9,12 +9,14 @@ use Over_Code\Libraries\Twig;
  */
 abstract class MainController
 {
+    use \Over_Code\Libraries\Helpers;
+
     protected string $action;
     protected array $params = [];
     protected object $twig;
 
     /**
-     * Defines parameters to send to display method
+     * Call method action, passing parameters, and send it to the display method
      *
      * @param string $action
      * @param array $params
@@ -23,11 +25,11 @@ abstract class MainController
      */
     public function __construct(string $action, array $params = [])
     {
-        $this->action = $action;
-
-        $this->params = $params;
+        $this->$action($params);
 
         $this->twig = new Twig;
+
+        $this->display();
     }
 
     /**
@@ -37,6 +39,14 @@ abstract class MainController
      */
     public function display(): void
     {
-        echo $this->twig->twigRender($this->action, $this->params);
+        echo $this->twig->twigRender($this->template, $this->params);
+    }
+
+    /**
+     * Set template to pageNotFound if method sent in constructor is not fpound
+     */
+    public function methodNotFound()
+    {
+        $this->template = 'pageNotFound.twig';
     }
 }

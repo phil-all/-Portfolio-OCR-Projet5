@@ -10,27 +10,8 @@ use Over_Code\Controllers\MainController;
  */
 class MembresController extends MainController
 {
-    public function register()
+    public function inscriptionConnexion()
     {
-
+        $this->template = 'client' . DS . 'signin-login.twig';
     }
-
-    public function unregister()
-    {
-
-    }
-
-    public function login()
-    {
-
-    }
-
-    public function logout()
-    {
-
-    }
-
-    // getters
-
-    //setters
 }
