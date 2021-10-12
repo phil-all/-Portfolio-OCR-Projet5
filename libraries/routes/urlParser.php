@@ -32,7 +32,7 @@ class UrlParser
     public function getMethodName(): string
     {
         $method =  ($this->uri[1]) ?? 'index';
-        $method = (strlen(($this->uri[1]) ?? 'index') === 0) ? 'index' : $method;
+        $method = (strlen($method) === 0) ? 'index' : $method;
 
         return $method;
     }

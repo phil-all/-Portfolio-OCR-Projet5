@@ -13,11 +13,10 @@ Class UrlChecker
 
     public function __construct()
     {
-        $this->hub = $this->hubFinder();
-
         $this->uri = new UrlParser();
+        $this->hub = $this->hubFinder();        
         $this->class = '\Over_Code\controllers\\' . $this->hub . '\\' . $this->uri->getControllerClass() . 'Controller';
-        $this->method = $this->uri->getMethodName();
+        $this->method = $this->undashedMethod($this->uri->getMethodName()); 
         $this->params = $this->uri->getAttributesList();
     }
 
@@ -43,5 +42,26 @@ Class UrlChecker
         }
 
         return false;
+    }
+
+    /**
+     * Delete dashes from method name, and trasform in camel case form
+     *
+     * @param string $getMethod
+     * @return string
+     */
+    public function undashedMethod(string $getMethod): string
+    {
+        if (preg_match('/-/', $getMethod)) {
+            $getMethod = explode('-', $getMethod);
+
+            for ($i = 1; $i <= (count($getMethod) - 1); $i++) {
+                $getMethod[$i] = ucfirst($getMethod[$i]);
+            }
+            
+            return implode('', $getMethod);
+        }
+
+        return $getMethod;
     }
 }

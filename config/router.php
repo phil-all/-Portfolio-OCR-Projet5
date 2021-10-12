@@ -50,6 +50,10 @@ class Router
      */
     private function getMethod(): string
     {
+        if (!$this->match->methodCheck()) {
+            return 'methodNotFound';
+        }
+
         return $this->match->method;
     }
 
