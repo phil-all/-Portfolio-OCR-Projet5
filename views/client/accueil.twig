@@ -4,91 +4,102 @@
     <title>{{ constant('SITE_NAME') }} - Accueil</title>
 {% endblock %}
 
+{% block body_class %} class="home"{% endblock %}
+
 {% block content %}
-    <section class="mt-5 mb-5">
-        <div class="container text-center">
-            <h1>Bienvenue sur OverCode</h1>
-            <h3>Ici on parle de code, mais aussi d'informatique en général</h3>
-        </div>
-    </section>
-    <section class="container mt-5 mb-5">
-        <div class="row"  style="margin-top: 30px; margin-bottom: 30px;">
-            <h3>Last news</h3>
-            {% for new in lastNews %}
-            <article class="card mb-3 col-12 col-md-6 border-none">
-                <img src="./public/uploads/article-0001.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ new.title }}</h5>
-                    <p class="card-text">{{ new.chapo }}</p>
-                    <p class="card-text"><small class="text-muted">date : {{ new.created_at }}</small></p>
-                    {% autoescape %}
-                    <a href="{{ constant('SITE_ADRESS') }}/articles/{{ new.id }}/{{ new.slug }}">
-                    {% endautoescape %}
-                        <button type="button" class="btn btn-light"><i class="bi bi-arrow-right-square"></i> lire plus...</button>
-                    </a>
+    <main class="pt-5 pb-5">
+        <section class="mt-1 mb-5">
+            <div class="container d-flex justify-content-center hero">
+                <div class="px-3">
+                    <h1><span class="green-txt">Bienvenue</span> sur Over_Code</h1>
+                    <h3>Ici on parle de code, mais pas seulement, on s'interresse aussi à l'informatique en général...</h3>
                 </div>
-            </article>            
-            {% endfor %}            
-        </div>        
-    </section><!--End news-->
-    <section class="container mt-5 mb-5 bg-dark">
-        <article class="row"  style="padding-top: 30px; padding-bottom: 30px;" id="about">
-            <div class="col-12 col-lg-8 col-xl-10  text-white">
-                <h1>Vers l'infini et au delà...</h1>
-                <br>
-                <p>Piqué au virus de l'informatique dès l'enfance, j'ai saisi mes premières lignes de code en visual basic sur un bon vieux CPC 464 Schneider avec chargement à bande (ersatz de l'Amstrad de même référence).<br><br>
-                Ces dernières années j'ai peu à peu délaissé la galaxie Windows, pour me plonger avec délectation dans la nébuleuse Linux. Ah! Les joies de la ligne de commande..<br><br>
-                Polyvalent et pris d'intérêt par le développement web, je me suis tout d'abord attelé aux bases du front-end, puis des différentes étapes techniques de création d'un site web ou d'une application web, pour finalement étudier aujourd'hui le back-end au travers du SQL, du langage PHP et de son framework Symfony.</p>
-            </div><!--End presentation-->
-            <div class="col-12 col-lg-4 col-xl-2 d-flex justify-content-center align-items-center">
-                <div class="card text-center">
-                    <img src="./public/images/trombi.jpg" class="card-img-top" alt="Photo">
+            </div>
+        </section>
+        <section class="container mt-5 news">
+            <div class="row mt-3">
+                <p class="green-txt mb-0 text-uppercase">Articles récents</p>
+                <h2 class="pb-5">Last news</h2>
+                {% for new in lastNews %}
+                <article class="card mb-3 col-12 col-md-6 border-none">
+                    <img src="./public/uploads/article-0001.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <p class="card-title">Philippe<br>Allard-Latour</p>
-                        <a href="#" class="btn btn-primary">consulter CV</a>
+                        <p class="card-text"><small class="text-muted">date : {{ new.created_at }}</small></p>
+                        <h5 class="card-title">{{ new.title }}</h5>
+                        <p class="card-text">{{ new.chapo }}</p>                        
+                        {% autoescape %}
+                        <a href="{{ constant('SITE_ADRESS') }}/articles/{{ new.id }}/{{ new.slug }}">
+                        {% endautoescape %}
+                            <button type="button" class="btn btn-light"><i class="bi bi-arrow-right-square"></i> lire plus...</button>
+                        </a>
+                    </div>
+                </article>            
+                {% endfor %}            
+            </div>        
+        </section><!--End news-->
+    </main>
+    <div class="secondary pt-5 pb-5">
+        <section class="container mt-5 mb-5">
+            <article class="row pt-5 pb-5" id="about">
+                <div class="col-12 col-lg-8 col-xl-10  text-white">
+                    <p class="green-txt mb-0 text-uppercase">about me</p>
+                    <h2>Vers l'infini et au delà...</h2>
+                    <br>
+                    <p>Piqué au virus de l'informatique dès l'enfance, j'ai saisi mes premières lignes de code en visual basic sur un bon vieux CPC 464 Schneider avec chargement à bande (ersatz de l'Amstrad de même référence).<br><br>
+                    Ces dernières années j'ai peu à peu délaissé la galaxie Windows, pour me plonger avec délectation dans la nébuleuse Linux. Ah! Les joies de la ligne de commande..<br><br>
+                    Polyvalent et pris d'intérêt par le développement web, je me suis tout d'abord attelé aux bases du front-end, puis des différentes étapes techniques de création d'un site web ou d'une application web, pour finalement étudier aujourd'hui le back-end au travers du SQL, du langage PHP et de son framework Symfony.</p>
+                </div><!--End presentation-->
+                <div class="col-12 col-lg-4 col-xl-2 d-flex justify-content-center align-items-center">
+                    <div class="card text-center">
+                        <img src="./public/images/trombi.jpg" class="card-img-top" alt="Photo">
+                        <div class="card-body dark-card-body">
+                            <p class="card-title">Philippe</p>
+                            <p>Allard-Latour</p>
+                            <a href="#" class="btn btn-dark-green">consulter CV</a>
+                        </div>
+                    </div>
+                </div><!--End card-->
+            </article>
+        </section><!--End About-->
+        <section class="container mt-5 mb-5 pt-5 pb-5">
+            <div class="row contact bg-dark" id="contact">
+                <div class="col-md-6 p-5 d-flex flex-column justify-content-between px-5 contact1">
+                    <div class="contact-title">
+                        <span>CONTACTEZ</span>
+                        <span>MOI</span>
+                    </div>
+                    <div>
+                        <p>Toute suggestion, idée ou retour sera fortement apprécié. N'hésitez pas à m'écrire.</p>
                     </div>
                 </div>
-            </div><!--End card-->
-        </article>
-    </section><!--End About-->
-    <section class="container mt-5 mb-5">
-        <div class="row contact bg-dark" id="contact">
-            <div class="col-md-6 p-5 d-flex flex-column justify-content-between px-5 contact1">
-                <div class="contact-title">
-                    <span>CONTACTEZ</span>
-                    <span>MOI</span>
-                </div>
-                <div>
-                    <p>Toute suggestion, idée ou retour sera fortement apprécié. N'hésitez pas à m'écrire.</p>
+                <div class="col-12 col-md-6 p-5 contact2">
+                    <form action="#" method="POST">
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <input  class="form-control" type="text" placeholder="Prénom" aria-label="Prénom" name="first_name">
+                            </div>
+                            <div class="col-lg-6">
+                                <input class="form-control" type="text" placeholder="Nom de famille" aria-label="Nom de famille" name="last_name">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" aria-describedby="email" placeholder="E-mail">
+                            <div id="emailHelp" class="form-text">Votre email ne sera communiqué à personne.</div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Sujet" name="subject">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" placeholder="Votre message" rows="5" name="message"></textarea>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="Check">
+                            <label class="form-check-label" for="Check">Je ne suis pas un robot !</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </form>
                 </div>
             </div>
-            <div class="col-12 col-md-6 p-5 contact2">
-                <form action="#" method="POST">
-                    <div class="row mb-3">
-                        <div class="col-lg-6">
-                            <input  class="form-control" type="text" placeholder="Prénom" aria-label="Prénom" name="first_name">
-                        </div>
-                        <div class="col-lg-6">
-                            <input class="form-control" type="text" placeholder="Nom de famille" aria-label="Nom de famille" name="last_name">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" aria-describedby="email" placeholder="E-mail">
-                        <div id="emailHelp" class="form-text">Votre email ne sera communiqué à personne.</div>
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Sujet" name="subject">
-                    </div>
-                    <div class="mb-3">
-                        <textarea class="form-control" placeholder="Votre message" rows="5" name="message"></textarea>
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="Check">
-                        <label class="form-check-label" for="Check">Je ne suis pas un robot !</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
-                </form>
-            </div>
-        </div>
-    </section><!--End contact form-->
+        </section><!--End contact form-->
+    </div>
 {% endblock %}

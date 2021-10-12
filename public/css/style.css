@@ -2,6 +2,10 @@
 body {
   background-color: #444;
   color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont,
+    “Segoe UI”, “Roboto”, “Oxygen”,
+    “Ubuntu”, “Cantarell”, “Fira Sans”,
+    “Droid Sans”, “Helvetica Neue”, sans-serif;
 }
 
 h1 {
@@ -13,7 +17,15 @@ h1 {
   border: none;
 }
 
+.green-txt {
+  color: #1abc9c;
+}
+
 /* --- header --- */
+header {
+  border-bottom: #363a39 1px solid;
+}
+
 header .navbar-dark .navbar-brand {
   color: #1abc9c;
   font-weight: 700;
@@ -55,9 +67,23 @@ footer .social p {
 }
 
 footer .social p a {
-  padding: 0 30px;
+  padding: 0 40px;
   font-size: 28px;
+  color: #fff;
+  line-height: 45px;
+  transition: color 0.22s ease-in-out;
+}
+
+footer .social p a:hover {  
   color: #1abc9c;
+}
+
+footer .list-inline-item, footer .list-inline-item a {
+  transition: color 0.15s ease-in-out;
+}
+
+footer .list-inline-item a:hover {
+  color: #1abc9c !important;
 }
 
 /* --- bootstrap elements --- */
@@ -76,7 +102,7 @@ footer .social p a {
 }
 
 .bg-dark {
-  background-color: #2c2c2c;
+  background-color: #0B0D0E !important;
 }
 
 /* --- header nav user button --- */
@@ -103,35 +129,39 @@ header .btn-success:hover {
 }
 
 .card-body {
-  color: #555;
+  color: #131616;
   background-color: #fff;
   border-bottom-left-radius: calc(0.25rem - 1px);
   border-bottom-right-radius: calc(0.25rem - 1px);
 }
 
+.dark-card-body {
+  color: #fff;
+  background-color: #131616;
+}
+
 .card-title {
   text-transform: uppercase;
-  letter-spacing: -0.062em;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 /* --- card button --- */
 .card .btn-light {
   background-color: transparent;
-  color: #555;
-  border: 2px solid #555;
+  color: #1abc9c;
+  border-color: transparent;
   border-radius: 0;
   transition: color 0.22s ease-in-out, background-color 0.22s ease-in-out, border-color 0.22s ease-in-out, box-shadow 0.22s ease-in-out;
 }
 
 .card .btn-light:hover {
-  background-color: #555;
+  background-color: #1abc9c;
   color: #fff;
 }
 
 /* --- signin-login-page --- */
-.user-landing {
+.user-landing main {
   background-image: url(../images/member-log.jpg);
   background-position: center;
   background-size: cover;
@@ -168,7 +198,52 @@ header .btn-success:hover {
   border-color: #1abc9c;
 }
 
-/* --- contact --- */
+/* --- home-page --- */
+.home main {
+  background-color: #000;
+  background-image: url(../images/home-main.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.home main .hero{
+  padding: 80px 0;
+}
+
+.home h1 {
+  font-weight: 800;
+  font-size: 48px;
+}
+
+.home h2 {
+  font-size: 45px;
+  line-height: 62px;
+  letter-spacing: 0.17px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.home h3 {
+  font-size: 20px;
+  padding-left: 20px;
+  border-left: 3px solid #1abc9c;
+  width: 580px;
+}
+
+.home main .news {
+  padding: 50px 0;
+}
+
+.home .secondary {
+  background-color: #0B0D0E;
+  background-image: url(../images/home-secondary.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* --- home-page contact --- */
 .contact-title {
   display: flex;
   flex-direction: column;
