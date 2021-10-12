@@ -25,7 +25,7 @@
                         <td>{{ article.title }}</td>
                         <td>{{ category }}</td>
                         {% autoescape %}
-                        <td><a href="{{ constant('SITE_ADRESS') }}/articles/{{ article.id }}/{{article.slug}}"><i class="bi bi-book"></i> lire...</a></td>
+                        <td><a href="{{ constant('SITE_ADRESS') }}/articles/numero/{{ article.id }}/{{article.slug}}"><i class="bi bi-book"></i> lire...</a></td>
                         {% endautoescape %}
                     </tr>
                 {% endfor %}
