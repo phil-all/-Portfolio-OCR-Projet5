@@ -55,6 +55,8 @@ class Init
         define('VIEWS_PATH', ROOT_DS . 'views' . DS);
 
         // Start session
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 }
