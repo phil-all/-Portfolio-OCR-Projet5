@@ -106,5 +106,7 @@ class Superglobals
         $this->POST = filter_input_array(INPUT_POST) ?? NULL;
 
         $this->SERVER = filter_input_array(INPUT_SERVER) ?? NULL;
+
+        $this->SESSION = (!isset($_SESSION)) ? [] : filter_var_array($_SESSION, FILTER_SANITIZE_STRING);
     }
 }

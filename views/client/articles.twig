@@ -23,8 +23,8 @@
                         <td>{{ article.first_name }} {{ article.last_name }}</td>
                         <td>{{ article.title }}</td>
                         {% autoescape %}
-                        <td><a href="{{ constant('SITE_ADRESS') }}/articles/{{ article.category }}/page-1">{{ article.category }}</a></td>
-                        <td><a href="{{ constant('SITE_ADRESS') }}/articles/{{ article.id }}/{{article.slug}}"><i class="bi bi-book"></i> lire...</a></td>
+                        <td><a href="{{ constant('SITE_ADRESS') }}/articles/liste/{{ article.category }}/page-1">{{ article.category }}</a></td>
+                        <td><a href="{{ constant('SITE_ADRESS') }}/articles/numero/{{ article.id }}/{{article.slug}}"><i class="bi bi-book"></i> lire...</a></td>
                         {% endautoescape %}
                     </tr>
                 {% endfor %}
@@ -34,15 +34,15 @@
             <ul class="pagination justify-content-center">
                 {% autoescape %}
                 <li class="page-item {{ statePrev }}">
-                    <a href="{{ constant('SITE_ADRESS') }}/articles/page-{{ prev }}" class="page-link"><i class="bi bi-caret-left-fill"></i></i></a>
+                    <a href="{{ constant('SITE_ADRESS') }}/articles/liste/tous/page-{{ prev }}" class="page-link"><i class="bi bi-caret-left-fill"></i></i></a>
                 </li>
                 {% for i in 1.. totalPages %}
                     <li class="page-item {% if i == page %} active{% endif %}">
-                        <a href="{{ constant('SITE_ADRESS') }}/articles/page-{{ i }}" class="page-link">{{ i }}</a>
+                        <a href="{{ constant('SITE_ADRESS') }}/articles/liste/tous/page-{{ i }}" class="page-link">{{ i }}</a>
                     </li>
                 {% endfor %}
                 <li class="page-item {{ stateNext }}">
-                    <a href="{{ constant('SITE_ADRESS') }}/articles/page-{{ next }}" class="page-link"><i class="bi bi-caret-right-fill"></i></i></a>
+                    <a href="{{ constant('SITE_ADRESS') }}/articles/liste/tous/page-{{ next }}" class="page-link"><i class="bi bi-caret-right-fill"></i></i></a>
                 </li>                    
                 {% endautoescape %}
             </ul>

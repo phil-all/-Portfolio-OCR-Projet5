@@ -118,6 +118,24 @@ class ArticlesModel extends MainModel
     }
 
     /**
+     * Return a list of articles depending on $param,
+     * a list by category name or a list af all articles
+     *
+     * @param integer $currentPage
+     * @param integer $perPage
+     * @param string $param is a category name
+     * @return array
+     */
+    public function getArticlesList(int $currentPage, int $perPage, string $param): array
+    {
+        if ($this->categoryExist($param)) {
+            return $this->getCategoryArticles($currentPage, $perPage, $param);
+        }
+
+        return $this->getAllArticles($currentPage, $perPage);
+    }
+
+    /**
      * Returns the x last articles
      *
      * @param integer $countNews : count of articles to retrun
@@ -144,20 +162,19 @@ class ArticlesModel extends MainModel
     }
 
     /**
-     * Return a boolean if:
+     * Check article id and return a boolean if:
      * - id is integer
      * - id exist in table
      *
      * @param mixed $articleId : article id to check
-     * @param object $object : object corresponding to Model instance, for exemple: $this->articles
      * 
      * @return boolean
      */
-    public function idExist(int $articleId, object $object): bool
+    public function idExist(int $articleId): bool
     {
         $query = 'SELECT EXISTS (SELECT * from article WHERE id = :id)';
         
-        $stmt = $object->pdo->prepare($query);
+        $stmt = $this->pdo->prepare($query);
 
         $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
 
@@ -167,13 +184,11 @@ class ArticlesModel extends MainModel
     }
 
     /**
-    * Rerturn an integer corresponding to count of a table
+    * Rerturn count of all articles
     *
-    * @param string $table : table name to count
-    * 
     * @return integer
     */
-    public function getCount(): int
+    public function getArchivesCount(): int
     {
         $query = 'SELECT COUNT(*) FROM article';
 
@@ -185,7 +200,7 @@ class ArticlesModel extends MainModel
     }
 
     /**
-     * Return an integer corresponding to count of a given category
+     * Return count of articles from a given category
      *
      * @param string $category
      * 
@@ -206,6 +221,24 @@ class ArticlesModel extends MainModel
         $stmt->execute();
 
         return (int)$stmt->fetch()[0];
+    }
+
+    /**
+     * Return a count of articles depending on $param,
+     * all articles or category articles
+     *
+     * @param string $param
+     * 
+     * @return integer
+     */
+    public function getCount(string $param): int
+    {
+        if ($this->categoryExist($param)) {
+            return $this->getCategoryCount($param);
+        }
+
+        return $this->getArchivesCount();
+
     }
 
     /**

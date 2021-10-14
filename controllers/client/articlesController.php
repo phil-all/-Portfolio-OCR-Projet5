@@ -2,7 +2,6 @@
 
 namespace Over_Code\Controllers\Client;
 
-use Over_Code\Libraries\Twig;
 use Over_Code\Models\ArticlesModel;
 use Over_Code\Controllers\MainController;
 
@@ -13,213 +12,71 @@ class ArticlesController extends MainController
     private array $articles;
     private int $perPage = 4;
     private int $totalPages;
-    private int $page;
+    private int $currentPage;
     private string $statePrevLink;
     private string $stateNextLink;
     private string $prevLink;
     private string $nextLink;
-    
 
-    /**
-     * Defines parameters to send to display method
-     *
-     * @param string $action
-     * @param array $params
-     */
-    public function __construct(string $action, array $params = [])
+    public function numero(array $params)
     {
-        $articles = new ArticlesModel;
+        $model = new ArticlesModel;
 
-        $this->totalPages = (int)ceil($articles->getCount('article') / $this->perPage);
+        $this->template = 'pageNotFound.twig';
 
-        $dispatch = $this->articlesDispatcher($params, $this->totalPages, $articles);
+        if ($model->idExist($params[0])) {
+            $slug = $this->toSlug($model->getTitle((int)$params[0]));
 
-        switch ($dispatch[0]) {
-            case '404':
-
-                $this->action = 'client' . DS . 'pageNotFound.twig';
-
-                $this->params = array();
-
-                break;
-
-            case 'List':
-
-                switch ($dispatch[1]) {
-                    case 'All':
-
-                        $this->page = (int)(explode('-', $params[0]))[1];
-
-                        $this->articles = $articles->getAllArticles($this->page, $this->perPage);
-
-                        $this->action = $action;
-
-                        break;
-
-                    case 'Category':
-
-                        $this->page = (int)(explode('-', $params[1]))[1];
-                        
-                        $this->articles = $articles->getCategoryArticles($this->page, $this->perPage, $params[0]);
-
-                        $this->totalPages = (int)ceil($articles->getCategoryCount($params[0]) / $this->perPage);
-
-                        $this->action = 'client' . DS . 'articles-by-category.twig';
-
-                        $this->params['category'] = $params[0];
-
-                        break;
-                }
-
-                foreach($this->articles as $key) { 
-                    $key['slug'] = $this->toSlug($key['title']);
-                    
-                    array_shift($this->articles);
-
-                    array_push($this->articles, $key);
-                }
-
-                $this->statePrevLink = ($this->page === 1) ? ' disabled' : '';
-
-                $this->stateNextLink = ($this->page === $this->totalPages) ? ' disabled' : '';
-
-                $this->prevLink = ($this->page === 1) ? 1 : $this->page - 1;
-
-                $this->nextLink = ($this->page === $this->totalPages) ? $this->totalPages : $this->page + 1;
-
-                $this->params = array_merge($this->params, array(
-                    'page'       => $this->page,
-                    'totalPages' => (int)$this->totalPages,
-                    'articles'   => $this->articles,
-                    'statePrev'  => $this->statePrevLink,
-                    'stateNext'  => $this->stateNextLink,
-                    'prev'       => $this->prevLink,
-                    'next'       => $this->nextLink
-                ));
-
-                break;
-
-            case 'One':
-
-                $this->action = 'client' . DS . 'single-article.twig';
-
-                $this->params = $articles->getSingleArticle($params[0]);
-
-                break;
-        }
-
-        $this->twig = new Twig;
-    }
-
-    /**
-     * Return articles type page, ex : all articles, articles from a category, one article
-     *
-     * @param array $params
-     * @param int $totalPages
-     * @param object $object instance of articles model
-     * 
-     * @return array
-     */
-    public function articlesDispatcher(array $params, int $total, object $object): array
-    {
-        $result[0] = '404';
-
-        $count = count($params);
-
-        switch ($count) {
-            case 0: // --- Redirect to .../articles/pages-1 ---
-
-                $url = SITE_ADRESS . '/articles/page-1';
-                
+            if ($slug != $params[1]) {
+                $url = SITE_ADRESS . DS . 'articles' . DS . 'numero' . DS .$params[0] . DS . $slug;
                 $this->redirect($url);
-                
-                break;
+            }
 
-            case 1: // --- All articles ---
-
-                if (self::uriPaginationTest($params[0], $total)) {
-
-                    $result = array(
-                        0 => 'List',
-                        1 => 'All'
-                    );
-
-                }
-                break;
-
-            case 2:
-                // --- params[0] is a category ---
-
-                if ($object->categoryExist($params[0])) {
-
-                    $total = $object->getCategoryCount($params[0]);
-
-                    if (self::uriPaginationTest($params[1], $total)) {
-
-                        $result = array(
-                            0 => 'List',
-                            1 => 'Category'
-                        );
-
-                    }
-
-                // --- params[0] is an article id ---
-                } elseif ($object->idExist($params[0], $object)) {
-
-                    $slug = $this->toSlug($object->getTitle((int)$params[0]));
-
-                    if ($slug != $params[1]) {
-
-                        $url = SITE_ADRESS . DS . 'article' . DS . $params[0] . DS . $slug;
-
-                        $this->redirect($url);
-
-                    }
-
-                    $result[0] = 'One';
-
-                };
-                break;
-        }
-
-        return $result;
+            $this->template = 'client' . DS . 'single-article.twig';
+            $this->params = $model->getSingleArticle($params[0]);
+        }        
     }
-
+    
     /**
-     * Test pagination in URI
-     * - syntax have to be like page-1
-     * - the number of the page have to be less or equal to the totalpage
+     * Set a list of articles to be sent to rendering:
+     * - all articles
+     * - articles from a category
      *
-     * @param string $uriPart for example page-1
-     * @param int $total count of all pages or a single category
-     * 
-     * @return boolean
+     * @param array $params
      */
-    public static function uriPaginationTest(string $uriPart, int $total): bool
+    public function liste(array $params)
     {
-        $explode = explode('-', $uriPart);
+        $model = new ArticlesModel;
+        
+        $this->currentPage = (int)(explode('-', $params[1]))[1];
+        $this->totalPosts = $model->getCount($params[0]);
+        $this->totalPages = ceil($this->totalPosts / $this->perPage);
+        $this->template = 'pageNotFound.twig';
 
-        $test1 = (count($explode) === 2) ? true : false;
+        if ($this->currentPage > 0 && $this->currentPage <= $this->totalPages && explode('-', $params[1])[0] === 'page') {
+            $this->articles = $model->getArticlesList($this->currentPage, $this->perPage, $params[0]);
+            $this->template = 'client' . DS .'articles.twig';
 
-        switch ($test1) {
+            if ($model->categoryExist($params[0])) {                
+                $this->template = 'client' . DS . 'articles-by-category.twig';
+                $this->params['category'] = $params[0];
+            }
 
-            case true:
+            foreach($this->articles as $key) { 
+                $key['slug'] = $this->toSlug($key['title']);                
+                array_shift($this->articles);
+                array_push($this->articles, $key);
+            }
 
-                $deleteInt = preg_replace("~[0-9]~", "", $explode[1]);
-
-                $test2 = ($explode[0] === 'page') ? true : false;
-
-                $test3 = (empty($deleteInt) && $explode[1] != '') ? true : false;
-                
-                return ($test2 && $test3) ? ($explode[1] <= $total) : false;
-
-                break;
-
-            case false:
-
-                return false;
-
-                break;
+            $this->params = array_merge($this->params, array(
+                'page'       => $this->currentPage,
+                'totalPages' => $this->totalPages,
+                'articles'   => $this->articles,
+                'statePrev'  => ($this->currentPage === 1) ? ' disabled' : '',
+                'stateNext'  => ($this->currentPage === $this->totalPages) ? ' disabled' : '',
+                'prev'       => ($this->currentPage === 1) ? 1 : $this->currentPage - 1,
+                'next'       => ($this->currentPage === $this->totalPages) ? $this->totalPages : $this->currentPage + 1
+            ));
         }
     }
 }
