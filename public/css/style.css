@@ -24,7 +24,8 @@ body {
   font-family:
     -apple-system,
     BlinkMacSystemFont,
-    “Segoe UI”, “Roboto”,
+    “Segoe UI”,
+    “Roboto”,
     “Oxygen”,
     “Ubuntu”,
     “Cantarell”,
@@ -92,10 +93,11 @@ footer p {
   margin-bottom: 30px;
 }
 
-footer a {
+footer a,
+footer li a {
   padding: 0 40px;
   color: #fff;
-  line-height: 45px;
+  line-height: 45px;  
   transition: color 0.22s ease-in-out;
 }
 
@@ -103,17 +105,9 @@ footer i {
   font-size: 28px;
 }
 
-footer a:hover {
+footer a:hover,
+footer ul li a:hover {
   color: #1abc9c;
-}
-
-footer .list-inline-item,
-footer .list-inline-item a {
-  transition: color 0.15s ease-in-out;
-}
-
-footer .list-inline-item a:hover {
-  color: #1abc9c !important;
 }
 
 /* --- header nav user button --- */

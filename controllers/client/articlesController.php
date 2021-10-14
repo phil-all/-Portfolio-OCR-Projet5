@@ -49,7 +49,7 @@ class ArticlesController extends MainController
         $this->totalPages = ceil($this->totalPosts / $this->perPage);
         $this->template = 'pageNotFound.twig';
 
-        if ($this->currentPage > 0 && $this->currentPage <= $this->totalPages && explode('-', $params[1])[0] === 'page') {
+        if ($this->currentPage <= $this->totalPages && explode('-', $params[1])[0] === 'page') {
             $this->articles = $model->getArticlesList($this->currentPage, $this->perPage, $params[0]);
             $this->template = 'client' . DS .'articles.twig';
 
