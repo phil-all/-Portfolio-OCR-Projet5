@@ -13,10 +13,6 @@ class ArticlesController extends MainController
     private int $perPage = 4;
     private int $totalPages;
     private int $currentPage;
-    private string $statePrevLink;
-    private string $stateNextLink;
-    private string $prevLink;
-    private string $nextLink;
 
     public function numero(array $params)
     {
