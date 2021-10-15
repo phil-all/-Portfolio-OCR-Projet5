@@ -28,6 +28,6 @@ class DbConnect extends PDO
 
         }
         */
-        parent::__construct('mysql:host=localhost;dbname=mydb', 'root', 'pass');  
+        parent::__construct('mysql:host=localhost;dbname=overtest', 'root', 'pass');  
     }
 }
