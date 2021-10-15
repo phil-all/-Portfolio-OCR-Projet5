@@ -40,13 +40,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            
-                                <a class="nav-link log-btn" href="{{ constant('SITE_ADRESS') }}/membres/inscription-connexion">
-                                    <button type="button" class="btn btn-success">
-                                        <i class="bi bi-person-circle"></i> inscription-connexion
-                                    </button>
-                                </a>
-                            
+                            {% include 'layouts/login-out-button.twig' %}
                         </li>
                         {% endautoescape %} 
                     </ul>

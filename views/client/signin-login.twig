@@ -8,7 +8,7 @@
 
 {% block content %}
     <main>
-        <div class="container mb-5 mt-5">
+        <div class="container pb-5 pt-5">
             <div class="row">
                 <!-- Start register form -->
                 <section class="col-md-6">
@@ -63,14 +63,14 @@
                     <div class="m-1 p-3 user-landing-form">
                         <h2>De retour parmis nous</h2>
                         <p>connexion à votre compte</p>
-                        <form action="#" method="POST" class="row g-3">
+                        <form method="post" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/membres/login"{% endautoescape %} class="row g-3">                        
                             <div class="col-12">
                                 <label for="logmail" class="form-label">E-mail</label>
-                                <input type="text" class="form-control" id="logmail">
+                                <input type="text" class="form-control" id="logmail" name="logmail">
                             </div>
                             <div class="col-12">
                                 <label for="logpass" class="form-label">Mot de passe</label>
-                                <input type="text" class="form-control" id="logpass">
+                                <input type="text" class="form-control" id="logpass" name="logpass">
                             </div>
                             <div class="col-lg-6">
                                 <a href="#" class="user-landing-form-link ">Mot de passe oublié ?</a>
