@@ -64,6 +64,16 @@ trait Helpers
         return self::getGlobals()->get_GET($param);
     }
 
+    public static function POST(string $param)
+    {
+        return self::getGlobals()->get_POST($param);
+    }
+
+    public function set_SESSION($key, $value)
+    {
+        return self::getGlobals()->set_SESSION($key, $value);
+    }
+
     /**
      * Return hub plateform: admin or client
      *

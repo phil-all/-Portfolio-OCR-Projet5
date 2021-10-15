@@ -34,7 +34,7 @@ class Superglobals
     {
         if ($key !== NULL) {
 
-            return $this->GET[$key] ?? NULL;
+            return htmlentities($this->GET[$key]) ?? NULL;
 
         }
 
@@ -52,7 +52,7 @@ class Superglobals
     {
         if ($key !== NULL) {
 
-            return $this->POST[$key] ?? NULL;
+            return htmlentities($this->POST[$key]) ?? NULL;
 
         }
 
@@ -93,6 +93,19 @@ class Superglobals
         }
 
         return $this->SESSION;
+    }
+
+    /**
+     * Set $_SESSION[$key] with $value
+     *
+     * @param [type] $key
+     * @param [type] $value
+     * 
+     * @return void
+     */
+    public function set_SESSION($key, $value)
+    {
+        $_SESSION[$key] = $value;
     }
 
     /**
