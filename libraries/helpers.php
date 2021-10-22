@@ -69,6 +69,11 @@ trait Helpers
         return self::getGlobals()->get_POST($param);
     }
 
+    public static function SESSION(string $param)
+    {
+        return self::getGlobals()->get_SESSION($param);
+    }
+
     public function set_SESSION($key, $value)
     {
         return self::getGlobals()->set_SESSION($key, $value);

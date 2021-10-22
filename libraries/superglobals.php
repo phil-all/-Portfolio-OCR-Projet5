@@ -34,7 +34,7 @@ class Superglobals
     {
         if ($key !== NULL) {
 
-            return htmlentities($this->GET[$key]) ?? NULL;
+            return strip_tags($this->GET[$key]) ?? NULL;
 
         }
 
@@ -52,7 +52,7 @@ class Superglobals
     {
         if ($key !== NULL) {
 
-            return htmlentities($this->POST[$key]) ?? NULL;
+            return strip_tags($this->POST[$key]) ?? NULL;
 
         }
 
