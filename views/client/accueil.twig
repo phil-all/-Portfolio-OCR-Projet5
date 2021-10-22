@@ -13,7 +13,7 @@
                 <div class="px-3">
                 {% if session is defined %}
                     <h1><span class="green-txt">Bon retour</span> {{ session.pseudo }}</h1>
-                    <h3>Heureux de vous revoir sur Over_Code...</h3>
+                    <h3>Heureux de vous revoir sur Over_Code. Votre dernière connexion: {{ session.token_datetime }}</h3>
                 {% else %}
                     <h1><span class="green-txt">Bienvenue</span> sur Over_Code</h1>
                     <h3>Ici on parle de code, mais pas seulement, on s'interresse aussi à l'informatique en général...</h3>

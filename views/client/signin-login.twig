@@ -15,7 +15,7 @@
                     <div class="m-1 p-3 user-landing-form">
                         <h2>Nouveau sur le site ?</h2>
                         <p>inscrivez-vous gratuitement</p>
-                        <form action="#" method="POST" class="row g-3 form-dark">
+                        <form {% autoescape %}action="{{ constant('SITE_ADRESS') }}/membres/register"{% endautoescape %} method="POST" class="row g-3 form-dark">
                             <div class="col-lg-6">
                                 <input  class="form-control" type="text" placeholder="Prénom" aria-label="Prénom" name="first_name">
                             </div>
@@ -23,13 +23,16 @@
                                 <input class="form-control" type="text" placeholder="Nom de famille" aria-label="Nom de famille" name="last_name">
                             </div>
                             <div class="col-12">
-                                <input class="form-control" type="text" placeholder="Veuillez choisir un pseudo" aria-label="Pseudo" name="peudo">
+                                <input class="form-control" type="text" placeholder="Veuillez choisir un pseudo" aria-label="Pseudo" name="pseudo">
                             </div>
                             <div class="col-12">
                                 <input class="form-control" type="text" placeholder="e-mail" aria-label="e-mail" name="email">
                             </div>
                             <div class="col-12">
                                 <input class="form-control" type="text" placeholder="Mot de passe" aria-label="Mot de passe" name="password">
+                            </div>
+                            <div class="col-12">
+                                <input class="form-control" type="text" placeholder="Retapez votre mot de passe" aria-label="Mot de passe" name="confirm_password">
                             </div>
                             <fielset class="row mb-3">
                                 <legend class="col-form-label col-12">Choisissez un avavtar</legend>
