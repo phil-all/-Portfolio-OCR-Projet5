@@ -14,7 +14,8 @@
     "require": {
         "php": "^8.0",
         "twig/twig": "^3.0",
-        "symfony/dotenv": "^5.3"
+        "symfony/dotenv": "^5.3",
+        "swiftmailer/swiftmailer": "^6.0"
     },
     "config": {
         "platform": {
