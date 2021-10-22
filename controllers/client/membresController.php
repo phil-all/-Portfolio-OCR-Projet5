@@ -2,13 +2,15 @@
 
 namespace Over_Code\Controllers\Client;
 
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 use Over_Code\Libraries\Twig;
-use Over_Code\Controllers\UserController;
 use Over_Code\Models\UserModel;
-use Over_Code\Config\User;
+use Over_Code\Controllers\UserController;
 
 /**
- * Manage resgistration, log-in and log-out
+ * Manage user access: resgistration, log-in and log-out
  */
 class MembresController extends UserController
 {
@@ -61,20 +63,45 @@ class MembresController extends UserController
         $this->redirect(SITE_ADRESS);
     }
 
+    /**
+     * Create a user in database, with pending status and send him activation mail,
+     * if registrations_test return true.
+     *
+     * @return void
+     */
     public function register()
     {
         $model = new UserModel();
 
         if ($model->registration_test()) {
             $model->createUser();
-            echo 'create user'; die;
-        }  else {
-            echo 'validation ne marche pas';die;
-        } 
-        
-        // on envoie un mail de validation avec un lien contenant le token et l'adresse mail
-        // page vous avec reçu un mail de validation, confirmez dans les 20 minutes
 
+            $twigMail = new Twig;
+            $params = [];
+            $mailTemplate = 'emails'. DS . 'validation-link.twig';
+            $title = 'Confirmation d\'inscription - [Ne pas répondre]';
+            
+            // Create the Transport
+            $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 2525))
+                ->setUsername('3933404713c11d')
+                ->setPassword('f3f1b649535189');
+
+            // Create the Mailer using created Transport
+            $mailer = new Swift_Mailer($transport);
+
+            // Create a message            
+            $message = (new Swift_Message($title))
+                ->setFrom(['team.overcode@example.com' => 'Over_code Team'])
+                ->setTo(['adresse.test@test.org'])
+                ->setBody($twigMail->getTwig()->render($mailTemplate, $params),'text/html');
+
+            // Send the message
+            $result = $mailer->send($message);
+
+            $this->template = 'client' . DS . 'validation-link-sent.twig';
+        }  else {
+            $this->template = 'client' . DS . 'registration-failed.twig';
+        }
     }
 
     public function validation()
