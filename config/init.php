@@ -16,6 +16,9 @@ class Init
      */
     public static function start(): void
     {
+        // Start session
+        session_start();
+        
         $superGlobals = new Superglobals;
 
         $requestScheme = $superGlobals->get_SERVER('REQUEST_SCHEME');
@@ -27,7 +30,7 @@ class Init
         // Define site
         define('SITE_NAME', 'Over_Code');
 
-        define('SITE_ADRESS' , $requestScheme . '://' . $serverName . dirname($scriptName));
+        define('SITE_ADRESS' , $requestScheme . '://' . $serverName . preg_replace('[\/index.php]', '', $scriptName));
         
         // Define path constants
         define('CONTROLLERS_PATH', ROOT_DS . 'controllers' . DS);
@@ -53,8 +56,5 @@ class Init
         define('UPLOADS_PATH', PUBLIC_PATH . 'uploads' . DS);
 
         define('VIEWS_PATH', ROOT_DS . 'views' . DS);
-
-        // Start session
-        session_start();
     }
 }
