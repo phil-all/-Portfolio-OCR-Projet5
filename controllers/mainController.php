@@ -29,17 +29,7 @@ abstract class MainController
 
         $this->twig = new Twig;
 
-        $this->display();
-    }
-
-    /**
-     * Apply twigRender method on $twig object
-     * 
-     * @return void
-     */
-    public function display(): void
-    {
-        echo $this->twig->twigRender($this->template, $this->params);
+        $this->twig->twigRender($this->template, $this->params);
     }
 
     /**
