@@ -88,11 +88,11 @@ class Superglobals
     {
         if ($key !== NULL) {
 
-            return $this->SESSION[$key] ?? NULL;
+            $result = $_SESSION[$key] ?? NULL;
+
+            return $result;
 
         }
-
-        return $this->SESSION;
     }
 
     /**
@@ -106,7 +106,5 @@ class Superglobals
         $this->POST = filter_input_array(INPUT_POST) ?? NULL;
 
         $this->SERVER = filter_input_array(INPUT_SERVER) ?? NULL;
-
-        $this->SESSION = filter_var_array($_SESSION, FILTER_SANITIZE_STRING) ?? NULL;
     }
 }
