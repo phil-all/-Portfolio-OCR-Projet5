@@ -11,7 +11,6 @@ class Superglobals
     private array $GET;
     private mixed $POST;
     private array $SERVER;
-    private array $SESSION;
 
     /**
      * Use collect_superglobals method
@@ -75,24 +74,6 @@ class Superglobals
         }
 
         return $this->SERVER;
-    }
-
-    /**
-     * Returns a key value from $_SESSION
-     *
-     * @param string $key
-     * 
-     * @return mixed
-     */
-    public function get_SESSION(string $key = NULL): mixed
-    {
-        if ($key !== NULL) {
-
-            $result = $_SESSION[$key] ?? NULL;
-
-            return $result;
-
-        }
     }
 
     /**
