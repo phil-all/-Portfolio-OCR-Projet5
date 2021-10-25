@@ -32,9 +32,9 @@ class MembresController extends UserController
 
         $auth = $model->auth();
 
-        if (!$auth) {
-            $status = 'authentification-error';
-        } else {
+        $status = 'authentification-error';
+        
+        if ($auth) {
             $status = $model->getStatus();
 
             if ($status === 'active') {            
@@ -96,7 +96,7 @@ class MembresController extends UserController
                 ->setBody($twigMail->getTwig()->render($mailTemplate, $params),'text/html');
 
             // Send the message
-            $result = $mailer->send($message);
+            $mailer->send($message);
 
             $this->template = 'client' . DS . 'validation-link-sent.twig';
         }  else {

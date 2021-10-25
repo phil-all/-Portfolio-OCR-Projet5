@@ -15,7 +15,6 @@ class UserModel extends MainModel
     private $email;
     private $pseudo;
     private $token;
-    private $token_datetime;
 
     /**
      * Set log user attributes and return an array with user datas if 
