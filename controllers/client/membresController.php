@@ -72,6 +72,8 @@ class MembresController extends UserController
     public function register()
     {
         $model = new UserModel();
+        
+        $this->template = 'client' . DS . 'registration-failed.twig';
 
         if ($model->registration_test()) {
             $model->createUser();
@@ -99,8 +101,6 @@ class MembresController extends UserController
             $mailer->send($message);
 
             $this->template = 'client' . DS . 'validation-link-sent.twig';
-        }  else {
-            $this->template = 'client' . DS . 'registration-failed.twig';
         }
     }
 

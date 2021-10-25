@@ -9,7 +9,7 @@ Class Jwt
 {
     use \Over_Code\Libraries\Helpers;
 
-    public $header;
+    private $header;
     private $key;
 
     public function __construct()
@@ -120,26 +120,6 @@ Class Jwt
         $correctSignature = $this->cleaned_encoded_signature($header, $payload);
 
         return ($givenSignature === $correctSignature);
-    }
-
-    /**
-     * Gets header attribute
-     *
-     * @return array
-     */
-    public function getHeader(): array
-    {
-        return $this->header;
-    }
-
-    /**
-     * Gets key attribute
-     *
-     * @return array
-     */
-    private function getkey(): array
-    {
-        return $this->key;
     }
 
     /**
