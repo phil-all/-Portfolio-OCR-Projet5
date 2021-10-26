@@ -4,6 +4,7 @@
 
 ## Table of Contents
 - [General info](#general-info)
+- [Project status](#project-status)
 - [Technologies](#technologies)
 - [Getting started](#getting-started)
 - [Features](#features)
@@ -14,6 +15,10 @@
 
 Over_Code blog is the fifth study project of: web application developper PHP & Symfony, by Openclassrooms.
 
+## Project Status
+
+> Project is: in progress
+
 ## Technologies
 This project is created with:
 - Apache2 HTTP server
@@ -22,7 +27,7 @@ This project is created with:
 - Bootstrap 5
 - Twig 3
 - Swiftmailer 6
-- Mailtrap.io (for testing in catching sent emails)
+- Mailtrap (for testing in catching sent emails)
 - Json Web Tokens
 
 ## Getting started
@@ -66,8 +71,10 @@ DB_PASSWORD=changethis
 
 ## Author
 
-**Philippe Allard-Latour** - *Main* - [Github](https://github.com/phil-all)
-*Other repositeries* - [Github](https://github.com/phil-all?tab=repositories)
+**Philippe Allard-Latour**
+
+- [Twitter](https://twitter.com/AllardLatour)
+- [Github](https://github.com/phil-all)
 
 ## Contributing
 
