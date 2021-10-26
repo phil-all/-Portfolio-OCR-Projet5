@@ -2,6 +2,7 @@
 
 namespace Over_Code\Models;
 
+use Over_Code\Libraries\Jwt;
 use PDO;
 
 class UserModel extends MainModel
@@ -17,8 +18,9 @@ class UserModel extends MainModel
     private $token;
 
     /**
-     * Set log user attributes and return an array with user datas if 
-     * database occurence, false if no occurence
+     * Set user attributes logmail and logpass, and return :
+     * - true if database occurence
+     * -  false if no occurence
      *
      * @return boolean
      */
@@ -42,7 +44,10 @@ class UserModel extends MainModel
     }
 
     /**
-     * Return the user status (pending, active or suspended)
+     * Return the user status (pending, active or suspended) from connection log datas:
+     * - email
+     * - password.
+     * Used on login user process
      *
      * @return string
      */
@@ -62,6 +67,46 @@ class UserModel extends MainModel
         $stmt->execute();
 
         return $stmt->fetchColumn();
+    }
+
+    /**
+     * Checks if an given user status is on pending, used on validation account process
+     *
+     * @param string $email
+     * 
+     * @return boolean
+     */
+    public function isPending(string $email): bool
+    {
+        $query = 'SELECT user_status_id FROM user WHERE email = :email';
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Set status user on active
+     *
+     * @param string $email
+     * 
+     * @return void
+     */
+    public function accountValidation(string $email): void
+    {
+        $query = 'UPDATE user
+        SET user_status_id = 2
+        WHERE email = :email';
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
     }
 
     /**
@@ -98,7 +143,7 @@ class UserModel extends MainModel
      *
      * @return string
      */
-    public function generateToken(): string
+    private function generateToken(): string ///// deprecated : use Jwt class /////
     {
         return md5(time()*rand(1,255));
     }
@@ -108,7 +153,7 @@ class UserModel extends MainModel
      * 
      * @return void
      */
-    private function set_token(): void
+    private function set_token(): void ///// deprecated : use Jwt class /////
     {
         $token =$this->generateToken();
 
@@ -145,16 +190,67 @@ class UserModel extends MainModel
         $stmt->execute();
     }
 
-    public function registration_test(): bool
+    /**
+     * Cheks datas from registration form
+     *
+     * @return boolean
+     */
+    private function registration_form_test(): bool
     {
         return (
             $this->isNameValid($this->POST('first_name')) &&
             $this->isNamevalid($this->POST('last_name')) &&
             $this->isPseudoValid($this->POST('pseudo')) &&
-            !$this->isMailExists($this->POST('email')) &&
             $this->isMailValid($this->POST('email')) &&
             $this->isPassValid($this->POST('password')) &&
             $this->isConfirmPassValid($this->POST('password'), $this->POST('confirm_password'))
+        );
+    }
+
+    private function expiredValidation(int $timestamp, string $email): bool
+    {
+        if ($this->isMailExists($email)) {
+            $query = 'SELECT token FROM user
+            WHERE email = :email';
+
+            $stmt = $this->pdo->prepare($query);
+
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+            $stmt->execute();
+            $result = $stmt->fetchColumn();
+
+            $jwt = new Jwt;
+            $payload = $jwt->decode_data($result, 1);
+
+            if ($payload['exp'] > $timestamp) {
+                return false;
+            }
+
+            $this->delete_pendingUser($email);
+        }
+
+        return true;
+    }
+
+    private function registrableUser($timestamp):bool
+    {
+        return (
+            !$this->isMailExists($this->POST('email')) ||
+            ($this->expiredValidation($timestamp, $this->POST('email')))
+        );
+    }
+
+    /**
+     * Checks all conditions to register an user are true
+     *
+     * @return boolean
+     */
+    public function registration_conditions($timestamp): bool
+    {
+        return (
+            $this->registration_form_test() &&
+            $this->registrableUser($timestamp)
         );
     }
 
@@ -162,13 +258,14 @@ class UserModel extends MainModel
      * Create in database an user with status on 'pending',
      * from POST datas
      *
+     * @param string $token
+     * @param string $date_time
+     * 
      * @return void
      */
-    public function createUser(): void
+     public function createUser(string $token, string $date_time): void
     {
-        $now = date('Y-m-d H:i:s');
-
-        $query = 'INSERT INTO user (
+            $query = 'INSERT INTO user (
             first_name,
             last_name,
             pseudo,
@@ -199,10 +296,10 @@ class UserModel extends MainModel
         $stmt->bindValue(':email', $this->POST('email'),  PDO::PARAM_STR);
         $stmt->bindValue(':password', $this->POST('password'),  PDO::PARAM_STR);
         $stmt->bindValue(':avatar_id', (int)$this->POST('avatar_id'),  PDO::PARAM_INT);
-        $stmt->bindValue(':token', $this->generateToken(),  PDO::PARAM_STR);
-        $stmt->bindValue(':token_datetime',$now, PDO::PARAM_STR);
+        $stmt->bindValue(':token', $token,  PDO::PARAM_STR);
+        $stmt->bindValue(':token_datetime',$date_time, PDO::PARAM_STR);
         $stmt->bindValue(':user_status_id', 1,  PDO::PARAM_INT);
-        $stmt->bindValue(':created_at', $now, PDO::PARAM_STR);
+        $stmt->bindValue(':created_at', $date_time, PDO::PARAM_STR);
 
         $stmt->execute();
     }
@@ -248,7 +345,7 @@ class UserModel extends MainModel
      * 
      * @return boolean
      */
-    public function isMailExists(string $email): bool
+    public function isMailExists(string $email): bool   //// deprecated and actually unsed ////
     {
         $query = 'SELECT count(*)
         FROM user
@@ -303,6 +400,36 @@ class UserModel extends MainModel
     public function isConfirmPassValid(string $pass, string $confirmPass): bool
     {
         return ($pass === $confirmPass);
+    }
+
+    /**
+     * Return a JWT token, in url friendly form : dots are replaced by dashes.
+     * Only used for validation link, when registration token is generated,
+     * before validation by user.
+     *
+     * @param string $email
+     * 
+     * @return string
+     */
+    public function uriRegistrationToken(string $token): string
+    {
+        $totkenUri = preg_replace('~[.]~', '/', $token);
+
+        return $totkenUri;
+    }
+
+    /**
+     * Transform uri params in a string with dots separators, as follow :
+     * - foo/bar/foo in uri becomes: foo.bar.foo
+     *
+     * @param array $params
+     * 
+     * @return string
+     */
+    public function uriToJwt_token(array $params): string
+    {
+        $token = implode('.', $params);
+        return $token;
     }
 
     /**
@@ -379,5 +506,25 @@ class UserModel extends MainModel
     public function get_token()
     {
         return $this->token;
+    }
+
+    /**
+     * Delete a given pending user.
+     * Only permitted to recreate user if non active and validation expired.
+     *
+     * @param string $email
+     * 
+     * @return void
+     */
+    private function delete_pendingUser(string $email): void
+    {
+        $query = 'DELETE FROM user
+        WHERE email = :email AND user_status_id = 1';
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute;
     }
 }

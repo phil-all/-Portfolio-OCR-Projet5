@@ -18,6 +18,13 @@ Class Jwt
         $this->setkey();
     }
 
+    /**
+     * Generates a JWT token, using claims from a given array
+     *
+     * @param array $payload
+     * 
+     * @return string
+     */
     public function generateToken(array $payload): string
     {
         $encodedHeader = $this->cleaned_encoded_datas($this->header);
@@ -54,13 +61,13 @@ Class Jwt
     private function cleaned_encoded_signature(string $encodedHeader, string $encodedPayload): string
     {
         $message = $encodedHeader . '.' . $encodedPayload;
-        $signature = hash_hmac('sha256', $message, base64_encode($this->key), true);
+        $signature = base64_encode(hash_hmac('sha256', $message, base64_encode($this->key), true));
 
         return $this->clean($signature);
     }
 
     /**
-     * Return decoded data from token, used for :
+     * Return json decoded data from token, used for :
      * - header
      * - payload
      *
@@ -71,11 +78,17 @@ Class Jwt
      * 
      * @return array
      */
-    private function decode_data(string $token, int $typeKey): array
+    public function decode_data(string $token, int $typeKey): array
     {
         $token = explode('.', $token);
-        
-        return json_decode(base64_decode($token[$typeKey]), true);
+
+        $data = mb_convert_encoding(
+                $token[$typeKey],
+                'UTF-8',
+                'BASE64'
+        );
+
+        return json_decode($data, true);
     }
 
     /**
@@ -101,7 +114,7 @@ Class Jwt
      */
     public function isJWT(string $token): bool
     {
-        return preg_match('~[\w\-]+\.[\w\-]+\.[\w\-]+^$~', $token) === 1;
+        return preg_match('~^[\w\-]+\.[\w\-]+\.[\w\-]+$~', $token);
     }
 
     /**
