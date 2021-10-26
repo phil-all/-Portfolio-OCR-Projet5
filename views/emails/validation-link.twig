@@ -52,9 +52,13 @@
     <div class="container center-h">
         <h1>&lt; <span style="color: #fff">Over_Code</span> &gt;</h1>
         <p class="center-h">Nous sommes heureux de l'intérêt que vous nous portez, mais avant toute chose, vous devez d'abord confirmer votre inscription. Cliquez juste sur le bouton ci-dessous.</p>
-        <a href="#" class="btn">Confirm Account</a>
+        <a {% autoescape %}href="{{ constant('SITE_ADRESS') }}/membres/validation/{{ token }}"{% endautoescape %} class="btn">
+            Validez votre inscription
+        </a>
         <p>Si le bouton ne marche pas, copiez et collez dans votre navigateur le lien ci-dessous:</p>
-        <a class="green-link" href="#">http....le lien à coller</a>
+        <a class="green-link" {% autoescape %}href="{{ constant('SITE_ADRESS') }}/membres/validation/{{ token }}"{% endautoescape %}>
+            {% autoescape %}{{ constant('SITE_ADRESS') }}/membres/validation/{{ token }}{% endautoescape %}
+        </a>
         <p>Si vous avez la moindre question, contactez nous via le formulaire de contact présent en page d'accueil. Nous serons ravi de vous répondre.</p>
         <p>Cordialement,<br/>La team Over_code</p>
     </div>
