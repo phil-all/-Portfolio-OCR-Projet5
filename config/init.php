@@ -2,14 +2,12 @@
 
 namespace Over_Code\Config;
 
-use Over_Code\Libraries\Superglobals;
-use Over_Code\Libraries\Session;
-
 /**
  * Define constants & Start session
  */
 class Init
 {
+    use \Over_code\Libraries\Helpers;
     /**
      * Run initialisation
      *
@@ -18,15 +16,13 @@ class Init
     public static function start(): void
     {
         // Start session
-        Session::start();
-        
-        $superGlobals = new Superglobals;
+        self::sessionStart();
 
-        $requestScheme = $superGlobals->get_SERVER('REQUEST_SCHEME');
+        $requestScheme = self::get_SERVER('REQUEST_SCHEME');
 
-        $serverName = $superGlobals->get_SERVER('SERVER_NAME');
+        $serverName = self::get_SERVER('SERVER_NAME');
 
-        $scriptName = $superGlobals->get_SERVER('SCRIPT_NAME');
+        $scriptName = self::get_SERVER('SCRIPT_NAME');
 
         // Define site
         define('SITE_NAME', 'Over_Code');

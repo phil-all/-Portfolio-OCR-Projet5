@@ -1,11 +1,11 @@
 <?php
 
-namespace Over_Code\Libraries;
+namespace Over_Code\Libraries\Globals;
 
 /**
  * SESSION superglobal wrapper
  */
-class Session
+final class Session
 {
     private $session = NULL;
 
@@ -14,7 +14,12 @@ class Session
      */
     public function __construct()
     {
-        $this->session = filter_var_array($_SESSION, FILTER_SANITIZE_STRING) ?? NULL;
+        $this->session = $_SESSION ?? NULL;
+
+        if ($this->session != NULL) {
+            $this->session = filter_var_array($_SESSION, FILTER_SANITIZE_STRING);
+        } 
+
     }
 
     /**
@@ -22,9 +27,9 @@ class Session
      *
      * @return void
      */
-    public static function start(): void
+    public function start(): void
     {
-        if (self::$session === NULL) {
+        if ($this->session === NULL) {
             session_start();
         }
     }
@@ -54,6 +59,7 @@ class Session
      * Gets a superglobal session element
      *
      * @param string $key
+     * 
      * @return mixed
      */
     public function get(string $key): mixed
@@ -70,6 +76,7 @@ class Session
      *
      * @param string $key
      * @param mixed $value
+     * 
      * @return void
      */
     public function set(string $key, mixed $value): void
@@ -81,6 +88,7 @@ class Session
      * Checks if a superglobal SESSION element exists
      *
      * @param string $key
+     * 
      * @return boolean
      */
     private function has(string $key): bool

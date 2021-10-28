@@ -10,24 +10,21 @@ use PDO;
  */
 class DbConnect extends PDO
 {
+    use \Over_Code\Libraries\Helpers;
+
+    private string $ds;
+    private string $user;
+    private string $pass;
+
     /**
-     * Construct magic method: return a PDO instance
+     * Return a PDO instance
      */
     public function __construct()
     {
-        /*
-        try{
+        $this->dsn = self::get_Env('DSN');
+        $this->user = self::get_Env('DB_USERNAME');
+        $this->pass = self::get_Env('DB_PASSWORD');
 
-            $pdo = new PDO('mysql:host=localhost;dbname=mydb', 'root', 'pass');
-
-            return $pdo;
-
-        }catch(Exception $e){
-
-            die('Erreur de connection : ' . $e->getMessage());
-
-        }
-        */
-        parent::__construct('mysql:host=localhost;dbname=mydb', 'root', 'pass');  
+        parent::__construct($this->dsn, $this->user, $this->pass);  
     }
 }

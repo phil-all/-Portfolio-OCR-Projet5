@@ -3,15 +3,17 @@
 namespace Over_Code\Libraries;
 
 use ReflectionClass;
-use Over_Code\Libraries\Superglobals;
+use Over_Code\Libraries\Globals\Env;
+use Over_Code\Libraries\Globals\Session;
+use Over_Code\Libraries\Globals\Superglobals;
 
 trait Helpers
 {
     /**
-     * Slug a string
+     * Slug a string,
      * exemple:
-     * string to slug: "Hello World I'm happy"
-     * result: "hello-world-i-m-happy"
+     * - string to slug: "Hello World I'm happy"
+     * - result: "hello-world-i-m-happy"
      *
      * @param string $string
      * 
@@ -59,7 +61,7 @@ trait Helpers
     //////////////////////////////////////////
 
     /**
-     * Used to instanciate Superglobals in refering globals static methods
+     * Used to instanciate Superglobals to refering globals static methods
      *
      * @return object
      */
@@ -93,18 +95,6 @@ trait Helpers
     }
 
     /**
-     * * Gets an input ENV by its key
-     *
-     * @param string $key
-     * 
-     * @return string
-     */
-    public static function get_ENV(string $key): string
-    {
-        return self::globals()->get_ENV($key);
-    }
-
-    /**
      * * Gets an input SERVER by its key
      *
      * @param string $key
@@ -117,11 +107,38 @@ trait Helpers
 
 
     //////////////////////////////////////////
+    // Methods refering to Env class
+    //////////////////////////////////////////
+
+    /**
+     * Used to instanciate Env to env getter
+     *
+     * @return object
+     */
+    private static function env(): object
+    {
+        return new Env;
+    }
+
+    /**
+     * * Gets an input ENV by its key
+     *
+     * @param string $key
+     * 
+     * @return mixed
+     */
+    public static function get_ENV(string $key): mixed
+    {
+        return self::env()->get($key);
+    }
+
+
+    //////////////////////////////////////////
     // Methods refering to Session class
     //////////////////////////////////////////
 
     /**
-     * Used to instanciate Session in refering session static methods
+     * Used to instanciate Session to refering session static methods
      *
      * @return object
      */
@@ -131,12 +148,21 @@ trait Helpers
     }
 
     /**
+     * Start a session
+     */
+    public static function sessionStart()
+    {
+        return self::session()->start();
+    }
+
+    /**
      * * Gets an input SERVER by its key
      *
      * @param string $key
-     * @return string
+     * 
+     * @return mixed
      */
-    public static function get_SESSION(string $key): string
+    public static function get_SESSION(string $key): mixed
     {
         return self::session()->get($key);
     }

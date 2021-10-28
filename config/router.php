@@ -2,7 +2,7 @@
 
 namespace Over_Code\Config;
 
-use \Over_Code\Libraries\Routes\UrlChecker;
+use Over_Code\Libraries\Routes\UrlChecker;
 
 /**
  * Instantiate the good controller

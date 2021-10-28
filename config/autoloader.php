@@ -33,25 +33,15 @@ class Autoloader
         $array = explode('\\', $class);
         unset($array[0]);
 
-        // Extract the ClassName in a new array and apply lcfirst
-        $last = array_map('lcfirst', array_slice($array, -1));
-
-        // Create new key with last $arrey key number, and delete firt one
-        $last[array_key_last($array)] = $last[0];
-        unset($last[0]);
-
         // Transform $array entry to lower case
-        $array = array_map('strtolower', $array);
+        $array = array_map('lcfirst', $array);
 
         // Replace last $array entry by $last entry, and implode it in $class
-        $class = implode('/', array_replace($array, $last));
+        $class = implode('/', $array);
 
         if (is_file(ROOT_DS . $class . '.php')) {
-
             $classPath = ROOT_DS . $class . '.php';
-
             require_once $classPath;
-
         }
     }
 }

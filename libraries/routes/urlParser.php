@@ -11,7 +11,7 @@ class UrlParser
 
     public function __construct()
     {
-        $this->uri = explode('/', trim($this->GET('url_params')));
+        $this->uri = explode('/', trim($this->get_GET('url_params')));
     }
 
     /**

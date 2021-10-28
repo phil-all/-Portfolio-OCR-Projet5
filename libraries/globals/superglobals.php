@@ -1,12 +1,11 @@
 <?php
-//source : https://beamtic.com/avoid-superglobals-oop-php
 
-namespace Over_Code\Libraries;
+namespace Over_Code\Libraries\Globals;
 
 /**
  * Super globals variables manipulation
  */
-class Superglobals
+final class Superglobals
 {
     private array $ENV;
     private array $GET;
@@ -28,18 +27,16 @@ class Superglobals
      * Returns a key value from $_ENV
      *
      * @param string $key
-     * 
-     * @return mixed
      */
-    public function get_ENV(string $key = NULL): mixed
+    public function get_ENV(string $key = NULL)
     {
         if ($key !== NULL) {
 
-            return strip_tags(htmlspecialchars($this->ENV[$key])) ?? NULL;
+            return $this->ENV;
 
         }
 
-        return $this->ENV;
+        //return $this->ENV;
     }
 
     /**
@@ -120,14 +117,12 @@ class Superglobals
      */
     private function collect_superglobals()
     {
-        $this->ENV = filter_input_array(INPUT_ENV) ?? NULL;
-        
-        $this->GET = filter_input_array(INPUT_GET) ?? NULL;
+        $this->GET = filter_input_array(INPUT_GET) ?? [];
 
-        $this->POST = filter_input_array(INPUT_POST) ?? NULL;
+        $this->POST = filter_input_array(INPUT_POST) ?? [];
 
-        $this->COOKIE = filter_input_array(INPUT_COOKIE) ?? NULL;
+        $this->COOKIE = filter_input_array(INPUT_COOKIE) ?? [];
 
-        $this->SERVER = filter_input_array(INPUT_SERVER) ?? NULL;
+        $this->SERVER = filter_input_array(INPUT_SERVER) ?? [];
     }
 }
