@@ -7,7 +7,7 @@ namespace Over_Code\Libraries;
  */
 class Session
 {
-    private $session;
+    private $session = NULL;
 
     public function __construct()
     {
@@ -18,18 +18,15 @@ class Session
 
     public static function start()
     {
-        if (session_status() === PHP_SESSION_NONE) {
+        if (self::$session === NULL) {
             session_start();
-            session_regenerate_id(true);
         }
     }
 
     public static function destroy()
     {
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            session_unset();
-            session_destroy();
-        }
+        session_unset();
+        session_destroy();
     }
 
     public function get(string $key): mixed
