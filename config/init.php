@@ -3,6 +3,7 @@
 namespace Over_Code\Config;
 
 use Over_Code\Libraries\Superglobals;
+use Over_Code\Libraries\Session;
 
 /**
  * Define constants & Start session
@@ -17,7 +18,7 @@ class Init
     public static function start(): void
     {
         // Start session
-        session_start();
+        Session::start();
         
         $superGlobals = new Superglobals;
 
