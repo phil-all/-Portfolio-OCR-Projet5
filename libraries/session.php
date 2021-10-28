@@ -7,7 +7,14 @@ namespace Over_Code\Libraries;
  */
 class Session
 {
-    private $sessionId;
+    private $session;
+
+    public function __construct()
+    {
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            $this->session = $_SESSION;
+        }
+    }
 
     public static function start()
     {
@@ -28,7 +35,7 @@ class Session
     public function get(string $key): mixed
     {
         if($this->has($key)) {
-            return $_SESSION[$key];
+            return $this->session[$key];
         }
 
         return NULL;
@@ -36,11 +43,11 @@ class Session
 
     public function set(string $key, mixed $value): void
     {
-        $_SESSION[$key] = $value;
+        $this->session[$key] = $value;
     }
 
     private function has(string $key): bool
     {
-        return array_key_exists($key, $_SESSION);
+        return array_key_exists($key, $this->session);
     }
 }
