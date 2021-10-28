@@ -1,15 +1,16 @@
 ![Library logo](public/images/github/logo.jpg)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f05cd994261045b99622abf7a8d7ccbf)](https://www.codacy.com/gh/phil-all/Portfolio-OCR-Projet5/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=phil-all/Portfolio-OCR-Projet5&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f05cd994261045b99622abf7a8d7ccbf)](https://www.codacy.com/gh/phil-all/Portfolio-OCR-Projet5/dashboard?utm_source=github.com&utm_medium=referral&utm_content=phil-all/Portfolio-OCR-Projet5&utm_campaign=Badge_Grade)
 
 ## Table of Contents
-- [General info](#general-info)
-- [Project status](#project-status)
-- [Technologies](#technologies)
-- [Getting started](#getting-started)
-- [Features](#features)
-- [Author](#author)
-- [Contributing](#contributing)
+
+-   [General info](#general-info)
+-   [Project status](#project-status)
+-   [Technologies](#technologies)
+-   [Getting started](#getting-started)
+-   [Features](#features)
+-   [Author](#author)
+-   [Contributing](#contributing)
 
 ## General info
 
@@ -20,15 +21,17 @@ Over_Code blog is the fifth study project of: web application developper PHP & S
 > Project is: in progress
 
 ## Technologies
+
 This project is created with:
-- Apache2 HTTP server
-- Mariadb 8.0 database
-- PHP 8
-- Bootstrap 5
-- Twig 3
-- Swiftmailer 6
-- Mailtrap (for testing in catching sent emails)
-- Json Web Tokens
+
+-   Apache2 HTTP server
+-   Mariadb 8.0 database
+-   PHP 8
+-   Bootstrap 5
+-   Twig 3
+-   Swiftmailer 6
+-   Mailtrap (for testing in catching sent emails)
+-   Json Web Tokens
 
 ## Getting started
 
@@ -44,7 +47,7 @@ Install `Twig` for templating html
 composer require "twig/twig:^3.0"
 ```
 
-Install `Dotenv` component to parse .env files, and make environment variables stored in them accessible via $_ENV.
+Install `Dotenv` component to parse .env files, and make environment variables stored in them accessible via $\_ENV.
 
 ```bash
 composer require "symfony/dotenv:^5.3"
@@ -67,14 +70,14 @@ DB_PASSWORD=changethis
 
 ## Features
 
-- `Dynamic routing`, which don't use a routes file, but deduce classes ,methods and arguments in analizing URL parameters
+-   `Dynamic routing`, which don't use a routes file, but deduce classes ,methods and arguments in analizing URL parameters
 
 ## Author
 
 **Philippe Allard-Latour**
 
-- [Twitter](https://twitter.com/AllardLatour)
-- [Github](https://github.com/phil-all)
+-   [Twitter](https://twitter.com/AllardLatour)
+-   [Github](https://github.com/phil-all)
 
 ## Contributing
 
