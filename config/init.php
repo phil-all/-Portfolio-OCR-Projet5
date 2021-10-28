@@ -3,6 +3,7 @@
 namespace Over_Code\Config;
 
 use Over_Code\Libraries\Superglobals;
+use Over_Code\Libraries\Session;
 
 /**
  * Define constants & Start session
@@ -55,8 +56,6 @@ class Init
         define('VIEWS_PATH', ROOT_DS . 'views' . DS);
 
         // Start session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        Session::start();
     }
 }
