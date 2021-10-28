@@ -54,14 +54,91 @@ trait Helpers
         exit();
     }
 
-    public static function getGlobals()
+    //////////////////////////////////////////
+    // Methods refering to Superglobals Class
+    //////////////////////////////////////////
+
+    /**
+     * Used to instanciate Superglobals in refering globals static methods
+     *
+     * @return object
+     */
+    private static function globals(): object
     {
         return new Superglobals;
     }
 
-    public static function GET(string $param)
+    /**
+     * Gets an input GET by its key
+     *
+     * @param string $key
+     * 
+     * @return string
+     */
+    public static function get_GET(string $key): string
     {
-        return self::getGlobals()->get_GET($param);
+        return self::globals()->get_GET($key);
+    }
+
+    /**
+     * Gets an input POST by its key
+     *
+     * @param string $key
+     * 
+     * @return string
+     */
+    public static function get_POST(string $key): string
+    {
+        return self::globals()->get_POST($key);
+    }
+
+    /**
+     * * Gets an input ENV by its key
+     *
+     * @param string $key
+     * 
+     * @return string
+     */
+    public static function get_ENV(string $key): string
+    {
+        return self::globals()->get_ENV($key);
+    }
+
+    /**
+     * * Gets an input SERVER by its key
+     *
+     * @param string $key
+     * @return string
+     */
+    public static function get_SERVER(string $key): string
+    {
+        return self::globals()->get_SERVER($key);
+    }
+
+
+    //////////////////////////////////////////
+    // Methods refering to Session class
+    //////////////////////////////////////////
+
+    /**
+     * Used to instanciate Session in refering session static methods
+     *
+     * @return object
+     */
+    private static function session(): object
+    {
+        return new Session;
+    }
+
+    /**
+     * * Gets an input SERVER by its key
+     *
+     * @param string $key
+     * @return string
+     */
+    public static function get_SESSION(string $key): string
+    {
+        return self::session()->get($key);
     }
 
     /**
@@ -73,8 +150,10 @@ trait Helpers
     {
         $globals = new Superglobals;
 
-        return ($globals->get_SESSION('hub') === 'admin') ? 'admin' : 'client';
+        return (self::get_SESSION('hub') === 'admin') ? 'admin' : 'client';
     }
+
+    //////////////////////////////////////////
 
     /**
      * Check if a string contain only numbers
