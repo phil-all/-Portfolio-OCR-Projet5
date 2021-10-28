@@ -9,26 +9,53 @@ class Session
 {
     private $session = NULL;
 
+    /**
+     * Sets $session only if superglobal SESSION exists and is not null
+     */
     public function __construct()
     {
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            $this->session = $_SESSION;
-        }
+        $this->session = filter_var_array($_SESSION, FILTER_SANITIZE_STRING) ?? NULL;
     }
 
-    public static function start()
+    /**
+     * Starts a session only if $session is null
+     *
+     * @return void
+     */
+    public static function start(): void
     {
         if (self::$session === NULL) {
             session_start();
         }
     }
 
-    public static function destroy()
+    /**
+     * Resets supergloblal SESSION, in defining it on an empty array
+     *
+     * @return void
+     */
+    private static function resetSession(): void
     {
-        session_unset();
+        $_SESSION = array();
+    }
+
+    /**
+     * Destroys superglobal SESSION
+     *
+     * @return void
+     */
+    public static function destroy(): void
+    {
+        self::resetSession();
         session_destroy();
     }
 
+    /**
+     * Gets a superglobal session element
+     *
+     * @param string $key
+     * @return mixed
+     */
     public function get(string $key): mixed
     {
         if($this->has($key)) {
@@ -38,11 +65,24 @@ class Session
         return NULL;
     }
 
+    /**
+     * Sets a superglobal SESSION element
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
     public function set(string $key, mixed $value): void
     {
         $this->session[$key] = $value;
     }
 
+    /**
+     * Checks if a superglobal SESSION element exists
+     *
+     * @param string $key
+     * @return boolean
+     */
     private function has(string $key): bool
     {
         return array_key_exists($key, $this->session);
