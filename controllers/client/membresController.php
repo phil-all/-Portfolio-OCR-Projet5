@@ -2,9 +2,6 @@
 
 namespace Over_Code\Controllers\Client;
 
-<<<<<<< HEAD
-use Over_Code\Controllers\MainController;
-=======
 use DateTime;
 use Swift_Mailer;
 use Swift_Message;
@@ -13,7 +10,6 @@ use Over_Code\Libraries\Jwt;
 use Over_Code\Libraries\Twig;
 use Over_Code\Models\UserModel;
 use Over_Code\Controllers\UserController;
->>>>>>> user_management
 
 /**
  * Manage user access: resgistration, log-in and log-out
@@ -92,7 +88,7 @@ class MembresController extends UserController
             'sub' => 'registration',
             'iat' => $timestamp,
             'exp' => $expiration,
-            'email' => $this->POST('email')
+            'email' => $this->get_POST('email')
             ];
             $token = $jwt->generateToken($claims);
 

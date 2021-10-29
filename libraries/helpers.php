@@ -179,11 +179,6 @@ trait Helpers
         return self::session()->get($key);
     }
 
-    public static function POST(string $param)
-    {
-        return self::getGlobals()->get_POST($param);
-    }
-
     public function set_SESSION($key, $value)
     {
         return self::session()->set($key, $value);

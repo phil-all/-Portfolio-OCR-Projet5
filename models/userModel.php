@@ -26,8 +26,8 @@ class UserModel extends MainModel
      */
     public function auth(): bool
     {
-        $this->logmail = $this->POST('logmail');
-        $this->logpass = $this->POST('logpass');
+        $this->logmail = $this->get_POST('logmail');
+        $this->logpass = $this->get_POST('logpass');
         
         $query = 'SELECT COUNT(*)
         FROM user
@@ -198,12 +198,12 @@ class UserModel extends MainModel
     private function registration_form_test(): bool
     {
         return (
-            $this->isNameValid($this->POST('first_name')) &&
-            $this->isNamevalid($this->POST('last_name')) &&
-            $this->isPseudoValid($this->POST('pseudo')) &&
-            $this->isMailValid($this->POST('email')) &&
-            $this->isPassValid($this->POST('password')) &&
-            $this->isConfirmPassValid($this->POST('password'), $this->POST('confirm_password'))
+            $this->isNameValid($this->get_POST('first_name')) &&
+            $this->isNamevalid($this->get_POST('last_name')) &&
+            $this->isPseudoValid($this->get_POST('pseudo')) &&
+            $this->isMailValid($this->get_POST('email')) &&
+            $this->isPassValid($this->get_POST('password')) &&
+            $this->isConfirmPassValid($this->get_POST('password'), $this->get_POST('confirm_password'))
         );
     }
 
@@ -236,8 +236,8 @@ class UserModel extends MainModel
     private function registrableUser($timestamp):bool
     {
         return (
-            !$this->isMailExists($this->POST('email')) ||
-            ($this->expiredValidation($timestamp, $this->POST('email')))
+            !$this->isMailExists($this->get_POST('email')) ||
+            ($this->expiredValidation($timestamp, $this->get_POST('email')))
         );
     }
 
@@ -256,7 +256,7 @@ class UserModel extends MainModel
 
     /**
      * Create in database an user with status on 'pending',
-     * from POST datas
+     * from get_POST datas
      *
      * @param string $token
      * @param string $date_time
@@ -290,12 +290,12 @@ class UserModel extends MainModel
 
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindValue(':first_name', $this->POST('first_name'), PDO::PARAM_STR);
-        $stmt->bindValue(':last_name', $this->POST('last_name'),  PDO::PARAM_STR);
-        $stmt->bindValue(':pseudo', $this->POST('pseudo'),  PDO::PARAM_STR);
-        $stmt->bindValue(':email', $this->POST('email'),  PDO::PARAM_STR);
-        $stmt->bindValue(':password', $this->POST('password'),  PDO::PARAM_STR);
-        $stmt->bindValue(':avatar_id', (int)$this->POST('avatar_id'),  PDO::PARAM_INT);
+        $stmt->bindValue(':first_name', $this->get_POST('first_name'), PDO::PARAM_STR);
+        $stmt->bindValue(':last_name', $this->get_POST('last_name'),  PDO::PARAM_STR);
+        $stmt->bindValue(':pseudo', $this->get_POST('pseudo'),  PDO::PARAM_STR);
+        $stmt->bindValue(':email', $this->get_POST('email'),  PDO::PARAM_STR);
+        $stmt->bindValue(':password', $this->get_POST('password'),  PDO::PARAM_STR);
+        $stmt->bindValue(':avatar_id', (int)$this->get_POST('avatar_id'),  PDO::PARAM_INT);
         $stmt->bindValue(':token', $token,  PDO::PARAM_STR);
         $stmt->bindValue(':token_datetime',$date_time, PDO::PARAM_STR);
         $stmt->bindValue(':user_status_id', 1,  PDO::PARAM_INT);
