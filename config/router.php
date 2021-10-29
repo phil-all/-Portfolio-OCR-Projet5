@@ -23,7 +23,9 @@ class Router
         
         $controller = $this->getClass();
 
-        $controller = new $controller($this->getMethod(), $this->getParams());
+        $params = (empty($this->getParams())) ? NULL : $this->getParams();
+
+        $controller = new $controller($this->getMethod(), $params);
     }
 
     /**

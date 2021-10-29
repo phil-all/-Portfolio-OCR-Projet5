@@ -2,7 +2,6 @@
 
 namespace Over_Code\Controllers\Client;
 
-use DateTime;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
@@ -17,35 +16,38 @@ use Over_Code\Controllers\UserController;
 class MembresController extends UserController
 {
     use \Over_Code\Libraries\Helpers;
+    use \Over_Code\Libraries\User\Register;
 
     public function inscriptionConnexion()
     {
         $this->template = 'client' . DS . 'signin-login.twig';
     }
-
-    /**
-     * Log-in an user and redirect to home page
-     *
-     * @return void
-     */
-    public function login(): void
+//
+//
+//
+    public function login(?string $email = NULL, ?string $pass = NULL): void
     {
         $user = new UserModel();
 
-        $auth = $user->auth();
+        $user->set_logmail($email);
+        $user->set_logPass($pass);
 
-        $status = 'authentification-error';
-        
-        if ($auth) {
-            $status = $user->getStatus();
+        $auth = $user->auth($user->get_logmail(), $user->get_logpass());
 
-            if ($status === 'active') {            
-                $user->hydrate();
+        $status = ($auth) ? $user->getStatus() : 'authentification-error';
+
+        if ($status === 'active') {            
+            $user->hydrate();
+            
+            if ($email === NULL && $pass === NULL) {
                 $this->redirect(SITE_ADRESS);
             }
         }
 
-        $this->template = 'client' . DS . $status . '-user.twig';        
+        $this->template = ($email === NULL && $pass === NULL)
+            ? 'client' . DS . $status . '-user.twig'
+            : 'client' . DS . 'new-user-welcome.twig'
+        ;        
     }
 
     /**
@@ -73,30 +75,26 @@ class MembresController extends UserController
      */
     public function register()
     {
-        $user = new UserModel();
+          $this->template = 'client' . DS . 'registration-failed.twig';
 
-        $now = new \DateTime();
-        $date_time = $now->format('Y-m-d H:i:s');
-        $timestamp = $now->getTimestamp();
-        $expiration = $timestamp + 900; // 15 minutes
+        if ($this->registration_form_test()) {
+            $date = $this->arrayDate(900); // 900s = 15 min
 
-        $this->template = 'client' . DS . 'registration-failed.twig';
-
-        if ($user->registration_conditions($timestamp)) {
             $jwt = new Jwt();
             $claims = [
-            'sub' => 'registration',
-            'iat' => $timestamp,
-            'exp' => $expiration,
-            'email' => $this->get_POST('email')
+                'sub' => 'registration',
+                'iat' => $date['timestamp'],
+                'exp' => $date['expiration'],
+                'email' => $this->get_POST('email')
             ];
             $token = $jwt->generateToken($claims);
 
-            $user->createUser($token, $date_time);
+            $user = new UserModel();
+            $user->createUser($token, $date['date_time']);
 
             $twigMail = new Twig;
             $params = [
-                'token' => $user->uriRegistrationToken($token)
+                'token' => $jwt->tokenToUri($token)
             ];
             $mailTemplate = 'emails'. DS . 'validation-link.twig';
             $title = 'Confirmation d\'inscription - [Ne pas répondre]';
@@ -124,24 +122,22 @@ class MembresController extends UserController
 
     public function validation(array $params)
     {
-        $user = new UserModel();
-        $token = $user->uriToJwt_token($params);
-
-        $jwt = new Jwt();
-
         $this->template = 'client' . DS . 'invalid-validation-link.twig';
+
+        $jwt = new Jwt();      
+        $token = $jwt->uriToToken($params);        
 
         if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
             $payload = $jwt->decode_data($token, 1);
 
-            $now = new DateTime();
-            $timestamp = $now->getTimestamp();
+            $date = $this->arrayDate();
+            $timestamp = $date['timestamp'];
 
             $email = $payload['email'];
                 
-            if ($user->isPending($email)) {
-                $user->accountValidation($email);
-                $this->template = 'client' . DS . 'new-user-welcome.twig';
+            if ($this->isPending($email) && ($timestamp < $payload['exp'])) {
+                $this->accountValidation($email);
+                $this->login(true, $token);
             }
 
             if ($timestamp > $payload['exp']) {

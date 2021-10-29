@@ -159,4 +159,34 @@ Class Jwt
     {
         $this->key = $_ENV['JWT_KEY'];
     }
+
+    /**
+     * Return a JWT token, in url friendly form : dots are replaced by dashes.
+     * Only used for validation link, when registration token is generated,
+     * before validation by user.
+     *
+     * @param string $email
+     * 
+     * @return string
+     */
+    public function tokenToUri(string $token): string
+    {
+        $totkenUri = preg_replace('~[.]~', '/', $token);
+
+        return $totkenUri;
+    }
+
+    /**
+     * Transform uri params in a string with dots separators, as follow :
+     * - foo/bar/foo in uri becomes: foo.bar.foo
+     *
+     * @param array $params
+     * 
+     * @return string
+     */
+    public function uriToToken(array $params): string
+    {
+        $token = implode('.', $params);
+        return $token;
+    }
 }
