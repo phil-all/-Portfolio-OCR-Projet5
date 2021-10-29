@@ -10,6 +10,35 @@ use Over_Code\Libraries\Globals\Superglobals;
 trait Helpers
 {
     /**
+     * Redirect to a given url
+     *
+     * @param string $url destination of redirection
+     * @return void
+     */
+    public static function redirect(string $url): void
+    {
+        header('Location: ' . $url);
+
+        exit();
+    }
+
+    /**
+     * Return a reflection class instance
+     *
+     * @param string $class
+     * 
+     * @return mixed
+     */
+    public function getReflection(string $class): mixed
+    {
+        return new ReflectionClass($class);
+    }
+    
+    //////////////////////////////////////////
+    // Strings methods
+    //////////////////////////////////////////
+    
+    /**
      * Slug a string,
      * exemple:
      * - string to slug: "Hello World I'm happy"
@@ -44,16 +73,15 @@ trait Helpers
     }
 
     /**
-     * Redirect to a given url
+     * Check if a string contain only numbers
      *
-     * @param string $url destination of redirection
-     * @return void
+     * @param string $param
+     * 
+     * @return boolean
      */
-    public static function redirect(string $url): void
+    public function onlyInteger(string $param): bool
     {
-        header('Location: ' . $url);
-
-        exit();
+        return (preg_replace('~([0-9]*)~', '', $param) === '');
     }
 
     //////////////////////////////////////////
@@ -194,31 +222,5 @@ trait Helpers
         $globals = new Superglobals;
 
         return (self::get_SESSION('hub') === 'admin') ? 'admin' : 'client';
-    }
-
-    //////////////////////////////////////////
-
-    /**
-     * Check if a string contain only numbers
-     *
-     * @param string $param
-     * 
-     * @return boolean
-     */
-    public function onlyInteger(string $param): bool
-    {
-        return (preg_replace('~([0-9]*)~', '', $param) === '');
-    }
-
-    /**
-     * Return a reflection class instance
-     *
-     * @param string $class
-     * 
-     * @return mixed
-     */
-    public function getReflection(string $class): mixed
-    {
-        return new ReflectionClass($class);
-    }
+    }   
 }

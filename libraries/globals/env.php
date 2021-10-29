@@ -20,9 +20,7 @@ final class Env
     public function get(string $key = NULL): mixed
     {
         if ($key !== NULL) {
-
             return strip_tags(htmlspecialchars($this->ENV[$key])) ?? NULL;
-
         }
 
         return $this->ENV;

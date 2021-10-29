@@ -147,8 +147,6 @@ class MembresController extends UserController
             if ($timestamp > $payload['exp']) {
                 $this->template = 'client' . DS . 'validation-expired.twig';
             }
-            
-            
         }
     }
 }

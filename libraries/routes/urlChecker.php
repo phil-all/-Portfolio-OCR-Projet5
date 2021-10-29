@@ -45,7 +45,10 @@ Class UrlChecker
     }
 
     /**
-     * Delete dashes from method name, and trasform in camel case form
+     * Delete dashes from method name, and trasform in camel case form.
+     * exemple:
+     * - inscription-connexion
+     * - become: insriptionConnexion
      *
      * @param string $getMethod
      * @return string

@@ -242,7 +242,7 @@ class ArticlesModel extends MainModel
     }
 
     /**
-     * Return a boolean if a value exist in category name
+     * Checks if an article category exists
      * 
      * @param string $value : value to check
      * 
