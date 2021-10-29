@@ -1,11 +1,8 @@
-# source : http://www.zzzen.net/comprendre-et-utiliser-htaccess/
-# source : https://www.danielmorell.com/guides/htaccess-seo/redirects/https-www-and-trailing-slash
-
 <IfModule mod_rewrite.c>
 
     RewriteEngine On
 
-    # put in $_GET['url_params'] string following index.php in URL
+    RewriteRule ^([a-zA-Z0-9\-\/]+)jeton-([a-z0-9]+) index.php?url_params=$1&token=$2
     RewriteRule ^([\w\-\/]*)$ index.php?url_params=$1
 
 </IfModule>

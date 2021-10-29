@@ -1,0 +1,16 @@
+{% extends 'layouts/layout.twig' %}
+
+{% block title %}
+    <title>Erreur d'authentification</title>
+{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Erreur</h1>
+        <p>Il semblerait que votre email ou mot de passe soit erroné.</p>
+        {% autoescape %}
+        <a href="{{ constant('SITE_ADRESS') }}">Retour à l'accueil</a>
+        <a href="{{ constant('SITE_ADRESS') }}/membres/inscription-connexion">Réessayer...</a>
+        {% endautoescape %}        
+    </main>
+{% endblock %}

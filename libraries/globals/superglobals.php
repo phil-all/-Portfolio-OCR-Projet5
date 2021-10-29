@@ -3,11 +3,10 @@
 namespace Over_Code\Libraries\Globals;
 
 /**
- * Super globals variables manipulation
+ * Wraps globals: GET, POST, COOKIE and SERVER
  */
 final class Superglobals
 {
-    private array $ENV;
     private array $GET;
     private array $POST;
     private array $COOKIE;
@@ -22,22 +21,6 @@ final class Superglobals
     {
         $this->collect_superglobals();
     }
-    
-    /**
-     * Returns a key value from $_ENV
-     *
-     * @param string $key
-     */
-    public function get_ENV(string $key = NULL)
-    {
-        if ($key !== NULL) {
-
-            return $this->ENV;
-
-        }
-
-        //return $this->ENV;
-    }
 
     /**
      * Returns a key value from $_GET
@@ -49,9 +32,7 @@ final class Superglobals
     public function get_GET(string $key = NULL): mixed
     {
         if ($key !== NULL) {
-
             return strip_tags(htmlspecialchars($this->GET[$key])) ?? NULL;
-
         }
 
         return $this->GET;
@@ -67,9 +48,7 @@ final class Superglobals
     public function get_POST(string $key = NULL): mixed
     {
         if ($key !== NULL) {
-
             return strip_tags(htmlspecialchars($this->POST[$key])) ?? NULL;
-
         }
 
         return $this->POST;
@@ -85,9 +64,7 @@ final class Superglobals
     public function get_COOKIE(string $key = NULL): mixed
     {
         if ($key !== NULL) {
-
             return strip_tags(htmlspecialchars($this->COOKIE[$key])) ?? NULL;
-
         }
 
         return $this->COOKIE;
@@ -103,9 +80,7 @@ final class Superglobals
     public function get_SERVER(string $key = NULL): mixed
     {
         if ($key !== NULL) {
-
             return strip_tags(htmlspecialchars($this->SERVER[$key])) ?? NULL;
-
         }
 
         return $this->SERVER;

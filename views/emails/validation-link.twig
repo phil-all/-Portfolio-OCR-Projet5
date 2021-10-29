@@ -1,0 +1,66 @@
+<html>
+<head>
+    <style type="text/css">
+        body {
+            background-color: #444;
+            color: #fff;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        h1 {
+            color: #1abc9c;
+            text-align: center;
+            padding: 40px 10px;
+        }
+
+        p {
+            font-size: 18px;
+            padding: 10px 0;
+        }
+
+        .center-h {
+        margin-left: auto;
+        margin-right: auto;
+        }
+
+        .btn {
+            font-size: 20px;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 5px;
+            background-color: #1abc9c;
+            text-align: center;
+            display:block;
+            width:200px;
+            margin: 80px auto;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 650px;
+            padding: 10px 10px;
+        
+        }
+
+        .green-link {
+            color: #1abc9c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container center-h">
+        <h1>&lt; <span style="color: #fff">Over_Code</span> &gt;</h1>
+        <p class="center-h">Nous sommes heureux de l'intérêt que vous nous portez, mais avant toute chose, vous devez d'abord confirmer votre inscription. Cliquez juste sur le bouton ci-dessous.</p>
+        <a {% autoescape %}href="{{ constant('SITE_ADRESS') }}/membres/validation/{{ token }}"{% endautoescape %} class="btn">
+            Validez votre inscription
+        </a>
+        <p>Si le bouton ne marche pas, copiez et collez dans votre navigateur le lien ci-dessous:</p>
+        <a class="green-link" {% autoescape %}href="{{ constant('SITE_ADRESS') }}/membres/validation/{{ token }}"{% endautoescape %}>
+            {% autoescape %}{{ constant('SITE_ADRESS') }}/membres/validation/{{ token }}{% endautoescape %}
+        </a>
+        <p>Si vous avez la moindre question, contactez nous via le formulaire de contact présent en page d'accueil. Nous serons ravi de vous répondre.</p>
+        <p>Cordialement,<br/>La team Over_code</p>
+    </div>
+</body>
+</html>

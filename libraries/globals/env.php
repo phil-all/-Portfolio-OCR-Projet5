@@ -4,6 +4,9 @@ namespace Over_Code\Libraries\Globals;
 
 use Symfony\Component\Dotenv\Dotenv;
 
+/**
+ * ENV superglobal wrapper
+ */
 final class Env
 {
     public function __construct()

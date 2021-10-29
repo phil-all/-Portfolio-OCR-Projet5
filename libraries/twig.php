@@ -6,7 +6,7 @@ use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 /**
- * Renders a template based on params from router
+ * Template rendering
  */
 class Twig
 {
@@ -18,7 +18,7 @@ class Twig
     private $twig;
 
     /**
-     * Construct magic method: define twig environment object
+     * Defines twig environment object
      */
     public function __construct()
     {
@@ -28,6 +28,10 @@ class Twig
             'debug' => true,
             'cache' => false,
         ]);
+
+        if (isset($_SESSION['token'])) {            
+            $twig->addGlobal('session', $_SESSION);
+        }
 
         $twig->addExtension(new DebugExtension());
 
@@ -43,5 +47,15 @@ class Twig
     public function twigRender(string $template, array $params = [])
     {
         echo $this->twig->render($template, $params);
+    }
+
+    /**
+     * Return twig environment object
+     *
+     * @return object
+     */
+    public function getTwig(): object
+    {
+        return $this->twig;
     }
 }

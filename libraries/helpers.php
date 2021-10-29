@@ -95,6 +95,18 @@ trait Helpers
     }
 
     /**
+     * Gets an input COOKIE by its key
+     *
+     * @param string $key
+     * 
+     * @return string
+     */
+    public static function get_COOKIE(string $key): string
+    {
+        return self::globals()->get_COOKIE($key);
+    }
+
+    /**
      * * Gets an input SERVER by its key
      *
      * @param string $key
@@ -165,6 +177,16 @@ trait Helpers
     public static function get_SESSION(string $key): mixed
     {
         return self::session()->get($key);
+    }
+
+    public static function POST(string $param)
+    {
+        return self::getGlobals()->get_POST($param);
+    }
+
+    public function set_SESSION($key, $value)
+    {
+        return self::session()->set($key, $value);
     }
 
     /**

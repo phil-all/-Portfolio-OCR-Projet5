@@ -144,7 +144,7 @@ class ArticlesModel extends MainModel
      */
     public function getNews(int $countNews): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at
+        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at, a.img_path
         FROM article AS a 
         JOIN user as u 
             ON a.author_id = u.id

@@ -24,7 +24,7 @@ class DbConnect extends PDO
         $this->dsn = self::get_Env('DSN');
         $this->user = self::get_Env('DB_USERNAME');
         $this->pass = self::get_Env('DB_PASSWORD');
-
-        parent::__construct($this->dsn, $this->user, $this->pass);  
+        
+        parent::__construct($this->dsn, $this->user, $this->pass);
     }
 }
