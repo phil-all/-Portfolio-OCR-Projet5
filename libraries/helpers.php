@@ -2,6 +2,7 @@
 
 namespace Over_Code\Libraries;
 
+use DateTime;
 use ReflectionClass;
 use Over_Code\Libraries\Globals\Env;
 use Over_Code\Libraries\Globals\Session;
@@ -33,6 +34,28 @@ trait Helpers
     {
         return new ReflectionClass($class);
     }
+
+    /**
+     * Return an assoc array containing:
+     * - date time: now on format Y-m-d H:i:s
+     * - timestamp: now
+     * - expiration: timestamp + gap
+     *
+     * @param integer $gap **given in seconds**, delay to expiration
+     * 
+     * @return array
+     */
+    public function arrayDate(int $gap): array
+    {
+        $now = new DateTime();
+
+        return array(            
+            'date_time'  => $now->format('Y-m-d H:i:s'),
+            'timestamp'  => $now->getTimestamp(),
+            'expiration' => $now->getTimestamp() + $gap
+        );
+    }
+
     
     //////////////////////////////////////////
     // Strings methods
@@ -196,7 +219,7 @@ trait Helpers
     }
 
     /**
-     * * Gets an input SERVER by its key
+     * * Gets an input SESSION by its key
      *
      * @param string $key
      * 
@@ -207,7 +230,14 @@ trait Helpers
         return self::session()->get($key);
     }
 
-    public function set_SESSION($key, $value)
+    /**
+     * Sets an input SESSION
+     *
+     * @param string $key
+     * @param string $value
+     * @return void
+     */
+    public function set_SESSION(string $key, string $value)
     {
         return self::session()->set($key, $value);
     }
