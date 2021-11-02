@@ -3,6 +3,7 @@
 namespace Over_Code\Libraries\User;
 
 use PDO;
+use Over_Code\Db\DbConnect;
 use Over_Code\Libraries\Jwt;
 
 /**
@@ -19,6 +20,8 @@ trait Register
      */
     public function isPending(string $email): bool
     {
+        $this->pdo = new DbConnect;
+
         $query = 'SELECT user_status_id FROM user WHERE email = :email';
 
         $stmt = $this->pdo->prepare($query);
@@ -39,6 +42,8 @@ trait Register
      */
     public function accountValidation(string $email): void
     {
+        $this->pdo = new DbConnect;
+
         $query = 'UPDATE user
         SET user_status_id = 2
         WHERE email = :email';
@@ -69,6 +74,8 @@ trait Register
 
     private function expiredValidation(int $timestamp, string $email): bool
     {
+        $this->pdo = new DbConnect;
+
         if ($this->isMailExists($email)) {
             $query = 'SELECT token FROM user
             WHERE email = :email';
@@ -136,6 +143,8 @@ trait Register
      */
     public function isMailExists(string $email): bool   //// deprecated and actually unsed ////
     {
+        $this->pdo = new DbConnect;
+        
         $query = 'SELECT count(*)
         FROM user
         WHERE email = :email';

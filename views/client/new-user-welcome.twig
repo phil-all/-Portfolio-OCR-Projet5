@@ -1,5 +1,41 @@
-<h1>Bienvenue parmis les membres de la communauté Over_Blog</h1>
-<p>Vous povez désormais liker ou commenter les articles et signaler des commentaires malveillants</p>
-<a {% autoescape %}href="{{ constant('SITE_ADRESS') }}"{% endautoescape %}>
-    Retour à l'accueil
-</a>
+{% extends 'layouts/layout.twig' %}
+
+{% block title %}
+    <title>Bienvenue</title>
+{% endblock %}
+
+{% block body_class %} class="user-landing"{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Bienvenue parmis les membres de la communauté Over_Blog</h1>
+        <p>Vous povez désormais vous connecter pour liker ou commenter les articles et signaler des commentaires malveillants</p>
+        <div class="container pb-5 pt-5">
+            <div class="row">
+                <!-- Start login form -->
+                <section class="col-md-6">
+                    <div class="m-1 p-3 user-landing-form">
+                        <h2>De retour parmis nous</h2>
+                        <p>connexion à votre compte</p>
+                        <form method="post" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/membres/login"{% endautoescape %} class="row g-3">                        
+                            <div class="col-12">
+                                <label for="logmail" class="form-label">E-mail</label>
+                                <input type="text" class="form-control" id="logmail" name="logmail">
+                            </div>
+                            <div class="col-12">
+                                <label for="logpass" class="form-label">Mot de passe</label>
+                                <input type="text" class="form-control" id="logpass" name="logpass">
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="#" class="user-landing-form-link ">Mot de passe oublié ?</a>
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="submit" class="btn btn-dark-green col-12">Se connecter</button>
+                            </div>
+                        </form>
+                    </div>
+                </section><!-- End login form -->
+            </div>
+        </div>
+    </main>
+{% endblock %}

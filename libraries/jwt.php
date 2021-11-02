@@ -157,7 +157,8 @@ Class Jwt
      */
     private function setkey(): void
     {
-        $this->key = $_ENV['JWT_KEY'];
+        $env = $this->Env();
+        $this->key = $env->get('JWT_KEY');
     }
 
     /**
