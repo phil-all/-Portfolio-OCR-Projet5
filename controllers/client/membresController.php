@@ -2,9 +2,7 @@
 
 namespace Over_Code\Controllers\Client;
 
-use Swift_Mailer;
-use Swift_Message;
-use Swift_SmtpTransport;
+use Over_Code\Libraries\Email;
 use Over_Code\Libraries\Jwt;
 use Over_Code\Libraries\Twig;
 use Over_Code\Models\UserModel;
@@ -87,34 +85,22 @@ class MembresController extends UserController
                 'exp' => $date['expiration'],
                 'email' => $this->get_POST('email')
             ];
-            $token = $jwt->generateToken($claims);
-
-            $user = new UserModel();
-            $user->createUser($token, $date['date_time']);
+            $token = $jwt->generateToken($claims);    
 
             $twigMail = new Twig;
+            $mailTemplate = 'emails'. DS . 'validation-link.twig';
             $params = [
                 'token' => $jwt->tokenToUri($token)
             ];
-            $mailTemplate = 'emails'. DS . 'validation-link.twig';
+
+            $reciever = [$this->get_POST('email')];
             $title = 'Confirmation d\'inscription - [Ne pas répondre]';
-           
-            // Create the Transport
-            $transport = (new Swift_SmtpTransport($_ENV['SMTP_SERVER'], $_ENV['SMTP_PORT']))
-                ->setUsername($_ENV['SMTP_USERNAME'])
-                ->setPassword($_ENV['SMTP_PASSWORD']);
+            $body = $twigMail->getTwig()->render($mailTemplate, $params);
 
-            // Create the Mailer using created Transport
-            $mailer = new Swift_Mailer($transport);
-
-            // Create a message            
-            $message = (new Swift_Message($title))
-                ->setFrom(['team.overcode@example.com' => 'Over_code Team'])
-                ->setTo(['adresse.test@test.org'])
-                ->setBody($twigMail->getTwig()->render($mailTemplate, $params),'text/html');
-
-            // Send the message
-            $mailer->send($message);
+            Email::sendHtmlEmail($reciever, $title, $body);
+            
+            $user = new UserModel();
+            $user->createUser($token, $date['date_time']);
 
             $this->template = 'client' . DS . 'validation-link-sent.twig';
         }
