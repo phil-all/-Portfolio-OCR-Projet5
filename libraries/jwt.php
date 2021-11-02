@@ -136,21 +136,6 @@ Class Jwt
     }
 
     /**
-     * Checks if a token is not yet expired
-     *
-     * @param array $payload token payload
-     * 
-     * @return boolean
-     */
-    public function isNotExpired(array $payload): bool
-    {
-        $date = $this->arrayDate();
-        $timestamp = $date['timestamp'];
-        
-        return ($timestamp < $payload['exp']);
-    }
-
-    /**
      * Set default header attribute
      *
      * @return void
