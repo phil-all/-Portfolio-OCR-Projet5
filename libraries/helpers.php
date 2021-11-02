@@ -41,11 +41,11 @@ trait Helpers
      * - timestamp: now
      * - expiration: timestamp + gap
      *
-     * @param integer $gap **given in seconds**, delay to expiration
+     * @param integer|null $gap **given in seconds**, delay to expiration
      * 
      * @return array
      */
-    public function arrayDate(int $gap): array
+    public function arrayDate(?int $gap = NULL): array
     {
         $now = new DateTime();
 

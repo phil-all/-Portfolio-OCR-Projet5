@@ -125,7 +125,7 @@ class MembresController extends UserController
         $this->template = 'client' . DS . 'invalid-validation-link.twig';
 
         $jwt = new Jwt();      
-        $token = $jwt->uriToToken($params);        
+        $token = $jwt->uriToToken($params);
 
         if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
             $payload = $jwt->decode_data($token, 1);
@@ -137,7 +137,7 @@ class MembresController extends UserController
                 
             if ($this->isPending($email) && ($timestamp < $payload['exp'])) {
                 $this->accountValidation($email);
-                $this->login(true, $token);
+                $this->template = 'client' . DS . 'new-user-welcome.twig';
             }
 
             if ($timestamp > $payload['exp']) {
