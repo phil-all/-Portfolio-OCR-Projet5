@@ -87,6 +87,19 @@ final class Superglobals
     }
 
     /**
+     * Sets a cookie without options
+     *
+     * @param string $name
+     * @param string $value
+     * 
+     * @return void
+     */
+    public function set_COOKIE(string $name, string $value): void
+    {
+        setcookie($name, $value);
+    }
+
+    /**
      * Collect PHP superglobals and
      * create a local copy
      */

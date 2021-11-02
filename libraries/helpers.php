@@ -168,6 +168,19 @@ trait Helpers
         return self::globals()->get_SERVER($key);
     }
 
+    /**
+     * Sets a cookie without options
+     *
+     * @param string $name
+     * @param string $value
+     * 
+     * @return void
+     */
+    public function set_COOKIE(string $name, string $value): void
+    {
+        self::globlas()->set_COOKIE($name, $value);
+    }
+
 
     //////////////////////////////////////////
     // Methods refering to Env class
