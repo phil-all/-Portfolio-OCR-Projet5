@@ -23,29 +23,24 @@ class MembresController extends UserController
 //
 //
 //
-    public function login(?string $email = NULL, ?string $pass = NULL): void
+    public function login(): void
     {
         $user = new UserModel();
+        $logmail = $this->get_POST('logmail');
+        $logpass = $this->get_POST('logpass');
 
-        $user->set_logmail($email);
-        $user->set_logPass($pass);
+        $auth = $user->auth($logmail, $logpass);
 
-        $auth = $user->auth($user->get_logmail(), $user->get_logpass());
+        $status = ($auth) ? $user->getStatus($logmail) : 'authentification-error';
 
-        $status = ($auth) ? $user->getStatus() : 'authentification-error';
-
-        if ($status === 'active') {            
-            $user->hydrate();
-            
-            if ($email === NULL && $pass === NULL) {
-                $this->redirect(SITE_ADRESS);
-            }
+        if ($status === 'active') {
+            $user->store_ipLog($logmail);
+            $user->hydrate($logmail);
+            $this->set_COOKIE('token', $user->get_token());
+            $this->redirect(SITE_ADRESS);
         }
 
-        $this->template = ($email === NULL && $pass === NULL)
-            ? 'client' . DS . $status . '-user.twig'
-            : 'client' . DS . 'new-user-welcome.twig'
-        ;        
+        $this->template = 'client' . DS . $status . '-user.twig';
     }
 
     /**

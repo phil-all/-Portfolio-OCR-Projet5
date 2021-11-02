@@ -16,12 +16,10 @@ class UserModel extends MainModel
     private $email;
     private $pseudo;
     private $token;
-    private $logmail;
-    private $logpass;
+    private $ip_log;
 
     /**
-     * Set user attributes logmail and logpass, and return :
-     * **true** if database occurence, **false** if no occurence.
+     * Checks if user with given **email** and **password** database occurence
      * 
      * @param string $email
      * @param string $pass
@@ -45,32 +43,38 @@ class UserModel extends MainModel
     }
 
     /**
-     * Return the user status (pending, active or suspended) from connection log datas:
-     * - email
-     * - password.
+     * Return the user status (pending, active or suspended) from connection log email
      * Used on login user process
+     * 
+     * @param string $email
      *
      * @return string
      */
-    public function getStatus(): string
+    public function getStatus(string $email): string
     {
         $query = 'SELECT s.status
         FROM user as u
         JOIN user_status as s
             ON u.user_status_id = s.id
-        WHERE u.email = :email AND u.password = :password';
+        WHERE u.email = :email';
 
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindValue(':email', $this->logmail, PDO::PARAM_STR);
-        $stmt->bindValue(':password', $this->logpass, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchColumn();
     }
 
-    public function hydrate(): void
+    /**
+     * Hydrate user object
+     *
+     * @param string $email
+     * 
+     * @return void
+     */ 
+    public function hydrate(string $email): void
     {
         $date = $this->arrayDate(900); // 900s = 15 min
 
@@ -79,7 +83,7 @@ class UserModel extends MainModel
             'sub' => 'login',
             'iat' => $date['timestamp'],
             'exp' => $date['expiration'],
-            'email' => $this->get_POST('email')
+            'email' => $email
         ];
 
         $this->token = $jwt->generateToken($claims);
@@ -87,12 +91,11 @@ class UserModel extends MainModel
 
         $query = 'SELECT *
         FROM user
-        WHERE email = :email AND password = :password';
+        WHERE email = :email';
 
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindValue(':email', $this->logmail, PDO::PARAM_STR);
-        $stmt->bindValue(':password', $this->logpass, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
         $stmt->execute();
 
@@ -100,7 +103,6 @@ class UserModel extends MainModel
         
         foreach($result as $key => $value) {
             $this->$key = $value;
-            $this->set_SESSION($key, $value);
         }
     }
 
@@ -274,48 +276,22 @@ class UserModel extends MainModel
     }
 
     /**
-     * Gets login mail
+     * Store login user ip address in database
      *
-     * @return string
-     */
-    public function get_logmail(): string
-    {
-        return $this->logmail;
-    }
-
-    /**
-     * Gets login pass
-     *
-     * @return string
-     */
-    public function get_logpass(): string
-    {
-        return $this->logpass;
-    }
-
-    /**
-     * Set attribute $logmail. Uses get_POST if $email is NULL.
-     *
-     * @param string|null $email
-     * 
      * @return void
      */
-    public function set_logmail(?string $email): void
+    public function store_ipLog($email): void
     {
-        $this->logmail = ($email != NULL) ? $email : $this->get_POST('logmail');
-    }
+        $query = 'UPDATE user
+        SET ip_log = :ip
+        WHERE email = :email';
 
-    /**
-     * Sets attribute $logpass. Uses get_POST if $email is NULL
-     * 
-     *
-     * @param string|null $pass
-     * 
-     * @return void
-     */
-    public function set_logpass(?string $pass): void
-    {
-        $this->logpass = ($pass != NULL) ? $pass : $this->get_POST('logpass');
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':ip', $this->get_SERVER('REMOTE_ADDR'), PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
     }
 
     /**

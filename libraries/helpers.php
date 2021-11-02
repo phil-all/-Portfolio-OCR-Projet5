@@ -178,7 +178,7 @@ trait Helpers
      */
     public function set_COOKIE(string $name, string $value): void
     {
-        self::globlas()->set_COOKIE($name, $value);
+        self::globals()->set_COOKIE($name, $value);
     }
 
 
