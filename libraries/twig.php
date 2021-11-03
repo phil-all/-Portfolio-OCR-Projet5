@@ -29,10 +29,6 @@ class Twig
             'cache' => false,
         ]);
 
-        if (isset($_SESSION['token'])) {            
-            $twig->addGlobal('session', $_SESSION);
-        }
-
         $twig->addExtension(new DebugExtension());
 
         $this->twig = $twig;

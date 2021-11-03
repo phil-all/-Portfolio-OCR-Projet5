@@ -5,7 +5,6 @@ namespace Over_Code\Libraries;
 use DateTime;
 use ReflectionClass;
 use Over_Code\Libraries\Globals\Env;
-use Over_Code\Libraries\Globals\Session;
 use Over_Code\Libraries\Globals\Superglobals;
 
 trait Helpers
@@ -206,64 +205,5 @@ trait Helpers
     public static function get_ENV(string $key): mixed
     {
         return self::env()->get($key);
-    }
-
-
-    //////////////////////////////////////////
-    // Methods refering to Session class
-    //////////////////////////////////////////
-
-    /**
-     * Used to instanciate Session to refering session static methods
-     *
-     * @return object
-     */
-    private static function session(): object
-    {
-        return new Session;
-    }
-
-    /**
-     * Start a session
-     */
-    public static function sessionStart()
-    {
-        return self::session()->start();
-    }
-
-    /**
-     * * Gets an input SESSION by its key
-     *
-     * @param string $key
-     * 
-     * @return mixed
-     */
-    public static function get_SESSION(string $key): mixed
-    {
-        return self::session()->get($key);
-    }
-
-    /**
-     * Sets an input SESSION
-     *
-     * @param string $key
-     * @param string $value
-     * @return void
-     */
-    public function set_SESSION(string $key, string $value)
-    {
-        return self::session()->set($key, $value);
-    }
-
-    /**
-     * Return hub plateform: admin or client
-     *
-     * @return string
-     */
-    public static function hubFinder(): string
-    {
-        $globals = new Superglobals;
-
-        return (self::get_SESSION('hub') === 'admin') ? 'admin' : 'client';
-    }   
+    }  
 }

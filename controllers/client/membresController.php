@@ -34,20 +34,11 @@ class MembresController extends UserController
         $status = ($auth) ? $user->getStatus($logmail) : 'authentification-error';
 
         if ($status === 'active') {
-            $date = $this->arrayDate(900); // 900s = 15 min
-
-            $jwt = new Jwt();
-            $claims = [
-                'sub' => 'login',
-                'iat' => $date['timestamp'],
-                'exp' => $date['expiration'],
-                'email' => $this->get_POST('email')
-            ];
-            $token = $jwt->generateToken($claims);
-            
             $user->store_ipLog($logmail);
-            $user->hydrate($logmail);
-            $this->set_COOKIE('token', $token);
+            $user->hydrate($logmail, 'login', 900); // exp 15 min
+            
+            $this->set_COOKIE('token', $user->get_token());
+            $this->set_COOKIE('token_obj', 'login');
 
             $this->redirect(SITE_ADRESS);
         }
@@ -62,13 +53,9 @@ class MembresController extends UserController
      */
     public function deconnexion(): void
     {
-        $user = new userModel();
-
-        $user->set_tokenNull();
+        $this->set_COOKIE('token', '');
+        $this->set_COOKIE('token_obj', 'logout');
         
-        session_unset();
-        session_destroy();
-
         $this->redirect(SITE_ADRESS);
     }
 

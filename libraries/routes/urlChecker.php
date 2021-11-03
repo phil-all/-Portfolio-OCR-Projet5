@@ -14,7 +14,7 @@ Class UrlChecker
     public function __construct()
     {
         $this->uri = new UrlParser();
-        $this->hub = $this->hubFinder();        
+        $this->hub = 'Client';
         $this->class = '\Over_Code\controllers\\' . $this->hub . '\\' . $this->uri->getControllerClass() . 'Controller';
         $this->method = $this->undashedMethod($this->uri->getMethodName()); 
         $this->params = $this->uri->getAttributesList();

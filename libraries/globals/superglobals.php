@@ -64,7 +64,8 @@ final class Superglobals
     public function get_COOKIE(string $key = NULL): mixed
     {
         if ($key !== NULL) {
-            return strip_tags(htmlspecialchars($this->COOKIE[$key])) ?? NULL;
+            return (isset($_COOKIE[$key])) ? strip_tags(htmlspecialchars($_COOKIE[$key])) : 'empty';
+            //var_dump($_COOKIE);
         }
 
         return $this->COOKIE;
@@ -87,7 +88,7 @@ final class Superglobals
     }
 
     /**
-     * Sets a cookie without options
+     * Sets a cookie, expired in 1 day
      *
      * @param string $name
      * @param string $value
@@ -96,7 +97,7 @@ final class Superglobals
      */
     public function set_COOKIE(string $name, string $value): void
     {
-        setcookie($name, $value);
+        setcookie($name, $value, 0, '/', null, false, true);
     }
 
     /**

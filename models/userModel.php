@@ -19,6 +19,28 @@ class UserModel extends MainModel
     private $ip_log;
 
     /**
+     * Read all datas from a given user, identified by its email
+     *
+     * @param string $email
+     * 
+     * @return array
+     */
+    public function read_user(string $email): array
+    {
+        $query = 'SELECT *
+        FROM user
+        WHERE email = :email';
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Checks if user with given **email** and **password** database occurence
      * 
      * @param string $email
@@ -71,55 +93,52 @@ class UserModel extends MainModel
      * Hydrate user object
      *
      * @param string $email
+     * @param string $subjectToken sub claim in token payload
+     * @param int|null $gap difference in seconds between token timestamp and expiration
      * 
      * @return void
      */ 
-    public function hydrate(string $email): void
+    public function hydrate(string $email, string $subjectToken, ?int $gap): void
     {
-        $date = $this->arrayDate(900); // 900s = 15 min
-
+        $date = $this->arrayDate($gap);
+        
         $jwt = new Jwt;
         $claims = [
-            'sub' => 'login',
+            'sub' => $subjectToken,
             'iat' => $date['timestamp'],
             'exp' => $date['expiration'],
             'email' => $email
         ];
 
-        $this->token = $jwt->generateToken($claims);
-        $this->token_datetime = $date['date_time'];
+        $token = $jwt->generateToken($claims);
 
-        $query = 'SELECT *
-        FROM user
-        WHERE email = :email';
+        $this->store_token($token, $email);
 
-        $stmt = $this->pdo->prepare($query);
+        $this->store_token_datetime($date['date_time'], $email);
 
-        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userDatas = $this->read_user($email);
         
-        foreach($result as $key => $value) {
+        foreach($userDatas as $key => $value) {
             $this->$key = $value;
         }
     }
+
+
 
     /**
      * Set token on Null in database
      *
      * @return void
      */
-    public function set_tokenNull(): void
+    public function store_tokenNull(): void
     {
         $query = 'UPDATE user
         SET token = NULL
-        WHERE id = :id';
+        WHERE email = :email';
 
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindValue(':id', (int)$this->SESSION('id'), PDO::PARAM_INT);
+        $stmt->bindValue(':id', $this->email, PDO::PARAM_INT);
 
         $stmt->execute();
     }
@@ -276,7 +295,73 @@ class UserModel extends MainModel
     }
 
     /**
-     * Store login user ip address in database
+     * Read in database the login IP address
+     *
+     * @param string $email
+     * 
+     * @return string
+     */
+    public function read_ipLog(string $email): string
+    {
+        $query = 'SELECT ip_log
+        FROM user
+        WHERE email = :email';
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Store a given token in database, in terms of email user
+     *
+     * @param string $token
+     * @param string $email.
+     * 
+     * @return void
+     */
+    public function store_token(string $token, string $email): void
+    {
+        $query = 'UPDATE user
+        SET token = :token
+        WHERE email = :email';
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':token', $token, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
+    /**
+     * store a token date time in database for an user identified by its email
+     *
+     * @param string $datetime format Y-m-d H:i:s
+     * @param string $email
+     * 
+     * @return void
+     */
+    public function store_token_datetime(string $datetime, string $email): void
+    {
+        $query = 'UPDATE user
+        SET token_datetime = :datetime
+        WHERE email = :email';
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':datetime', $datetime, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
+    /**
+     * Store login user IP address in database
      *
      * @return void
      */
@@ -312,5 +397,39 @@ class UserModel extends MainModel
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
         $stmt->execute;
+    }
+
+    /**
+     * Return following user datas in an array :
+     * - first name
+     * - last name
+     * - pseudo
+     * - email
+     * - avatar id
+     * - account creation date
+     *
+     * @param [type] $email
+     * 
+     * @return array
+     */
+    public function userInArray($email): array
+    {
+        $query = 'SELECT 
+            first_name,
+            last_name,
+            pseudo,
+            email,
+            avatar_id,
+            created_at
+        FROM user
+        WHERE email = :email';
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

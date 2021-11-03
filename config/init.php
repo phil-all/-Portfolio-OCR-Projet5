@@ -3,7 +3,7 @@
 namespace Over_Code\Config;
 
 /**
- * Define constants & Start session
+ * Define constants
  */
 class Init
 {
@@ -15,9 +15,6 @@ class Init
      */
     public static function start(): void
     {
-        // Start session
-        self::sessionStart();
-
         $requestScheme = self::get_SERVER('REQUEST_SCHEME');
 
         $serverName = self::get_SERVER('SERVER_NAME');
