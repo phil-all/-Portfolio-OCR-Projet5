@@ -12,6 +12,9 @@ controllers/client/portfolioController.php
 public/uploads/*.jpg
 views/client/portfolio*
 doc/*
+phpDocumentor.phar
+.phpdoc/
+docs/
 
 #---third---
 vendor/
