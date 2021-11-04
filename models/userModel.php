@@ -41,7 +41,7 @@ class UserModel extends MainModel
     }
 
     /**
-     * Checks if user with given **email** and **password** database occurence
+     * Checks if a **password** is correct for a given **email**
      * 
      * @param string $email
      * @param string $pass
@@ -50,7 +50,7 @@ class UserModel extends MainModel
      */
      public function auth(string $email, string $pass): bool
     {
-        $query = 'SELECT COUNT(*)
+        $query = 'SELECT password
         FROM user
         WHERE email = :email AND password = :password';
 
@@ -61,7 +61,9 @@ class UserModel extends MainModel
 
         $stmt->execute();
         
-        return $stmt->fetchColumn();
+        $db_HashPass =  $stmt->fetchColumn();
+
+        return password_verify($pass, $db_HashPass);
     }
 
     /**
@@ -183,7 +185,7 @@ class UserModel extends MainModel
         $stmt->bindValue(':last_name', $this->get_POST('last_name'),  PDO::PARAM_STR);
         $stmt->bindValue(':pseudo', $this->get_POST('pseudo'),  PDO::PARAM_STR);
         $stmt->bindValue(':email', $this->get_POST('email'),  PDO::PARAM_STR);
-        $stmt->bindValue(':password', $this->get_POST('password'),  PDO::PARAM_STR);
+        $stmt->bindValue(':password', password_hash($this->get_POST('password'), PASSWORD_ARGON2ID),  PDO::PARAM_STR);
         $stmt->bindValue(':avatar_id', (int)$this->get_POST('avatar_id'),  PDO::PARAM_INT);
         $stmt->bindValue(':token', $token,  PDO::PARAM_STR);
         $stmt->bindValue(':token_datetime',$date_time, PDO::PARAM_STR);
