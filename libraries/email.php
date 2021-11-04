@@ -8,6 +8,7 @@ use Swift_SmtpTransport;
 
 class Email
 {
+    use \Over_Code\Libraries\Helpers;
     /**
      * Send an HTML email
      *
@@ -19,9 +20,9 @@ class Email
      */
     public function sendHtmlEmail(array $reciever, string $title, string $body): void
     {
-        $transport = (new Swift_SmtpTransport($_ENV['SMTP_SERVER'], $_ENV['SMTP_PORT']))
-            ->setUsername($_ENV['SMTP_USERNAME'])
-            ->setPassword($_ENV['SMTP_PASSWORD']);
+        $transport = (new Swift_SmtpTransport($this->get_ENV('SMTP_SERVER'), $this->get_ENV('SMTP_PORT')))
+            ->setUsername($this->get_ENV('SMTP_USERNAME'))
+            ->setPassword($this->get_ENV('SMTP_PASSWORD'));
 
         $mailer = new Swift_Mailer($transport);
 
