@@ -155,11 +155,8 @@ class UserModel extends MainModel
      */
      public function createUser(string $token, string $date_time): void
     {
-        if (defined('PASSWORD_ARGON2ID')) {
-            $algo = PASSWORD_ARGON2ID;
-        } else {
-            $algo = PASSWORD_DEFAULT;
-        }
+        //argon2id only available if PHP has been compiled with Argon2 support
+        $algo = (defined('PASSWORD_ARGON2ID')) ? PASSWORD_ARGON2ID :PASSWORD_DEFAULT;
 
         $query = 'INSERT INTO user (
             first_name,

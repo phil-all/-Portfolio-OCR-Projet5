@@ -33,11 +33,8 @@ trait ResetPassword
      */
     public function newPassValidation(string $email): void
     {
-        if (defined('PASSWORD_ARGON2ID')) {
-            $algo = PASSWORD_ARGON2ID;
-        } else {
-            $algo = PASSWORD_DEFAULT;
-        }
+        //argon2id only available if PHP has been compiled with Argon2 support
+        $algo = (defined('PASSWORD_ARGON2ID')) ? PASSWORD_ARGON2ID :PASSWORD_DEFAULT; 
         
         $this->pdo = new DbConnect;
 
