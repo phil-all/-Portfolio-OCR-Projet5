@@ -64,7 +64,7 @@ final class Superglobals
     public function get_COOKIE(string $key = NULL): mixed
     {
         if ($key !== NULL) {
-            return (isset($_COOKIE[$key])) ? strip_tags(htmlspecialchars($_COOKIE[$key])) : 'empty';
+            return (isset($_COOKIE[$key])) ? strip_tags(stripslashes(htmlspecialchars($_COOKIE[$key]))) : 'empty';
             //var_dump($_COOKIE);
         }
 
