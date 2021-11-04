@@ -52,12 +52,11 @@ class UserModel extends MainModel
     {
         $query = 'SELECT password
         FROM user
-        WHERE email = :email AND password = :password';
+        WHERE email = :email';
 
         $stmt = $this->pdo->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-        $stmt->bindValue(':password', $pass, PDO::PARAM_STR);
 
         $stmt->execute();
         
