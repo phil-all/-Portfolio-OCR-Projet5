@@ -17,7 +17,7 @@ class Email
      * 
      * @return void
      */
-    public static function sendHtmlEmail(array $reciever, string $title, string $body): void
+    public function sendHtmlEmail(array $reciever, string $title, string $body): void
     {
         $transport = (new Swift_SmtpTransport($_ENV['SMTP_SERVER'], $_ENV['SMTP_PORT']))
             ->setUsername($_ENV['SMTP_USERNAME'])

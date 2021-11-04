@@ -92,7 +92,8 @@ class MembresController extends UserController
             $title = 'Confirmation d\'inscription - [Ne pas répondre]';
             $body = $twigMail->getTwig()->render($mailTemplate, $params);
 
-            Email::sendHtmlEmail($reciever, $title, $body);
+            $mail = new Email;
+            $mail->sendHtmlEmail($reciever, $title, $body);
             
             $user = new UserModel();
             $user->createUser($token, $date['date_time']);
@@ -167,7 +168,8 @@ class MembresController extends UserController
         $title = 'Récupération de compte - [Ne pas répondre]';
         $body = $twigMail->getTwig()->render($mailTemplate, $params);
 
-        Email::sendHtmlEmail($reciever, $title, $body);
+        $mail = new Email;
+        $mail->sendHtmlEmail($reciever, $title, $body);
 
         $this->template = 'client' . DS . 'pass/reset-password-enquiry-sent.twig';
     }
