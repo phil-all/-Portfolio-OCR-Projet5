@@ -12,7 +12,7 @@ class DbConnect extends PDO
 {
     use \Over_Code\Libraries\Helpers;
 
-    private string $ds;
+    private string $dsn;
     private string $user;
     private string $pass;
 
