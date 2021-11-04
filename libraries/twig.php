@@ -42,7 +42,7 @@ class Twig
      */
     public function twigRender(string $template, array $params = [])
     {
-        echo $this->twig->render($template, $params);
+        print_r($this->twig->render($template, $params));
     }
 
     /**
