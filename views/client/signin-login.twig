@@ -76,7 +76,7 @@
                                 <input type="text" class="form-control" id="logpass" name="logpass">
                             </div>
                             <div class="col-lg-6">
-                                <a href="#" class="user-landing-form-link ">Mot de passe oublié ?</a>
+                                <a {% autoescape %}href="{{ constant('SITE_ADRESS') }}/membres/forgottenPassword"{% endautoescape %} class="user-landing-form-link ">Mot de passe oublié ?</a>
                             </div>
                             <div class="col-lg-6">
                                 <button type="submit" class="btn btn-dark-green col-12">Se connecter</button>

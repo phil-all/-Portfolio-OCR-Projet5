@@ -2,9 +2,9 @@
 
 namespace Over_Code\Controllers\Client;
 
-use Over_Code\Libraries\Email;
 use Over_Code\Libraries\Jwt;
 use Over_Code\Libraries\Twig;
+use Over_Code\Libraries\Email;
 use Over_Code\Models\UserModel;
 use Over_Code\Controllers\UserController;
 
@@ -15,6 +15,7 @@ class MembresController extends UserController
 {
     use \Over_Code\Libraries\Helpers;
     use \Over_Code\Libraries\User\Register;
+    use \Over_Code\Libraries\User\ResetPassword;
 
     public function inscriptionConnexion()
     {
@@ -104,7 +105,7 @@ class MembresController extends UserController
     {
         $this->template = 'client' . DS . 'invalid-validation-link.twig';
 
-        $jwt = new Jwt();      
+        $jwt = new Jwt();
         $token = $jwt->uriToToken($params);
 
         if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
@@ -122,6 +123,127 @@ class MembresController extends UserController
 
             if ($timestamp > $payload['exp']) {
                 $this->template = 'client' . DS . 'validation-expired.twig';
+            }
+        }
+    }
+    
+    /**
+     * Sets twig template with forgotten-password.twig to display page to
+     * give email address to send reset password link enquiry
+     *
+     * @return void
+     */
+    public function forgottenPassword(): void
+    {
+        $this->template = 'client' . DS . 'pass/forgotten-password.twig';
+    }
+
+    /**
+     * Send an email to reset password to email address in POST,
+     * and sets twig template with reset-password-enquiry-sent.twig
+     * 
+     * @return void
+     */
+    public function resetPasswordEnquiry(): void
+    {
+        $date = $this->arrayDate(900); // 900s = 15 min
+
+        $jwt = new Jwt();
+        $claims = [
+            'sub' => 'reset password enquiry',
+            'iat' => $date['timestamp'],
+            'exp' => $date['expiration'],
+            'email' => $this->get_POST('email')
+        ];
+        $token = $jwt->generateToken($claims);   
+
+        $twigMail = new Twig;
+        $mailTemplate = 'emails'. DS . 'reset-password-enquiry.twig';
+        $params = [
+            'token' => $jwt->tokenToUri($token)
+        ];
+
+        $reciever = [$this->get_POST('email')];
+        $title = 'Récupération de compte - [Ne pas répondre]';
+        $body = $twigMail->getTwig()->render($mailTemplate, $params);
+
+        Email::sendHtmlEmail($reciever, $title, $body);
+
+        $this->template = 'client' . DS . 'pass/reset-password-enquiry-sent.twig';
+    }
+
+    /**
+     * Sets twig template with reset-password.twig
+     *
+     * @param array $params uri friendly token header/payload/signature
+     * @return void
+     */
+    public function resetPassword(array $params): void
+    {
+        $this->template = 'client' . DS . 'invalid-validation-link.twig';
+
+        $jwt = new Jwt();      
+        $token = $jwt->uriToToken($params);
+
+        if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
+            $payload = $jwt->decode_data($token, 1);
+
+            $date = $this->arrayDate();
+            $timestamp = $date['timestamp'];
+
+            $email = $payload['email'];
+                
+            if (($timestamp < $payload['exp'])) {                
+                $date = $this->arrayDate(900); // 900s = 15 min
+
+                $jwt = new Jwt();
+                $claims = [
+                    'sub' => 'reset password',
+                    'iat' => $date['timestamp'],
+                    'exp' => $date['expiration'],
+                    'email' => $email
+                ];
+                $token = $jwt->generateToken($claims);
+
+                $uriToken = $jwt->tokenToUri($token);
+
+                $this->params = array(
+                    'email' => $email,
+                    'tokenToUri' => $uriToken
+                );
+                $this->template = 'client' . DS . 'pass/reset-password.twig';
+            }
+
+            if ($timestamp > $payload['exp']) {
+                $this->template = 'client' . DS . 'validation-expired.twig';
+            }
+        }
+    }
+
+    public function updatePassword(array $params):void
+    {
+        $this->template = 'client' . DS . 'invalid-validation-link.twig';
+
+        if ($this->newPass_form_test()) {
+            $jwt = new Jwt();
+            $token = $jwt->uriToToken($params);
+
+            if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
+                $payload = $jwt->decode_data($token, 1);
+
+                $date = $this->arrayDate();
+                $timestamp = $date['timestamp'];
+
+                $email = $payload['email'];
+                    
+                if (($timestamp < $payload['exp'])) {
+                    $this->newPassValidation($email);
+                    $this->template = 'client' . DS . 'pass/reset-password-confirmation.twig';
+                }
+
+                if ($timestamp > $payload['exp']) {
+                    $this->template = 'client' . DS . 'validation-expired.twig';
+                }
             }
         }
     }

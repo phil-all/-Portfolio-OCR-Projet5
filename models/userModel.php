@@ -155,7 +155,13 @@ class UserModel extends MainModel
      */
      public function createUser(string $token, string $date_time): void
     {
-            $query = 'INSERT INTO user (
+        if (defined('PASSWORD_ARGON2ID')) {
+            $algo = PASSWORD_ARGON2ID;
+        } else {
+            $algo = PASSWORD_DEFAULT;
+        }
+
+        $query = 'INSERT INTO user (
             first_name,
             last_name,
             pseudo,
@@ -184,7 +190,7 @@ class UserModel extends MainModel
         $stmt->bindValue(':last_name', $this->get_POST('last_name'),  PDO::PARAM_STR);
         $stmt->bindValue(':pseudo', $this->get_POST('pseudo'),  PDO::PARAM_STR);
         $stmt->bindValue(':email', $this->get_POST('email'),  PDO::PARAM_STR);
-        $stmt->bindValue(':password', password_hash($this->get_POST('password'), PASSWORD_ARGON2ID),  PDO::PARAM_STR);
+        $stmt->bindValue(':password', password_hash($this->get_POST('password'), $algo),  PDO::PARAM_STR);
         $stmt->bindValue(':avatar_id', (int)$this->get_POST('avatar_id'),  PDO::PARAM_INT);
         $stmt->bindValue(':token', $token,  PDO::PARAM_STR);
         $stmt->bindValue(':token_datetime',$date_time, PDO::PARAM_STR);
