@@ -38,11 +38,11 @@ class ArticlesModel extends MainModel
      */
     public function getSingleArticle(int $articleId): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, a.created_at, a.last_update, a.chapo, a.content, a.img_path
+        $query = 'SELECT a.user_serial, u.first_name, u.last_name, a.title, a.created_at, a.last_update, a.chapo, a.content, a.img_path
         FROM article AS a
         JOIN user AS u
-            ON a.author_id = u.id
-        WHERE a.id = :id;';
+            ON a.user_serial = u.serial
+        WHERE a.user_serial = :id;';
 
         $stmt = $this->pdo->prepare($query);
 
@@ -64,10 +64,10 @@ class ArticlesModel extends MainModel
      */
     public function getCategoryArticles(int $currentPage, int $perPage, string $category_name): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category
+        $query = 'SELECT a.user_serial, u.first_name, u.last_name, a.title, c.category
         FROM article AS a 
         JOIN user as u 
-            ON a.author_id = u.id
+            ON a.user_serial = u.serial
         JOIN category AS c
             ON a.category_id = c.id
         WHERE c.category = :category
@@ -97,10 +97,10 @@ class ArticlesModel extends MainModel
      */
     public function getAllArticles(int $currentPage, int $perPage): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at
+        $query = 'SELECT a.user_serial, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at
         FROM article AS a 
         JOIN user as u 
-            ON a.author_id = u.id
+            ON a.user_serial = u.serial
         JOIN category AS c
             ON a.category_id = c.id
         ORDER BY id DESC LIMIT :firstArticle, :perPage';
@@ -144,10 +144,10 @@ class ArticlesModel extends MainModel
      */
     public function getNews(int $countNews): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at, a.img_path
+        $query = 'SELECT a.user_serial, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at, a.img_path
         FROM article AS a 
         JOIN user as u 
-            ON a.author_id = u.id
+            ON a.user_serial = u.serial
         JOIN category AS c
             ON a.category_id = c.id
         ORDER BY id DESC LIMIT 0, :count_articles';

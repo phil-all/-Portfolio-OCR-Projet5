@@ -9,7 +9,7 @@ class UserModel extends MainModel
 {
     use \Over_Code\Libraries\Helpers;
 
-    private $id;
+    private $serial;
     private $avatar_id;
     private $last_name;
     private $first_name;
@@ -139,7 +139,7 @@ class UserModel extends MainModel
 
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindValue(':id', $this->email, PDO::PARAM_INT);
+        $stmt->bindValue(':email', $this->email, PDO::PARAM_INT);
 
         $stmt->execute();
     }
@@ -223,13 +223,13 @@ class UserModel extends MainModel
     }
 
     /**
-     * Get the value of id
+     * Get the value of serial
      * 
      * @return int
      */ 
-    public function get_id(): int
+    public function get_serial(): int
     {
-        return (int)$this->id;
+        return (int)$this->serial;
     }
 
     /**
