@@ -36,8 +36,8 @@ class MembresController extends UserController
 
         if ($status === 'active') {
             $user->store_ipLog($logmail);
-            $user->hydrate($logmail, 'login', 900); // exp 15 min
-            
+            $user->hydrate('login', $logmail, 900); // exp 15 min
+         
             $this->set_COOKIE('token', $user->get_token());
             $this->set_COOKIE('token_obj', 'login');
 

@@ -43,7 +43,7 @@ abstract class MainController
             $remoteIp = $this->get_SERVER('REMOTE_ADDR');
 
             if ($jwt->isNotExpired($payload) && ($ipLog === $remoteIp)) {
-                $user->hydrate($payload['email'], 'renewal', 900); // exp 15 min
+                $user->hydrate('renewal', $payload['email'], 900); // exp 15 min
 
                 $this->set_COOKIE('token', $user->get_token());
                 $this->set_COOKIE('token_obj', 'renewal');
