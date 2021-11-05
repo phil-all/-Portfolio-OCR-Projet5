@@ -64,7 +64,7 @@ class ArticlesModel extends MainModel
      */
     public function getCategoryArticles(int $currentPage, int $perPage, string $category_name): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category
+        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, a.chapo, a.img_path, a.created_at
         FROM article AS a 
         JOIN user as u 
             ON a.user_serial = u.serial
@@ -97,7 +97,7 @@ class ArticlesModel extends MainModel
      */
     public function getAllArticles(int $currentPage, int $perPage): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at
+        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at, a.img_path
         FROM article AS a 
         JOIN user as u 
             ON a.user_serial = u.serial

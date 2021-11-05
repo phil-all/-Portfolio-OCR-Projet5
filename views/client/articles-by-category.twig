@@ -6,31 +6,30 @@
 
 {% block content %}
     <div class="container">
-        <h1 class="text-center">Archives des articles</h1>
-        <h2 class="text-center">Catégorie : {{ category }}</h2>
-        <p>page {{ page }} / {{ totalPages }}</p>
-        <table class="table table-success table-striped">
-            <thead>
-                <th>Numéro</th>
-                <th>Auteur</th>
-                <th>titre</th>
-                <th>categorie</th>
-                <th>lien vers l'article</th>
-            </thead>
-            <tbody>
+        <p>page {{ page }} / {{ totalPages }}</p>        
+        <section class="container mt-5 news">
+            <div class="row mt-3">
+                <p class="green-txt mb-0 text-uppercase">Archives des articles</p>
+                <h2 class="pb-5">Catégorie : {{ category }}</h2>
                 {% for article in articles %}
-                    <tr>
-                        <td>{{ article.id }}</td>
-                        <td>{{ article.first_name }} {{ article.last_name }}</td>
-                        <td>{{ article.title }}</td>
-                        <td>{{ category }}</td>
+                <article class="card mb-3 col-12 col-md-6 border-none">
+                    {% autoescape %}
+                    <img src="{{ constant('SITE_ADRESS') }}/public/uploads/{{ article.img_path }}" class="card-img-top" alt="...">
+                    {% endautoescape %}
+                    <div class="card-body">
+                        <p class="card-text"><small class="text-muted">date : {{ article.created_at }}</small></p>
+                        <h5 class="card-title">{{ article.title }}</h5>
+                        <p class="card-text">{{ article.chapo }}</p>                        
                         {% autoescape %}
-                        <td><a href="{{ constant('SITE_ADRESS') }}/articles/numero/{{ article.id }}/{{article.slug}}"><i class="bi bi-book"></i> lire...</a></td>
+                        <a href="{{ constant('SITE_ADRESS') }}/articles/numero/{{ article.id }}/{{ article.slug }}">
                         {% endautoescape %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table><!--End articles list-->
+                            <button type="button" class="btn btn-light"><i class="bi bi-arrow-right-square"></i> lire plus...</button>
+                        </a>
+                    </div>
+                </article>            
+                {% endfor %}            
+            </div>        
+        </section><!--End articles list-->
         <nav aria-label="Articles list pages">
             <ul class="pagination justify-content-center">
                 {% autoescape %}
