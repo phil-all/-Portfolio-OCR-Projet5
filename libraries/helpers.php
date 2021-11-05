@@ -33,28 +33,6 @@ trait Helpers
     {
         return new ReflectionClass($class);
     }
-
-    /**
-     * Return an assoc array containing:
-     * - date time: now on format Y-m-d H:i:s
-     * - timestamp: now
-     * - expiration: timestamp + gap
-     *
-     * @param integer|null $gap **given in seconds**, delay to expiration
-     * 
-     * @return array
-     */
-    public function arrayDate(?int $gap = NULL): array
-    {
-        $now = new DateTime();
-
-        return array(            
-            'date_time'  => $now->format('Y-m-d H:i:s'),
-            'timestamp'  => $now->getTimestamp(),
-            'expiration' => $now->getTimestamp() + $gap
-        );
-    }
-
     
     //////////////////////////////////////////
     // Strings methods

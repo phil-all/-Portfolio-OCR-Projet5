@@ -71,16 +71,8 @@ class MembresController extends UserController
           $this->template = 'client' . DS . 'registration-failed.twig';
 
         if ($this->registration_form_test()) {
-            $date = $this->arrayDate(900); // 900s = 15 min
-
             $jwt = new Jwt();
-            $claims = [
-                'sub' => 'registration',
-                'iat' => $date['timestamp'],
-                'exp' => $date['expiration'],
-                'email' => $this->get_POST('email')
-            ];
-            $token = $jwt->generateToken($claims);    
+            $token = $jwt->generateToken('registration', $this->get_POST('email'), 900); // 900s = 15 min
 
             $twigMail = new Twig;
             $mailTemplate = 'emails'. DS . 'validation-link.twig';
@@ -88,15 +80,15 @@ class MembresController extends UserController
                 'token' => $jwt->tokenToUri($token)
             ];
 
-            $reciever = [$this->get_POST('email')];
-            $title = 'Confirmation d\'inscription - [Ne pas répondre]';
-            $body = $twigMail->getTwig()->render($mailTemplate, $params);
-
             $mail = new Email;
-            $mail->sendHtmlEmail($reciever, $title, $body);
+            $mail->sendHtmlEmail(
+                [$this->get_POST('email')],
+                'Confirmation d\'inscription - [Ne pas répondre]',
+                $twigMail->getTwig()->render($mailTemplate, $params)
+            );
             
             $user = new UserModel();
-            $user->createUser($token, $date['date_time']);
+            $user->createUser($token, date('Y-m-d H:i:s'));
 
             $this->template = 'client' . DS . 'validation-link-sent.twig';
         }
@@ -112,17 +104,14 @@ class MembresController extends UserController
         if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
             $payload = $jwt->decode_data($token, 1);
 
-            $date = $this->arrayDate();
-            $timestamp = $date['timestamp'];
-
             $email = $payload['email'];
                 
-            if ($this->isPending($email) && ($timestamp < $payload['exp'])) {
+            if ($this->isPending($email) && (time() < $payload['exp'])) {
                 $this->accountValidation($email);
                 $this->template = 'client' . DS . 'new-user-welcome.twig';
             }
 
-            if ($timestamp > $payload['exp']) {
+            if (time() > $payload['exp']) {
                 $this->template = 'client' . DS . 'validation-expired.twig';
             }
         }
@@ -147,16 +136,8 @@ class MembresController extends UserController
      */
     public function resetPasswordEnquiry(): void
     {
-        $date = $this->arrayDate(900); // 900s = 15 min
-
         $jwt = new Jwt();
-        $claims = [
-            'sub' => 'reset password enquiry',
-            'iat' => $date['timestamp'],
-            'exp' => $date['expiration'],
-            'email' => $this->get_POST('email')
-        ];
-        $token = $jwt->generateToken($claims);   
+        $token = $jwt->generateToken('reset password enquiry', $this->get_POST('email'), 900); // 900s = 15 min
 
         $twigMail = new Twig;
         $mailTemplate = 'emails'. DS . 'reset-password-enquiry.twig';
@@ -164,12 +145,12 @@ class MembresController extends UserController
             'token' => $jwt->tokenToUri($token)
         ];
 
-        $reciever = [$this->get_POST('email')];
-        $title = 'Récupération de compte - [Ne pas répondre]';
-        $body = $twigMail->getTwig()->render($mailTemplate, $params);
-
         $mail = new Email;
-        $mail->sendHtmlEmail($reciever, $title, $body);
+        $mail->sendHtmlEmail(
+            [$this->get_POST('email')],
+            'Récupération de compte - [Ne pas répondre]',
+            $twigMail->getTwig()->render($mailTemplate, $params)
+        );
 
         $this->template = 'client' . DS . 'pass/reset-password-enquiry-sent.twig';
     }
@@ -190,33 +171,20 @@ class MembresController extends UserController
         if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
             $payload = $jwt->decode_data($token, 1);
 
-            $date = $this->arrayDate();
-            $timestamp = $date['timestamp'];
-
             $email = $payload['email'];
                 
-            if (($timestamp < $payload['exp'])) {                
-                $date = $this->arrayDate(900); // 900s = 15 min
-
+            if ((time() < $payload['exp'])) {                
                 $jwt = new Jwt();
-                $claims = [
-                    'sub' => 'reset password',
-                    'iat' => $date['timestamp'],
-                    'exp' => $date['expiration'],
-                    'email' => $email
-                ];
-                $token = $jwt->generateToken($claims);
-
-                $uriToken = $jwt->tokenToUri($token);
+                $token = $jwt->generateToken('reset password', $email, 900); // 900s = 15 min
 
                 $this->params = array(
                     'email' => $email,
-                    'tokenToUri' => $uriToken
+                    'tokenToUri' => $jwt->tokenToUri($token)
                 );
                 $this->template = 'client' . DS . 'pass/reset-password.twig';
             }
 
-            if ($timestamp > $payload['exp']) {
+            if (time() > $payload['exp']) {
                 $this->template = 'client' . DS . 'validation-expired.twig';
             }
         }
@@ -233,17 +201,14 @@ class MembresController extends UserController
             if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
                 $payload = $jwt->decode_data($token, 1);
 
-                $date = $this->arrayDate();
-                $timestamp = $date['timestamp'];
-
                 $email = $payload['email'];
                     
-                if (($timestamp < $payload['exp'])) {
+                if ((time() < $payload['exp'])) {
                     $this->newPassValidation($email);
                     $this->template = 'client' . DS . 'pass/reset-password-confirmation.twig';
                 }
 
-                if ($timestamp > $payload['exp']) {
+                if (time() > $payload['exp']) {
                     $this->template = 'client' . DS . 'validation-expired.twig';
                 }
             }

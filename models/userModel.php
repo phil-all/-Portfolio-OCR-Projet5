@@ -93,29 +93,20 @@ class UserModel extends MainModel
     /**
      * Hydrate user object
      *
+     * @param string $subject sub claim in token payload
      * @param string $email
-     * @param string $subjectToken sub claim in token payload
      * @param int|null $gap difference in seconds between token timestamp and expiration
      * 
      * @return void
      */ 
-    public function hydrate(string $email, string $subjectToken, ?int $gap): void
+    public function hydrate(string $subject, string $email, ?int $gap): void
     {
-        $date = $this->arrayDate($gap);
-        
         $jwt = new Jwt;
-        $claims = [
-            'sub' => $subjectToken,
-            'iat' => $date['timestamp'],
-            'exp' => $date['expiration'],
-            'email' => $email
-        ];
-
-        $token = $jwt->generateToken($claims);
+        $token = $jwt->generateToken($subject, $email, $gap);
 
         $this->store_token($token, $email);
 
-        $this->store_token_datetime($date['date_time'], $email);
+        $this->store_token_datetime(date('Y-m-d H:i:s'), $email);
 
         $userDatas = $this->read_user($email);
         

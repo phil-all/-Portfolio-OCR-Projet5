@@ -21,12 +21,21 @@ Class Jwt
     /**
      * Generates a JWT token, using claims from a given array
      *
-     * @param array $payload
+     * @param string $subject sub claim in token payload
+     * @param string $email
+     * @param integer|null $gap difference in seconds between token timestamp and expiration
      * 
      * @return string
      */
-    public function generateToken(array $payload): string
+    public function generateToken(string $subject, string $email, ?int $gap): string
     {
+        $payload = [
+            'sub' => $subject,
+            'iat' => time(),
+            'exp' => time() + $gap,
+            'email' => $email
+        ];
+
         $encodedHeader = $this->cleaned_encoded_datas($this->header);
         $encodedPayload = $this->cleaned_encoded_datas($payload);
         $encodedSignature = $this->cleaned_encoded_signature($encodedHeader, $encodedPayload);
@@ -144,10 +153,7 @@ Class Jwt
      */
     public function isNotExpired(array $payload): bool
     {
-        $date = $this->arrayDate();
-        $timestamp = $date['timestamp'];
-
-        return ($timestamp < $payload['exp']);
+        return (time() < $payload['exp']);
     }
 
     /**
