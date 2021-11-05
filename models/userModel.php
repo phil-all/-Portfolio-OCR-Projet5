@@ -410,13 +410,15 @@ class UserModel extends MainModel
     public function userInArray($email): array
     {
         $query = 'SELECT 
-            first_name,
-            last_name,
-            pseudo,
-            email,
-            avatar_id,
-            created_at
-        FROM user
+            u.first_name,
+            u.last_name,
+            u.pseudo,
+            u.email,
+            a.img_path,
+            u.created_at
+        FROM user AS u
+        JOIN avatar AS a
+            ON u.avatar_id = a.id
         WHERE email = :email';
 
         $stmt = $this->pdo->prepare($query);

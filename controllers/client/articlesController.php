@@ -2,6 +2,7 @@
 
 namespace Over_Code\Controllers\Client;
 
+use Over_Code\Models\CommentModel;
 use Over_Code\Models\ArticlesModel;
 use Over_Code\Controllers\MainController;
 
@@ -30,6 +31,11 @@ class ArticlesController extends MainController
 
             $this->template = 'client' . DS . 'single-article.twig';
             $this->params = $model->getSingleArticle($params[0]);
+
+            $comment = new CommentModel;            
+            if (!empty($comment->readAll($params[0]))) {
+                $this->params['comments'] =  $comment->readAll($params[0]);
+            }
         }        
     }
     
