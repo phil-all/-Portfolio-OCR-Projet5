@@ -6,6 +6,9 @@ use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
 
+/**
+ * Contain method used to send e-mail
+ */
 class Email
 {
     use \Over_Code\Libraries\Helpers;

@@ -12,7 +12,12 @@ class AccueilController extends MainController
 {
     use \Over_code\Libraries\Helpers;
 
-    public function index()
+    /**
+     * Sets params and template to twig, about home page
+     *
+     * @return void
+     */
+    public function index(): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
         

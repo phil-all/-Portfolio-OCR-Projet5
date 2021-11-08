@@ -17,13 +17,21 @@ class MembresController extends UserController
     use \Over_Code\Libraries\User\Register;
     use \Over_Code\Libraries\User\ResetPassword;
 
-    public function inscriptionConnexion()
+    /**
+     * Sets params and template to twig, regiser/login page
+     *
+     * @return void
+     */
+    public function inscriptionConnexion(): void
     {
         $this->template = 'client' . DS . 'signin-login.twig';
     }
-//
-//
-//
+
+    /**
+     * Login an user, and sets template to twig
+     *
+     * @return void
+     */
     public function login(): void
     {
         $user = new UserModel();
@@ -66,7 +74,7 @@ class MembresController extends UserController
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
           $this->template = 'client' . DS . 'registration-failed.twig';
 
@@ -94,7 +102,14 @@ class MembresController extends UserController
         }
     }
 
-    public function validation(array $params)
+    /**
+     * Validates an user registration
+     *
+     * @param array $params uri friendly JWT token header/payload/signature
+     * 
+     * @return void
+     */
+    public function validation(array $params): void
     {
         $this->template = 'client' . DS . 'invalid-validation-link.twig';
 
@@ -158,7 +173,8 @@ class MembresController extends UserController
     /**
      * Sets twig template with reset-password.twig
      *
-     * @param array $params uri friendly token header/payload/signature
+     * @param array $params uri friendly JWT token header/payload/signature, given in URL
+     * 
      * @return void
      */
     public function resetPassword(array $params): void
@@ -190,6 +206,14 @@ class MembresController extends UserController
         }
     }
 
+    /**
+     * Updates user password.
+     * Use in forgotten password process
+     *
+     * @param array $params uri friendly JWT token header/payload/signature
+     * 
+     * @return void
+     */
     public function updatePassword(array $params):void
     {
         $this->template = 'client' . DS . 'invalid-validation-link.twig';

@@ -6,6 +6,9 @@ use Over_Code\Models\CommentModel;
 use Over_Code\Models\ArticlesModel;
 use Over_Code\Controllers\MainController;
 
+/**
+ * Articles pages controller
+ */
 class ArticlesController extends MainController
 {
     use \Over_Code\Libraries\Helpers;
@@ -15,7 +18,14 @@ class ArticlesController extends MainController
     private int $totalPages;
     private int $currentPage;
 
-    public function numero(array $params)
+    /**
+     * Sets params and template to twig, about single article page
+     *
+     * @param array $params slug given in URL
+     * 
+     * @return void
+     */
+    public function numero(array $params): void
     {
         $model = new ArticlesModel;
 
@@ -40,13 +50,15 @@ class ArticlesController extends MainController
     }
     
     /**
-     * Set a list of articles to be sent to rendering:
+     * Sets params and template to twig, about list of articles:
      * - all articles
      * - articles from a category
      *
-     * @param array $params
+     * @param array $params category or all, and page number, given in URL
+     * 
+     * @return void
      */
-    public function liste(array $params)
+    public function liste(array $params): void
     {
         $model = new ArticlesModel;
         

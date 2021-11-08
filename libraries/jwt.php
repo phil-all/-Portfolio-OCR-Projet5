@@ -12,6 +12,9 @@ Class Jwt
     private $header;
     private $key;
 
+    /**
+     * Initializes header and signatuire key attributes
+     */
     public function __construct()
     {
         $this->setHeader();

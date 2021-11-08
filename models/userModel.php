@@ -5,6 +5,9 @@ namespace Over_Code\Models;
 use PDO;
 use Over_Code\Libraries\Jwt;
 
+/**
+ * CommentModel class used to manage valide users
+ */
 class UserModel extends MainModel
 {
     use \Over_Code\Libraries\Helpers;

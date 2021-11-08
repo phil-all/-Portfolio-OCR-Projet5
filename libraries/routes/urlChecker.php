@@ -11,6 +11,13 @@ Class UrlChecker
 {
     use \Over_Code\Libraries\Helpers;
 
+    /**
+     * Instanciates UrlParser, and initializes following attributes:
+     * - hub (client by default)
+     * - class
+     * - method
+     * - params
+     */
     public function __construct()
     {
         $this->uri = new UrlParser();

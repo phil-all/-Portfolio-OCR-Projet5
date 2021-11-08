@@ -8,8 +8,9 @@ namespace Over_Code\Config;
 class Init
 {
     use \Over_code\Libraries\Helpers;
+
     /**
-     * Run initialisation
+     * Initializes constants
      *
      * @return void
      */

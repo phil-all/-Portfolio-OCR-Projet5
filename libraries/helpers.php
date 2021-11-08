@@ -7,6 +7,9 @@ use ReflectionClass;
 use Over_Code\Libraries\Globals\Env;
 use Over_Code\Libraries\Globals\Superglobals;
 
+/**
+ * Trait containing miscallaneous methos, used in classes as a tool box
+ */
 trait Helpers
 {
     /**

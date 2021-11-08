@@ -4,6 +4,7 @@ namespace Over_Code\Db;
 
 use PDO;
 use Exception;
+
 /**
  * Manage connection to database
  */
@@ -17,7 +18,7 @@ class DbConnect// extends PDO
     private $pdo;
 
     /**
-     * Initialise and set attributes
+     * Initialise and set PDO construct parameters needed
      */
     public function __construct()
     {
