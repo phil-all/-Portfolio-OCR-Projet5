@@ -1,21 +1,16 @@
 #---own---
-db/test*
-public/images/avatar/pack.txt
 test/
 .env
-README.md
-
-#---last---
 public/images/logo3.png
 public/images/logo60px.png
-controllers/client/portfolioController.php
 public/uploads/*.jpg
-views/client/portfolio*
 doc/*
-phpDocumentor.phar
-.phpdoc/
-docs/
 
-#---third---
+#---PHPDoumentor
+phpDocumentor.phar
+phpdoc.dist.xml
+.phpdoc/
+
+#---composer---
 vendor/
 composer.lock
