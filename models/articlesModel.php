@@ -8,7 +8,7 @@ use PDO;
  * Articles manager
  */
 class ArticlesModel extends MainModel
-{
+{   
     /**
      * Get Title from article by id
      *
@@ -20,7 +20,7 @@ class ArticlesModel extends MainModel
     {
         $query = 'SELECT title from article WHERE id = :id';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
 
@@ -44,7 +44,7 @@ class ArticlesModel extends MainModel
             ON a.user_serial = u.serial
         WHERE a.id = :id;';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
 
@@ -73,7 +73,7 @@ class ArticlesModel extends MainModel
         WHERE c.category = :category
         ORDER BY a.id DESC LIMIT :firstArticle, :perPage';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $firstArticle = ($currentPage * $perPage) - $perPage;
 
@@ -105,7 +105,7 @@ class ArticlesModel extends MainModel
             ON a.category_id = c.id
         ORDER BY a.id DESC LIMIT :firstArticle, :perPage';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $firstArticle = ($currentPage * $perPage) - $perPage;
 
@@ -152,7 +152,7 @@ class ArticlesModel extends MainModel
             ON a.category_id = c.id
         ORDER BY a.id DESC LIMIT 0, :count_articles';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':count_articles', $countNews, PDO::PARAM_INT);
 
@@ -174,7 +174,7 @@ class ArticlesModel extends MainModel
     {
         $query = 'SELECT EXISTS (SELECT * from article WHERE id = :id)';
         
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
 
@@ -192,7 +192,7 @@ class ArticlesModel extends MainModel
     {
         $query = 'SELECT COUNT(*) FROM article';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->execute();
 
@@ -214,7 +214,7 @@ class ArticlesModel extends MainModel
             ON a.category_id = c.id 
         WHERE c.category = :category';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':category', $category, PDO::PARAM_STR);
 
@@ -257,7 +257,7 @@ class ArticlesModel extends MainModel
                         ON a.category_id = c.id
                     WHERE c.category = :category)';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':category', $value, PDO::PARAM_STR);
 

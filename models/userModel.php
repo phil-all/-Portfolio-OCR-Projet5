@@ -31,7 +31,7 @@ class UserModel extends MainModel
         FROM user
         WHERE email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
@@ -54,7 +54,7 @@ class UserModel extends MainModel
         FROM user
         WHERE email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
@@ -81,7 +81,7 @@ class UserModel extends MainModel
             ON u.user_status_id = s.id
         WHERE u.email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
@@ -128,7 +128,7 @@ class UserModel extends MainModel
         SET token = NULL
         WHERE email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':email', $this->email, PDO::PARAM_INT);
 
@@ -172,7 +172,7 @@ class UserModel extends MainModel
             :user_status_id,
             :created_at)';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':first_name', $this->get_POST('first_name'), PDO::PARAM_STR);
         $stmt->bindValue(':last_name', $this->get_POST('last_name'),  PDO::PARAM_STR);
@@ -203,7 +203,7 @@ class UserModel extends MainModel
         $query = 'SELECT password FROM user
         WHERE email = :email AND token = :token';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->bindValue(':token', $token, PDO::PARAM_STR);
@@ -302,7 +302,7 @@ class UserModel extends MainModel
         FROM user
         WHERE email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
@@ -325,7 +325,7 @@ class UserModel extends MainModel
         SET token = :token
         WHERE email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':token', $token, PDO::PARAM_STR);
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
@@ -347,7 +347,7 @@ class UserModel extends MainModel
         SET token_datetime = :datetime
         WHERE email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':datetime', $datetime, PDO::PARAM_STR);
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
@@ -366,7 +366,7 @@ class UserModel extends MainModel
         SET ip_log = :ip
         WHERE email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':ip', $this->get_SERVER('REMOTE_ADDR'), PDO::PARAM_STR);
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
@@ -387,7 +387,7 @@ class UserModel extends MainModel
         $query = 'DELETE FROM user
         WHERE email = :email AND user_status_id = 1';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
@@ -421,7 +421,7 @@ class UserModel extends MainModel
             ON u.avatar_id = a.id
         WHERE email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 

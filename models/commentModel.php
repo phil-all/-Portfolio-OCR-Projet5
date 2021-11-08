@@ -34,7 +34,7 @@ class CommentModel extends MainModel
             :article_id,
             1)';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':content', $content, PDO::PARAM_STR);
         $stmt->bindValue(':date', $date, PDO::PARAM_STR);
@@ -64,7 +64,7 @@ class CommentModel extends MainModel
             ON u.avatar_id = a.id
         WHERE article_id = :article_id';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':article_id', $article_id, PDO::PARAM_INT);
 
