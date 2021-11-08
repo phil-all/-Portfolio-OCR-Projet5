@@ -7,7 +7,7 @@ use Over_Code\Libraries\Routes\UrlParser;
 /**
  * Checking Url conformity with controller classes
  */
-Class UrlChecker
+class UrlChecker
 {
     use \Over_Code\Libraries\Helpers;
 
@@ -23,7 +23,7 @@ Class UrlChecker
         $this->uri = new UrlParser();
         $this->hub = 'Client';
         $this->class = '\Over_Code\controllers\\' . $this->hub . '\\' . $this->uri->getControllerClass() . 'Controller';
-        $this->method = $this->undashedMethod($this->uri->getMethodName()); 
+        $this->method = $this->undashedMethod($this->uri->getMethodName());
         $this->params = $this->uri->getAttributesList();
     }
 

@@ -18,4 +18,4 @@ Init::start();
 
 require_once ROOT_DS . 'vendor' . DS . 'autoload.php';
 
-$router = new Router;
+$router = new Router();

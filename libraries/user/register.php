@@ -15,12 +15,12 @@ trait Register
      * Checks if an given user status is on pending, used on validation account process
      *
      * @param string $email
-     * 
+     *
      * @return boolean
      */
     public function isPending(string $email): bool
     {
-        $this->pdo = new DbConnect;
+        $this->pdo = new DbConnect();
 
         $query = 'SELECT user_status_id FROM user WHERE email = :email';
 
@@ -37,12 +37,12 @@ trait Register
      * Set status user on active
      *
      * @param string $email
-     * 
+     *
      * @return void
      */
     public function accountValidation(string $email): void
     {
-        $this->pdo = new DbConnect;
+        $this->pdo = new DbConnect();
 
         $query = 'UPDATE user
         SET user_status_id = 2
@@ -60,21 +60,21 @@ trait Register
      *
      * @return boolean
      */
-    private function registration_form_test(): bool
+    private function registerFormTest(): bool
     {
         return (
-            $this->isNameValid($this->get_POST('first_name')) &&
-            $this->isNamevalid($this->get_POST('last_name')) &&
-            $this->isPseudoValid($this->get_POST('pseudo')) &&
-            $this->isMailValid($this->get_POST('email')) &&
-            $this->isPassValid($this->get_POST('password')) &&
-            $this->isConfirmPassValid($this->get_POST('password'), $this->get_POST('confirm_password'))
+            $this->isNameValid($this->getPOST('first_name')) &&
+            $this->isNamevalid($this->getPOST('last_name')) &&
+            $this->isPseudoValid($this->getPOST('pseudo')) &&
+            $this->isMailValid($this->getPOST('email')) &&
+            $this->isPassValid($this->getPOST('password')) &&
+            $this->isConfirmPassValid($this->getPOST('password'), $this->getPOST('confirm_password'))
         );
     }
 
     private function expiredValidation(int $timestamp, string $email): bool
     {
-        $this->pdo = new DbConnect;
+        $this->pdo = new DbConnect();
 
         if ($this->isMailExists($email)) {
             $query = 'SELECT token FROM user
@@ -87,14 +87,14 @@ trait Register
             $stmt->execute();
             $result = $stmt->fetchColumn();
 
-            $jwt = new Jwt;
-            $payload = $jwt->decode_data($result, 1);
+            $jwt = new Jwt();
+            $payload = $jwt->decodeDatas($result, 1);
 
             if ($payload['exp'] > $timestamp) {
                 return false;
             }
 
-            $this->delete_pendingUser($email);
+            $this->deletePendingUser($email);
         }
 
         return true;
@@ -110,7 +110,7 @@ trait Register
      * - 0 or more single quote
      *
      * @param string $name
-     * 
+     *
      * @return boolean
      */
     public function isNameValid(string $name): bool
@@ -124,9 +124,9 @@ trait Register
      * - at least 4 letters (lowercase or uppercase)
      * - 0 or more digit
      * - 0 or more underscore
-     * 
+     *
      * @param string $pseudo
-     * 
+     *
      * @return boolean
      */
     public function isPseudoValid(string $pseudo): bool
@@ -138,12 +138,12 @@ trait Register
      * Checks if an email already exists in database
      *
      * @param string $email
-     * 
+     *
      * @return boolean
      */
     public function isMailExists(string $email): bool   //// deprecated and actually unsed ////
     {
-        $this->pdo = new DbConnect;
+        $this->pdo = new DbConnect();
         
         $query = 'SELECT count(*)
         FROM user
@@ -162,7 +162,7 @@ trait Register
      * Checks if an email address is valid
      *
      * @param string $email
-     * 
+     *
      * @return boolean
      */
     public function isMailValid(string $email): bool
@@ -179,7 +179,7 @@ trait Register
      * - at least 1 special character in the list : !@#$%-+
      *
      * @param string $pass
-     * 
+     *
      * @return boolean
      */
     public function isPassValid(string $pass): bool
@@ -192,7 +192,7 @@ trait Register
      *
      * @param string $pass
      * @param string $confirmPass
-     * 
+     *
      * @return boolean
      */
     public function isConfirmPassValid(string $pass, string $confirmPass): bool

@@ -13,6 +13,6 @@ abstract class MainModel
      */
     public function __construct()
     {
-        $this->pdo = new DbConnect;
+        $this->pdo = new DbConnect();
     }
 }

@@ -1,14 +1,11 @@
 <?php
-//
-//namespace Over_Code\Controllers\Admin;
-//
-//class Controller
-//{
-//    function __construct()
-//    {
-//        echo 'admin Controller';
-//    }
-//    
-//}
 
-//echo 'admin';
+namespace Over_Code\Controllers\Admin;
+
+class Controller
+{
+    public function __construct()
+    {
+        echo 'admin Controller';
+    }
+}

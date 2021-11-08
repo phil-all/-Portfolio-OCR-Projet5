@@ -24,7 +24,7 @@ class Twig
     {
         $loader = new FilesystemLoader(VIEWS_PATH);
 
-        $twig = new \Twig\Environment($loader, [
+        $twig = new() \Twig\Environment($loader, [
             'debug' => true,
             'cache' => false,
         ]);

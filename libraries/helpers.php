@@ -29,7 +29,7 @@ trait Helpers
      * Return a reflection class instance
      *
      * @param string $class
-     * 
+     *
      * @return mixed
      */
     public function getReflection(string $class): mixed
@@ -48,7 +48,7 @@ trait Helpers
      * - result: "hello-world-i-m-happy"
      *
      * @param string $string
-     * 
+     *
      * @return string
      */
     public static function toSlug(string $string): string
@@ -79,7 +79,7 @@ trait Helpers
      * Check if a string contain only numbers
      *
      * @param string $param
-     * 
+     *
      * @return boolean
      */
     public function onlyInteger(string $param): bool
@@ -98,43 +98,43 @@ trait Helpers
      */
     private static function globals(): object
     {
-        return new Superglobals;
+        return new Superglobals();
     }
 
     /**
      * Gets an input GET by its key
      *
      * @param string $key
-     * 
+     *
      * @return string
      */
-    public static function get_GET(string $key): string
+    public static function getGET(string $key): string
     {
-        return self::globals()->get_GET($key);
+        return self::globals()->getGET($key);
     }
 
     /**
      * Gets an input POST by its key
      *
      * @param string $key
-     * 
+     *
      * @return string
      */
-    public static function get_POST(string $key): string
+    public static function getPOST(string $key): string
     {
-        return self::globals()->get_POST($key);
+        return self::globals()->getPOST($key);
     }
 
     /**
      * Gets an input COOKIE by its key
      *
      * @param string $key
-     * 
+     *
      * @return string
      */
-    public static function get_COOKIE(string $key): string
+    public static function getCOOKIE(string $key): string
     {
-        return self::globals()->get_COOKIE($key);
+        return self::globals()->getCOOKIE($key);
     }
 
     /**
@@ -143,9 +143,9 @@ trait Helpers
      * @param string $key
      * @return string
      */
-    public static function get_SERVER(string $key): string
+    public static function getSERVER(string $key): string
     {
-        return self::globals()->get_SERVER($key);
+        return self::globals()->getSERVER($key);
     }
 
     /**
@@ -153,12 +153,12 @@ trait Helpers
      *
      * @param string $name
      * @param string $value
-     * 
+     *
      * @return void
      */
-    public function set_COOKIE(string $name, string $value): void
+    public function setCOOKIE(string $name, string $value): void
     {
-        self::globals()->set_COOKIE($name, $value);
+        self::globals()->setCOOKIE($name, $value);
     }
 
 
@@ -173,18 +173,18 @@ trait Helpers
      */
     private static function env(): object
     {
-        return new Env;
+        return new Env();
     }
 
     /**
      * * Gets an input ENV by its key
      *
      * @param string $key
-     * 
+     *
      * @return mixed
      */
-    public static function get_ENV(string $key): mixed
+    public static function getENV(string $key): mixed
     {
         return self::env()->get($key);
-    }  
+    }
 }

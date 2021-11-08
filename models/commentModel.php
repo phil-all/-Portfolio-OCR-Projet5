@@ -6,7 +6,7 @@ use PDO;
 
 /**
  * CommentModel class used to manage valide users **comments** on articles
- */ 
+ */
 class CommentModel extends MainModel
 {
     /**
@@ -16,7 +16,7 @@ class CommentModel extends MainModel
      * @param string $date
      * @param integer $user_serial
      * @param integer $article_id
-     * 
+     *
      * @return void
      */
     public function create(string $content, string $date, int $user_serial, int $article_id): void
@@ -45,10 +45,10 @@ class CommentModel extends MainModel
     }
 
     /**
-     * Get all comments from one article 
+     * Get all comments from one article
      *
      * @param integer $article_id
-     * 
+     *
      * @return array
      */
     public function readAll(int $article_id): array
@@ -72,5 +72,4 @@ class CommentModel extends MainModel
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 }

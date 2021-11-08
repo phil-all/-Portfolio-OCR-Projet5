@@ -9,10 +9,10 @@ class Autoloader
 {
     /**
      * Run the autoload register
-     * 
+     *
      * @return void
      */
-    static function start(): void
+    public static function start(): void
     {
         spl_autoload_register(array(
             __CLASS__,
@@ -24,7 +24,7 @@ class Autoloader
      * Require called class file
      *
      * @param string $class called class with namespace, ex: Over_Code\Folder\Sub-folder\ClassName
-     * 
+     *
      * @return void
      */
     public static function load(string $class): void

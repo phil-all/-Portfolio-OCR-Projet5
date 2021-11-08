@@ -21,17 +21,17 @@ class AccueilController extends MainController
     {
         $this->template = 'client' . DS . 'accueil.twig';
         
-        $lastNews = new ArticlesModel;
+        $lastNews = new ArticlesModel();
         $this->lastNews = $lastNews->getNews(4);
 
-        foreach($this->lastNews as $key) { 
-            $key['slug'] = $this->toSlug($key['title']);            
+        foreach ($this->lastNews as $key) {
+            $key['slug'] = $this->toSlug($key['title']);
             array_shift($this->lastNews);
             array_push($this->lastNews, $key);
         }
 
         $this->params = array(
             'lastNews' => $this->lastNews
-        );        
+        );
     }
 }

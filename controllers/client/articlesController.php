@@ -22,12 +22,12 @@ class ArticlesController extends MainController
      * Sets params and template to twig, about single article page
      *
      * @param array $params slug given in URL
-     * 
+     *
      * @return void
      */
     public function numero(array $params): void
     {
-        $model = new ArticlesModel;
+        $model = new ArticlesModel();
 
         $this->template = 'pageNotFound.twig';
 
@@ -35,18 +35,18 @@ class ArticlesController extends MainController
             $slug = $this->toSlug($model->getTitle((int)$params[0]));
 
             if ($slug != $params[1]) {
-                $url = SITE_ADRESS . DS . 'articles' . DS . 'numero' . DS .$params[0] . DS . $slug;
+                $url = SITE_ADRESS . DS . 'articles' . DS . 'numero' . DS . $params[0] . DS . $slug;
                 $this->redirect($url);
             }
 
             $this->template = 'client' . DS . 'single-article.twig';
             $this->params = $model->getSingleArticle($params[0]);
 
-            $comment = new CommentModel;            
+            $comment = new CommentModel();
             if (!empty($comment->readAll($params[0]))) {
                 $this->params['comments'] =  $comment->readAll($params[0]);
             }
-        }        
+        }
     }
     
     /**
@@ -55,12 +55,12 @@ class ArticlesController extends MainController
      * - articles from a category
      *
      * @param array $params category or all, and page number, given in URL
-     * 
+     *
      * @return void
      */
     public function liste(array $params): void
     {
-        $model = new ArticlesModel;
+        $model = new ArticlesModel();
         
         $this->currentPage = (int)(explode('-', $params[1]))[1];
         $this->totalPosts = $model->getCount($params[0]);
@@ -69,15 +69,15 @@ class ArticlesController extends MainController
 
         if ($this->currentPage <= $this->totalPages && explode('-', $params[1])[0] === 'page') {
             $this->articles = $model->getArticlesList($this->currentPage, $this->perPage, $params[0]);
-            $this->template = 'client' . DS .'articles.twig';
+            $this->template = 'client' . DS . 'articles.twig';
 
-            if ($model->categoryExist($params[0])) {                
+            if ($model->categoryExist($params[0])) {
                 $this->template = 'client' . DS . 'articles-by-category.twig';
                 $this->params['category'] = $params[0];
             }
 
-            foreach($this->articles as $key) { 
-                $key['slug'] = $this->toSlug($key['title']);                
+            foreach ($this->articles as $key) {
+                $key['slug'] = $this->toSlug($key['title']);
                 array_shift($this->articles);
                 array_push($this->articles, $key);
             }

@@ -8,7 +8,7 @@ use Exception;
 /**
  * Manage connection to database
  */
-class DbConnect// extends PDO
+class DbConnect
 {
     use \Over_Code\Libraries\Helpers;
 
@@ -22,9 +22,9 @@ class DbConnect// extends PDO
      */
     public function __construct()
     {
-        $this->dsn = self::get_Env('DSN');
-        $this->user = self::get_Env('DB_USERNAME');
-        $this->pass = self::get_Env('DB_PASSWORD');
+        $this->dsn = self::getEnv('DSN');
+        $this->user = self::getEnv('DB_USERNAME');
+        $this->pass = self::getEnv('DB_PASSWORD');
     }
     
     /**
@@ -37,14 +37,10 @@ class DbConnect// extends PDO
         $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
         $pdo_options[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET NAMES utf8';
  
-        try
-        {
+        try {
             return $this->pdo ?? $this->pdo = new PDO($this->dsn, $this->user, $this->pass, $pdo_options);
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return "Erreur de connexion :" . $e->getMessage();
         }
-        
     }
 }

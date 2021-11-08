@@ -7,7 +7,7 @@ use Over_Code\Libraries\Routes\UrlChecker;
 /**
  * Instantiate the good controller
  * call method corresponding to action
- * pass attributes needed with good type 
+ * pass attributes needed with good type
  */
 class Router
 {
@@ -19,7 +19,7 @@ class Router
      */
     public function __construct()
     {
-        $this->match = new UrlChecker;
+        $this->match = new UrlChecker();
         
         $controller = $this->getClass();
 
@@ -33,7 +33,7 @@ class Router
      * Return class for routing
      *
      * @param boolean $test
-     * 
+     *
      * @return string
      */
 

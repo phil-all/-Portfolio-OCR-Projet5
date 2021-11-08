@@ -16,11 +16,11 @@ trait ResetPassword
      *
      * @return boolean
      */
-    private function newPass_form_test(): bool
+    private function newPassFormTest(): bool
     {
         return (
-            $this->isPassValid($this->get_POST('password')) &&
-            $this->isConfirmPassValid($this->get_POST('password'), $this->get_POST('confirm_password'))
+            $this->isPassValid($this->getPOST('password')) &&
+            $this->isConfirmPassValid($this->getPOST('password'), $this->getPOST('confirm_password'))
         );
     }
 
@@ -28,15 +28,15 @@ trait ResetPassword
      * Set status user on active
      *
      * @param string $email
-     * 
+     *
      * @return void
      */
     public function newPassValidation(string $email): void
     {
         //argon2id only available if PHP has been compiled with Argon2 support
-        $algo = (defined('PASSWORD_ARGON2ID')) ? PASSWORD_ARGON2ID :PASSWORD_DEFAULT; 
+        $algo = (defined('PASSWORD_ARGON2ID')) ? PASSWORD_ARGON2ID : PASSWORD_DEFAULT;
         
-        $this->pdo = new DbConnect;
+        $this->pdo = new DbConnect();
 
         $query = 'UPDATE user
         SET password = :password
@@ -45,7 +45,7 @@ trait ResetPassword
         $stmt = $this->pdo->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-        $stmt->bindValue(':password', password_hash($this->get_POST('password'), $algo),  PDO::PARAM_STR);
+        $stmt->bindValue(':password', password_hash($this->getPOST('password'), $algo), PDO::PARAM_STR);
 
         $stmt->execute();
     }

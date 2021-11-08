@@ -8,12 +8,13 @@ use PDO;
  * Articles manager
  */
 class ArticlesModel extends MainModel
-{   
+{
+
     /**
      * Get Title from article by id
      *
      * @param int $articleId : article id
-     * 
+     *
      * @return string
      */
     public function getTitle(int $articleId): string
@@ -33,12 +34,20 @@ class ArticlesModel extends MainModel
      * Get one article details from its id
      *
      * @param int $articleId : article id
-     * 
+     *
      * @return array
      */
     public function getSingleArticle(int $articleId): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, a.created_at, a.last_update, a.chapo, a.content, a.img_path
+        $query = 'SELECT 
+            a.id,
+            u.first_name,
+            u.last_name,
+            a.title,
+            a.created_at,
+            a.last_update,
+            a.chapo, a.content,
+            a.img_path
         FROM article AS a
         JOIN user AS u
             ON a.user_serial = u.serial
@@ -58,8 +67,8 @@ class ArticlesModel extends MainModel
      *
      * @param int $currentPage
      * @param int $perPage
-     * @param string $category_name 
-     * 
+     * @param string $category_name
+     *
      * @return array
      */
     public function getCategoryArticles(int $currentPage, int $perPage, string $category_name): array
@@ -77,7 +86,7 @@ class ArticlesModel extends MainModel
 
         $firstArticle = ($currentPage * $perPage) - $perPage;
 
-        $stmt->bindValue(':firstArticle', $firstArticle, PDO::PARAM_INT);    
+        $stmt->bindValue(':firstArticle', $firstArticle, PDO::PARAM_INT);
         $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
         $stmt->bindValue(':category', $category_name, PDO::PARAM_STR);
 
@@ -92,7 +101,7 @@ class ArticlesModel extends MainModel
      *
      * @param int $currentPage
      * @param int $perPage
-     * 
+     *
      * @return array
      */
     public function getAllArticles(int $currentPage, int $perPage): array
@@ -109,7 +118,7 @@ class ArticlesModel extends MainModel
 
         $firstArticle = ($currentPage * $perPage) - $perPage;
 
-        $stmt->bindValue(':firstArticle', $firstArticle, PDO::PARAM_INT);    
+        $stmt->bindValue(':firstArticle', $firstArticle, PDO::PARAM_INT);
         $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
 
         $stmt->execute();
@@ -139,7 +148,7 @@ class ArticlesModel extends MainModel
      * Returns the x last articles
      *
      * @param integer $countNews : count of articles to retrun
-     * 
+     *
      * @return array
      */
     public function getNews(int $countNews): array
@@ -167,7 +176,7 @@ class ArticlesModel extends MainModel
      * - id exist in table
      *
      * @param mixed $articleId : article id to check
-     * 
+     *
      * @return boolean
      */
     public function idExist(int $articleId): bool
@@ -203,7 +212,7 @@ class ArticlesModel extends MainModel
      * Return count of articles from a given category
      *
      * @param string $category
-     * 
+     *
      * @return integer
      */
     public function getCategoryCount(string $category): int
@@ -228,7 +237,7 @@ class ArticlesModel extends MainModel
      * all articles or category articles
      *
      * @param string $param
-     * 
+     *
      * @return integer
      */
     public function getCount(string $param): int
@@ -238,14 +247,13 @@ class ArticlesModel extends MainModel
         }
 
         return $this->getArchivesCount();
-
     }
 
     /**
      * Checks if an article category exists
-     * 
+     *
      * @param string $value : value to check
-     * 
+     *
      * @return boolean
      */
     public function categoryExist(string $value): bool

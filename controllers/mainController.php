@@ -22,31 +22,31 @@ abstract class MainController
      *
      * @param string $action
      * @param array $params
-     * 
+     *
      * @return void
      */
     public function __construct(string $action, array $params = [])
     {
-        $jwt = new Jwt;
+        $jwt = new Jwt();
         $token = '';
         $userToTwig = [];
 
-        if (!empty($this->get_COOKIE('token'))) {
-            $token =  $this->get_COOKIE('token');
+        if (!empty($this->getCOOKIE('token'))) {
+            $token =  $this->getCOOKIE('token');
         }
 
         if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
-            $user = new UserModel;
+            $user = new UserModel();
 
-            $payload = $jwt->decode_data($token, 1);
-            $ipLog = $user->read_ipLog($payload['email']);
-            $remoteIp = $this->get_SERVER('REMOTE_ADDR');
+            $payload = $jwt->decodeDatas($token, 1);
+            $ipLog = $user->readIpLog($payload['email']);
+            $remoteIp = $this->getSERVER('REMOTE_ADDR');
 
             if ($jwt->isNotExpired($payload) && ($ipLog === $remoteIp)) {
                 $user->hydrate('renewal', $payload['email'], 900); // exp 15 min
 
-                $this->set_COOKIE('token', $user->get_token());
-                $this->set_COOKIE('token_obj', 'renewal');
+                $this->setCOOKIE('token', $user->getToken());
+                $this->setCOOKIE('token_obj', 'renewal');
 
                 $userToTwig = array(
                     'user' => $user->userInArray($payload['email'])
@@ -56,7 +56,7 @@ abstract class MainController
 
         $this->$action($params);
 
-        $this->twig = new Twig;
+        $this->twig = new Twig();
 
         $this->params = array_merge($userToTwig, $this->params);
 

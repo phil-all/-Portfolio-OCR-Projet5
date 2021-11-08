@@ -16,16 +16,16 @@ class Init
      */
     public static function start(): void
     {
-        $requestScheme = self::get_SERVER('REQUEST_SCHEME');
+        $requestScheme = self::getSERVER('REQUEST_SCHEME');
 
-        $serverName = self::get_SERVER('SERVER_NAME');
+        $serverName = self::getSERVER('SERVER_NAME');
 
-        $scriptName = self::get_SERVER('SCRIPT_NAME');
+        $scriptName = preg_replace('[\/index.php]', '', self::getSERVER('SCRIPT_NAME'));
 
         // Define site
         define('SITE_NAME', 'Over_Code');
 
-        define('SITE_ADRESS' , $requestScheme . '://' . $serverName . preg_replace('[\/index.php]', '', $scriptName));
+        define('SITE_ADRESS', $requestScheme . '://' . $serverName . $scriptName);
         
         // Define path constants
         define('CONTROLLERS_PATH', ROOT_DS . 'controllers' . DS);

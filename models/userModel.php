@@ -25,10 +25,10 @@ class UserModel extends MainModel
      * Read all datas from a given user, identified by its email
      *
      * @param string $email
-     * 
+     *
      * @return array
      */
-    public function read_user(string $email): array
+    public function readUser(string $email): array
     {
         $query = 'SELECT *
         FROM user
@@ -45,13 +45,13 @@ class UserModel extends MainModel
 
     /**
      * Checks if a **password** is correct for a given **email**
-     * 
+     *
      * @param string $email
      * @param string $pass
-     * 
+     *
      * @return boolean
      */
-     public function auth(string $email, string $pass): bool
+    public function auth(string $email, string $pass): bool
     {
         $query = 'SELECT password
         FROM user
@@ -71,7 +71,7 @@ class UserModel extends MainModel
     /**
      * Return the user status (pending, active or suspended) from connection log email
      * Used on login user process
-     * 
+     *
      * @param string $email
      *
      * @return string
@@ -99,21 +99,21 @@ class UserModel extends MainModel
      * @param string $subject sub claim in token payload
      * @param string $email
      * @param int|null $gap difference in seconds between token timestamp and expiration
-     * 
+     *
      * @return void
-     */ 
+     */
     public function hydrate(string $subject, string $email, ?int $gap): void
     {
-        $jwt = new Jwt;
+        $jwt = new Jwt();
         $token = $jwt->generateToken($subject, $email, $gap);
 
-        $this->store_token($token, $email);
+        $this->updateToken($token, $email);
 
-        $this->store_token_datetime(date('Y-m-d H:i:s'), $email);
+        $this->updateTokenDatetime(date('Y-m-d H:i:s'), $email);
 
-        $userDatas = $this->read_user($email);
+        $userDatas = $this->readUser($email);
         
-        foreach($userDatas as $key => $value) {
+        foreach ($userDatas as $key => $value) {
             $this->$key = $value;
         }
     }
@@ -125,7 +125,7 @@ class UserModel extends MainModel
      *
      * @return void
      */
-    public function store_tokenNull(): void
+    public function updateTokenNull(): void
     {
         $query = 'UPDATE user
         SET token = NULL
@@ -140,17 +140,17 @@ class UserModel extends MainModel
 
     /**
      * Create in database an user with status on 'pending',
-     * from get_POST datas
+     * from getPOST datas
      *
      * @param string $token
      * @param string $date_time
-     * 
+     *
      * @return void
      */
-     public function createUser(string $token, string $date_time): void
+    public function createUser(string $token, string $date_time): void
     {
         //argon2id only available if PHP has been compiled with Argon2 support
-        $algo = (defined('PASSWORD_ARGON2ID')) ? PASSWORD_ARGON2ID :PASSWORD_DEFAULT;
+        $algo = (defined('PASSWORD_ARGON2ID')) ? PASSWORD_ARGON2ID : PASSWORD_DEFAULT;
 
         $query = 'INSERT INTO user (
             first_name,
@@ -177,31 +177,31 @@ class UserModel extends MainModel
 
         $stmt = $this->pdo->getPdo()->prepare($query);
 
-        $stmt->bindValue(':first_name', $this->get_POST('first_name'), PDO::PARAM_STR);
-        $stmt->bindValue(':last_name', $this->get_POST('last_name'),  PDO::PARAM_STR);
-        $stmt->bindValue(':pseudo', $this->get_POST('pseudo'),  PDO::PARAM_STR);
-        $stmt->bindValue(':email', $this->get_POST('email'),  PDO::PARAM_STR);
-        $stmt->bindValue(':password', password_hash($this->get_POST('password'), $algo),  PDO::PARAM_STR);
-        $stmt->bindValue(':avatar_id', (int)$this->get_POST('avatar_id'),  PDO::PARAM_INT);
-        $stmt->bindValue(':token', $token,  PDO::PARAM_STR);
-        $stmt->bindValue(':token_datetime',$date_time, PDO::PARAM_STR);
-        $stmt->bindValue(':user_status_id', 1,  PDO::PARAM_INT);
+        $stmt->bindValue(':first_name', $this->getPOST('first_name'), PDO::PARAM_STR);
+        $stmt->bindValue(':last_name', $this->getPOST('last_name'), PDO::PARAM_STR);
+        $stmt->bindValue(':pseudo', $this->getPOST('pseudo'), PDO::PARAM_STR);
+        $stmt->bindValue(':email', $this->getPOST('email'), PDO::PARAM_STR);
+        $stmt->bindValue(':password', password_hash($this->getPOST('password'), $algo), PDO::PARAM_STR);
+        $stmt->bindValue(':avatar_id', (int)$this->getPOST('avatar_id'), PDO::PARAM_INT);
+        $stmt->bindValue(':token', $token, PDO::PARAM_STR);
+        $stmt->bindValue(':token_datetime', $date_time, PDO::PARAM_STR);
+        $stmt->bindValue(':user_status_id', 1, PDO::PARAM_INT);
         $stmt->bindValue(':created_at', $date_time, PDO::PARAM_STR);
 
         $stmt->execute();
     }
 
     /**
-     * Return password.
+     * Return hashed password from db.
      * Used **only** during validation process,
      * by MembresController class validation method.
      *
      * @param string $email
      * @param string $token
-     * 
+     *
      * @return string
      */
-    public function get_Pass(string $email, string $token): string
+    public function readPass(string $email, string $token): string
     {
         $query = 'SELECT password FROM user
         WHERE email = :email AND token = :token';
@@ -218,76 +218,76 @@ class UserModel extends MainModel
 
     /**
      * Get the value of serial
-     * 
+     *
      * @return int
-     */ 
-    public function get_serial(): int
+     */
+    public function getSerial(): int
     {
         return (int)$this->serial;
     }
 
     /**
      * Get the value of avatar_id
-     * 
+     *
      * @return int
-     */ 
-    public function get_avatarId(): int
+     */
+    public function getAvatarId(): int
     {
         return (int)$this->avatar_id;
     }
 
     /**
      * Get the value of last_name
-     * 
+     *
      * @return string
-     */ 
-    public function get_lastName(): string
+     */
+    public function getLastName(): string
     {
         return $this->last_name;
     }
 
     /**
      * Get the value of first_name
-     * 
+     *
      * @return string
-     */ 
-    public function get_firstName(): string
+     */
+    public function getFirstName(): string
     {
         return $this->first_name;
     }
 
     /**
      * Get the value of email
-     * 
+     *
      * @return string
-     */ 
-    public function get_email(): string
+     */
+    public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
      * Get the value of pseudo
-     * 
+     *
      * @return string
-     */ 
-    public function get_pseudo(): string
+     */
+    public function getPseudo(): string
     {
         return $this->pseudo;
     }
     
     /**
      * Get the value of password
-     */ 
-    public function get_password()
+     */
+    public function getPassword()
     {
         return $this->password;
-    }    
+    }
 
     /**
      * Get the value of token
-     */ 
-    public function get_token()
+     */
+    public function getToken()
     {
         return $this->token;
     }
@@ -296,10 +296,10 @@ class UserModel extends MainModel
      * Read in database the login IP address
      *
      * @param string $email
-     * 
+     *
      * @return string
      */
-    public function read_ipLog(string $email): string
+    public function readIpLog(string $email): string
     {
         $query = 'SELECT ip_log
         FROM user
@@ -319,10 +319,10 @@ class UserModel extends MainModel
      *
      * @param string $token
      * @param string $email.
-     * 
+     *
      * @return void
      */
-    public function store_token(string $token, string $email): void
+    public function updateToken(string $token, string $email): void
     {
         $query = 'UPDATE user
         SET token = :token
@@ -341,10 +341,10 @@ class UserModel extends MainModel
      *
      * @param string $datetime format Y-m-d H:i:s
      * @param string $email
-     * 
+     *
      * @return void
      */
-    public function store_token_datetime(string $datetime, string $email): void
+    public function updateTokenDatetime(string $datetime, string $email): void
     {
         $query = 'UPDATE user
         SET token_datetime = :datetime
@@ -363,7 +363,7 @@ class UserModel extends MainModel
      *
      * @return void
      */
-    public function store_ipLog($email): void
+    public function updateIpLog($email): void
     {
         $query = 'UPDATE user
         SET ip_log = :ip
@@ -371,7 +371,7 @@ class UserModel extends MainModel
 
         $stmt = $this->pdo->getPdo()->prepare($query);
 
-        $stmt->bindValue(':ip', $this->get_SERVER('REMOTE_ADDR'), PDO::PARAM_STR);
+        $stmt->bindValue(':ip', $this->getSERVER('REMOTE_ADDR'), PDO::PARAM_STR);
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
         $stmt->execute();
@@ -382,10 +382,10 @@ class UserModel extends MainModel
      * Only permitted to recreate user if non active and validation expired.
      *
      * @param string $email
-     * 
+     *
      * @return void
      */
-    private function delete_pendingUser(string $email): void
+    private function deletePendingUser(string $email): void
     {
         $query = 'DELETE FROM user
         WHERE email = :email AND user_status_id = 1';
@@ -407,7 +407,7 @@ class UserModel extends MainModel
      * - account creation date
      *
      * @param [type] $email
-     * 
+     *
      * @return array
      */
     public function userInArray($email): array

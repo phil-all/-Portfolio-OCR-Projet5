@@ -35,19 +35,19 @@ class MembresController extends UserController
     public function login(): void
     {
         $user = new UserModel();
-        $logmail = $this->get_POST('logmail');
-        $logpass = $this->get_POST('logpass');
+        $logmail = $this->getPOST('logmail');
+        $logpass = $this->getPOST('logpass');
 
         $auth = $user->auth($logmail, $logpass);
 
         $status = ($auth) ? $user->getStatus($logmail) : 'authentification-error';
 
         if ($status === 'active') {
-            $user->store_ipLog($logmail);
+            $user->updateIpLog($logmail);
             $user->hydrate('login', $logmail, 900); // exp 15 min
          
-            $this->set_COOKIE('token', $user->get_token());
-            $this->set_COOKIE('token_obj', 'login');
+            $this->setCOOKIE('token', $user->getToken());
+            $this->setCOOKIE('token_obj', 'login');
 
             $this->redirect(SITE_ADRESS);
         }
@@ -62,8 +62,8 @@ class MembresController extends UserController
      */
     public function deconnexion(): void
     {
-        $this->set_COOKIE('token', '');
-        $this->set_COOKIE('token_obj', 'logout');
+        $this->setCOOKIE('token', '');
+        $this->setCOOKIE('token_obj', 'logout');
         
         $this->redirect(SITE_ADRESS);
     }
@@ -78,19 +78,19 @@ class MembresController extends UserController
     {
           $this->template = 'client' . DS . 'registration-failed.twig';
 
-        if ($this->registration_form_test()) {
+        if ($this->registerFormTest()) {
             $jwt = new Jwt();
-            $token = $jwt->generateToken('registration', $this->get_POST('email'), 900); // 900s = 15 min
+            $token = $jwt->generateToken('registration', $this->getPOST('email'), 900); // 900s = 15 min
 
-            $twigMail = new Twig;
-            $mailTemplate = 'emails'. DS . 'validation-link.twig';
+            $twigMail = new Twig();
+            $mailTemplate = 'emails' . DS . 'validation-link.twig';
             $params = [
                 'token' => $jwt->tokenToUri($token)
             ];
 
-            $mail = new Email;
+            $mail = new Email();
             $mail->sendHtmlEmail(
-                [$this->get_POST('email')],
+                [$this->getPOST('email')],
                 'Confirmation d\'inscription - [Ne pas répondre]',
                 $twigMail->getTwig()->render($mailTemplate, $params)
             );
@@ -106,7 +106,7 @@ class MembresController extends UserController
      * Validates an user registration
      *
      * @param array $params uri friendly JWT token header/payload/signature
-     * 
+     *
      * @return void
      */
     public function validation(array $params): void
@@ -117,7 +117,7 @@ class MembresController extends UserController
         $token = $jwt->uriToToken($params);
 
         if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
-            $payload = $jwt->decode_data($token, 1);
+            $payload = $jwt->decodeDatas($token, 1);
 
             $email = $payload['email'];
                 
@@ -146,23 +146,23 @@ class MembresController extends UserController
     /**
      * Send an email to reset password to email address in POST,
      * and sets twig template with reset-password-enquiry-sent.twig
-     * 
+     *
      * @return void
      */
     public function resetPasswordEnquiry(): void
     {
         $jwt = new Jwt();
-        $token = $jwt->generateToken('reset password enquiry', $this->get_POST('email'), 900); // 900s = 15 min
+        $token = $jwt->generateToken('reset password enquiry', $this->getPOST('email'), 900); // 900s = 15 min
 
-        $twigMail = new Twig;
-        $mailTemplate = 'emails'. DS . 'reset-password-enquiry.twig';
+        $twigMail = new Twig();
+        $mailTemplate = 'emails' . DS . 'reset-password-enquiry.twig';
         $params = [
             'token' => $jwt->tokenToUri($token)
         ];
 
-        $mail = new Email;
+        $mail = new Email();
         $mail->sendHtmlEmail(
-            [$this->get_POST('email')],
+            [$this->getPOST('email')],
             'Récupération de compte - [Ne pas répondre]',
             $twigMail->getTwig()->render($mailTemplate, $params)
         );
@@ -174,22 +174,22 @@ class MembresController extends UserController
      * Sets twig template with reset-password.twig
      *
      * @param array $params uri friendly JWT token header/payload/signature, given in URL
-     * 
+     *
      * @return void
      */
     public function resetPassword(array $params): void
     {
         $this->template = 'client' . DS . 'invalid-validation-link.twig';
 
-        $jwt = new Jwt();      
+        $jwt = new Jwt();
         $token = $jwt->uriToToken($params);
 
         if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
-            $payload = $jwt->decode_data($token, 1);
+            $payload = $jwt->decodeDatas($token, 1);
 
             $email = $payload['email'];
                 
-            if ((time() < $payload['exp'])) {                
+            if ((time() < $payload['exp'])) {
                 $jwt = new Jwt();
                 $token = $jwt->generateToken('reset password', $email, 900); // 900s = 15 min
 
@@ -211,19 +211,19 @@ class MembresController extends UserController
      * Use in forgotten password process
      *
      * @param array $params uri friendly JWT token header/payload/signature
-     * 
+     *
      * @return void
      */
-    public function updatePassword(array $params):void
+    public function updatePassword(array $params): void
     {
         $this->template = 'client' . DS . 'invalid-validation-link.twig';
 
-        if ($this->newPass_form_test()) {
+        if ($this->newPassFormTest()) {
             $jwt = new Jwt();
             $token = $jwt->uriToToken($params);
 
             if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
-                $payload = $jwt->decode_data($token, 1);
+                $payload = $jwt->decodeDatas($token, 1);
 
                 $email = $payload['email'];
                     
