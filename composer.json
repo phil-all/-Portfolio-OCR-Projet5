@@ -32,5 +32,8 @@
             "Over_Code\\Models\\": "models/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.5.x-dev"
+    }
 }
