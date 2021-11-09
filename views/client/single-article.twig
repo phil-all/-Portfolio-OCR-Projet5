@@ -8,7 +8,7 @@
     <main>
         <article class="container col-md-8 justify-content-center">
             <h1 class="mt-5">{{ title }}</h1>
-            <h3>{{ chapo }}</h3>
+            <h3 class="mb-5">{{ chapo }}</h3>
             <div {% autoescape %}style="
                 background-image: url({{ constant('SITE_ADRESS') }}/public/uploads/{{ img_path }});
                 background-position: center;
@@ -22,34 +22,56 @@
             <p class="mt-5">{{ content }}</p>
         </article>
         <section><!-- start comments -->
-            <div class="container mt-5">
-                <div class="d-flex justify-content-center row">
-                    <div class="col-md-8 bg-white text-dark">
+            <div class="container col-md-8 justify-content-center">
+                <div class="container">
+                    <div class="bg-white text-dark">
                         <h4 class="mb-4 mt-2">Commentaires</h4>
                         {% for comment in comments %}
-                            <div class="d-flex flex-column comment-section">
-                                <div class="shadow p-3 mb-3 bg-body roundedmb-3">
-                                    <div class="d-flex flex-row user-info">
-                                        <img class="rounded-circle" {% autoescape %}src="{{ constant('SITE_ADRESS') }}/public/images/avatar/{{ comment.img_path }}" width="48">{% endautoescape %}                                         
-                                        <div class="d-flex flex-column justify-content-start ml-2">
-                                            <span class="d-block fw-bold name text-success">{{ comment.pseudo }}</span>
-                                            <span class="date text-black-50">Publié le - {{ comment.created_at }}</span>
+                            <!-- validated comments -->
+                            {% if comment.status == 'validate' %}
+                                <div class="m-2 d-flex flex-column comment-section">
+                                    <div class="shadow p-3 mb-3 bg-body rounded">
+                                        <div class="d-flex flex-row user-info">
+                                            <img class="rounded-circle" {% autoescape %}src="{{ constant('SITE_ADRESS') }}/public/images/avatar/{{ comment.img_path }}" width="48">{% endautoescape %}                                         
+                                            <div class="d-flex flex-column justify-content-start ml-2">
+                                                <span class="d-block fw-bold text-success">{{ comment.pseudo }}</span>
+                                                <span class="date text-black-50">Publié le - {{ comment.created_at }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <p class="comment-text">{{ comment.content }}</p>
                                         </div>
                                     </div>
-                                    <div class="mt-2">
-                                        <p class="comment-text">{{ comment.content }}</p>
+                                </div>
+                            {% endif %}<!-- End validated comments -->
+                        {% endfor %}
+                        {% for comment in comments %}
+                            <!-- pending comments -->
+                            {% if comment.status == 'pending' and comment.email == user.email%}
+                                <div class="m-2 d-flex flex-column comment-section">
+                                    <div class="shadow p-3 mb-3 bg-body rounded">
+                                        <div class="d-flex flex-row user-info">
+                                            <img class="rounded-circle" {% autoescape %}src="{{ constant('SITE_ADRESS') }}/public/images/avatar/{{ comment.img_path }}" width="48">{% endautoescape %}                                         
+                                            <div class="d-flex flex-column justify-content-start ml-2">
+                                                <span class="d-block fw-bold text-success">{{ comment.pseudo }}</span>
+                                                <span class="d-block text-danger">en attente de validation</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <p class="comment-text">{{ comment.content }}</p>
+                                        </div>
                                     </div>
-                                </div>                                
-                            </div>
+                                </div>
+                            {% endif %}<!-- End pending comments-->
                         {% endfor %}
                         {% if user is defined %}
-                            <form class="mt-2 bg-light p-2" method="post" action="#">
+                            <form class="mt-2 bg-light p-2" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/comment/post"{% endautoescape %} method="POST" id="comment">
                                 <div class="d-flex flex-row align-items-start">
                                     <img class="rounded-circle" {% autoescape %}src="{{ constant('SITE_ADRESS') }}/public/images/avatar/{{ user.img_path }}" width="30">{% endautoescape %}
                                     <textarea name="comment" class="form-control ml-1 shadow-none textarea" placeholder="..." style="height: 100px"></textarea>
                                 </div>
                                 <div class="mt-2 text-right">
-                                    <button class="btn btn-success btn-sm shadow-none" type="submit">Commenter</button>
+                                    <button class="btn btn-secondary btn-sm" type="submit">Commenter</button>
                                 </div>
                             </form>
                         {% endif %}                        
@@ -57,8 +79,10 @@
                 </div>
             </div>            
         </section><!-- end comments -->
-        {% autoescape %}
-        <a href="{{ constant('SITE_ADRESS') }}/articles/page-1">Tous les articles</a>     
-        {% endautoescape %}        
+        <section class="container col-md-8 justify-content-center mt-5 mb-5">
+            {% autoescape %}
+            <a href="{{ constant('SITE_ADRESS') }}/articles/liste/tous/page-1" class="btn btn-success">Tous les articles</a>     
+            {% endautoescape %}   
+        </section>             
     </main>
 {% endblock %}

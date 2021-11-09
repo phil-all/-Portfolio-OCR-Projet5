@@ -118,8 +118,6 @@ class UserModel extends MainModel
         }
     }
 
-
-
     /**
      * Set token on Null in database
      *
@@ -412,7 +410,8 @@ class UserModel extends MainModel
      */
     public function userInArray($email): array
     {
-        $query = 'SELECT 
+        $query = 'SELECT
+            u.serial,
             u.first_name,
             u.last_name,
             u.pseudo,

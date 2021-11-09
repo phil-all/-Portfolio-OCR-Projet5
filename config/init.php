@@ -26,6 +26,8 @@ class Init
         define('SITE_NAME', 'Over_Code');
 
         define('SITE_ADRESS', $requestScheme . '://' . $serverName . $scriptName);
+
+        define('SINGLE_ARTICLE', SITE_ADRESS . '/articles/numero/');
         
         // Define path constants
         define('CONTROLLERS_PATH', ROOT_DS . 'controllers' . DS);

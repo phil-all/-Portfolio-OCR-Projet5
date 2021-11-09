@@ -9,17 +9,18 @@ use PDO;
  */
 class CommentModel extends MainModel
 {
+    use \Over_Code\Libraries\Helpers;
+
     /**
      * Back-up a created comment, in database
      *
      * @param string $content
-     * @param string $date
-     * @param integer $user_serial
-     * @param integer $article_id
+     * @param integer $user user serial
+     * @param integer $article article id
      *
      * @return void
      */
-    public function create(string $content, string $date, int $user_serial, int $article_id): void
+    public function create(string $content, int $user, int $article): void
     {
         $query = 'INSERT INTO  comment (
             content,
@@ -37,9 +38,9 @@ class CommentModel extends MainModel
         $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':content', $content, PDO::PARAM_STR);
-        $stmt->bindValue(':date', $date, PDO::PARAM_STR);
-        $stmt->bindValue(':user_serial', $user_serial, PDO::PARAM_INT);
-        $stmt->bindValue(':article_id', $article_id, PDO::PARAM_INT);
+        $stmt->bindValue(':created_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+        $stmt->bindValue(':user_serial', $user, PDO::PARAM_INT);
+        $stmt->bindValue(':article_id', $article, PDO::PARAM_INT);
 
         $stmt->execute();
     }
@@ -51,10 +52,10 @@ class CommentModel extends MainModel
      *
      * @return array
      */
-    public function readAll(int $article_id): array
+    public function readValidated(int $article_id): array
     {
         $query = 'SELECT
-            c.id "comment_id", c.content, c.created_at, u.pseudo, s.status, a.img_path
+            c.id "comment_id", c.content, c.created_at, u.pseudo, u.email, s.status, a.img_path
         FROM comment AS c
         JOIN user AS u
             ON u.serial = c.user_serial
@@ -62,7 +63,9 @@ class CommentModel extends MainModel
             ON s.id = c.comment_status_id
         JOIN avatar AS a
             ON u.avatar_id = a.id
-        WHERE article_id = :article_id';
+        WHERE c.article_id = :article_id
+        AND c.comment_status_id != 3
+        ORDER BY created_at ASC';
 
         $stmt = $this->pdo->getPdo()->prepare($query);
 

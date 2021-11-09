@@ -43,8 +43,8 @@ class ArticlesController extends MainController
             $this->params = $model->getSingleArticle($params[0]);
 
             $comment = new CommentModel();
-            if (!empty($comment->readAll($params[0]))) {
-                $this->params['comments'] =  $comment->readAll($params[0]);
+            if (!empty($comment->readValidated($params[0]))) {
+                $this->params['comments'] =  $comment->readValidated($params[0]);
             }
         }
     }
