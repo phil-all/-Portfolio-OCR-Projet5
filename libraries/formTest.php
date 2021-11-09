@@ -39,6 +39,17 @@ class FormTest
         );
     }
 
+    public function contactTest(): bool
+    {
+        return (
+            $this->isNameValid($this->getPOST('first_name')) &&
+            $this->isNamevalid($this->getPOST('last_name')) &&
+            $this->isSubjectValid($this->getPOST('subject')) &&
+            $this->isMailValid($this->getPOST('email')) &&
+            $this->isMessageValid($this->getPOST('message'))
+        );
+    }
+
     /**
      * Checks if a name is valid.
      * Name have to contain between 1 and 32 characters, as follow :
@@ -113,5 +124,39 @@ class FormTest
     public function isConfirmPassValid(string $pass, string $confirmPass): bool
     {
         return ($pass === $confirmPass);
+    }
+
+    /**
+     * Checks if a contact subject is valid.
+     * Subject have to contain at least 10 characters, in following list :
+     * - lowercase
+     * - upper case
+     * - underscore
+     * - special character in the list : -+@
+     *
+     * @param string $pass
+     *
+     * @return boolean
+     */
+    private function isSubjectValid(string $subject):bool
+    {
+        return preg_match('~(?=.*[\w\-\+\@]){10}~', $subject);
+    }
+
+    /**
+     * Checks if a contact message content is valid.
+     * Subject have to contain at least 30 characters, in following list :
+     * - lowercase
+     * - upper case
+     * - underscore
+     * - special character in the list : -+.%
+     *
+     * @param string $pass
+     *
+     * @return boolean
+     */
+    private function isMessageValid(string $message):bool
+    {
+        return preg_match('~(?=.*[\w\-\+\.\%]){30}~', $message);
     }
 }
