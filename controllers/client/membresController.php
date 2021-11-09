@@ -6,6 +6,7 @@ use Over_Code\Libraries\Jwt;
 use Over_Code\Libraries\Twig;
 use Over_Code\Libraries\Email;
 use Over_Code\Models\UserModel;
+use Over_Code\Libraries\FormTest;
 use Over_Code\Controllers\UserController;
 
 /**
@@ -76,9 +77,11 @@ class MembresController extends UserController
      */
     public function register(): void
     {
-          $this->template = 'client' . DS . 'registration-failed.twig';
+        $this->template = 'client' . DS . 'registration-failed.twig';
 
-        if ($this->registerFormTest()) {
+        $form = new FormTest();
+
+        if ($form->registerTest()) {
             $jwt = new Jwt();
             $token = $jwt->generateToken('registration', $this->getPOST('email'), 900); // 900s = 15 min
 
@@ -218,7 +221,9 @@ class MembresController extends UserController
     {
         $this->template = 'client' . DS . 'invalid-validation-link.twig';
 
-        if ($this->newPassFormTest()) {
+        $form = new FormTest();
+
+        if ($form->newPassTest()) {
             $jwt = new Jwt();
             $token = $jwt->uriToToken($params);
 
