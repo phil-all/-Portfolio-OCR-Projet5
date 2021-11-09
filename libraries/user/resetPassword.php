@@ -11,20 +11,7 @@ use Over_Code\Libraries\Jwt;
  */
 trait ResetPassword
 {
-    /**
-     * Cheks datas from reset password form
-     *
-     * @return boolean
-     */
-    private function newPassFormTest(): bool
-    {
-        return (
-            $this->isPassValid($this->getPOST('password')) &&
-            $this->isConfirmPassValid($this->getPOST('password'), $this->getPOST('confirm_password'))
-        );
-    }
-
-    /**
+        /**
      * Set status user on active
      *
      * @param string $email

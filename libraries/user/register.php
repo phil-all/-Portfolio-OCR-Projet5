@@ -55,23 +55,6 @@ trait Register
         $stmt->execute();
     }
 
-    /**
-     * Cheks datas from registration form
-     *
-     * @return boolean
-     */
-    private function registerFormTest(): bool
-    {
-        return (
-            $this->isNameValid($this->getPOST('first_name')) &&
-            $this->isNamevalid($this->getPOST('last_name')) &&
-            $this->isPseudoValid($this->getPOST('pseudo')) &&
-            $this->isMailValid($this->getPOST('email')) &&
-            $this->isPassValid($this->getPOST('password')) &&
-            $this->isConfirmPassValid($this->getPOST('password'), $this->getPOST('confirm_password'))
-        );
-    }
-
     private function expiredValidation(int $timestamp, string $email): bool
     {
         $this->pdo = new DbConnect();
@@ -101,40 +84,6 @@ trait Register
     }
     
     /**
-     * Checks if a name is valid.
-     * Name have to contain between 1 and 32 characters, as follow :
-     * - at least 1 uppercase letter
-     * - 0 or more lowercase letter
-     * - 0 or more space
-     * - 0 or more dash
-     * - 0 or more single quote
-     *
-     * @param string $name
-     *
-     * @return boolean
-     */
-    public function isNameValid(string $name): bool
-    {
-        return preg_match('~^(?=.*[A-Z])[a-zA-z\s\-\']+$~', $name);
-    }
-
-    /**
-     * Checks if a pseudo is valid.
-     * Pseudo have to contain between 8 and 32 characters, as follow :
-     * - at least 4 letters (lowercase or uppercase)
-     * - 0 or more digit
-     * - 0 or more underscore
-     *
-     * @param string $pseudo
-     *
-     * @return boolean
-     */
-    public function isPseudoValid(string $pseudo): bool
-    {
-        return preg_match('~^(?=.*[a-zA-Z]{4,})[\w]{8,32}$~', $pseudo);
-    }
-
-    /**
      * Checks if an email already exists in database
      *
      * @param string $email
@@ -156,47 +105,5 @@ trait Register
         $stmt->execute();
 
         return $stmt->fetchColumn();
-    }
-
-    /**
-     * Checks if an email address is valid
-     *
-     * @param string $email
-     *
-     * @return boolean
-     */
-    public function isMailValid(string $email): bool
-    {
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
-    }
-
-    /**
-     * Checks if a password is valid.
-     * Password have to contain between 8 and 50 characters, as follow :
-     * - at least 1 lowercase
-     * - at least 1 upper case
-     * - at least one digit
-     * - at least 1 special character in the list : !@#$%-+
-     *
-     * @param string $pass
-     *
-     * @return boolean
-     */
-    public function isPassValid(string $pass): bool
-    {
-        return preg_match('~^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%\-+])[\w!@#$%\-+]{8,50}$~', $pass);
-    }
-
-    /**
-     * Checks if password is well confirmed
-     *
-     * @param string $pass
-     * @param string $confirmPass
-     *
-     * @return boolean
-     */
-    public function isConfirmPassValid(string $pass, string $confirmPass): bool
-    {
-        return ($pass === $confirmPass);
     }
 }
