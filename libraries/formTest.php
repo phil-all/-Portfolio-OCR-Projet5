@@ -46,7 +46,7 @@ class FormTest
             $this->isNamevalid($this->getPOST('last_name')) &&
             $this->isSubjectValid($this->getPOST('subject')) &&
             $this->isMailValid($this->getPOST('email')) &&
-            $this->isMessageValid($this->getPOST('message'))
+            $this->isMessageValid($this->getPOST('content'))
         );
     }
 
