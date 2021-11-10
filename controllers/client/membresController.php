@@ -93,7 +93,7 @@ class MembresController extends UserController
 
             $mail = new Email();
             $mail->sendHtmlEmail(
-                [$this->getPOST('email')],
+                $this->getPOST('email'),
                 'Confirmation d\'inscription - [Ne pas répondre]',
                 $twigMail->getTwig()->render($mailTemplate, $params)
             );
@@ -165,7 +165,7 @@ class MembresController extends UserController
 
         $mail = new Email();
         $mail->sendHtmlEmail(
-            [$this->getPOST('email')],
+            $this->getPOST('email'),
             'Récupération de compte - [Ne pas répondre]',
             $twigMail->getTwig()->render($mailTemplate, $params)
         );

@@ -14,6 +14,27 @@ class Email
     use \Over_Code\Libraries\Helpers;
 
     /**
+     * Use in sending mails methods. Sets :
+     * - a transport
+     * - a mailer using created Transport
+     * - send the message
+     *
+     * @param Swift_Message $message contain informations to, from, title/subject, content
+     * 
+     * @return void
+     */
+    private function send(Swift_Message $message): void
+    {
+        $transport = (new Swift_SmtpTransport($this->getENV('SMTP_SERVER'), $this->getENV('SMTP_PORT')))
+            ->setUsername($this->getENV('SMTP_USERNAME'))
+            ->setPassword($this->getENV('SMTP_PASSWORD'));
+        
+        $mailer = new Swift_Mailer($transport);
+
+        $mailer->send($message);
+    }
+
+    /**
      * Send an HTML email
      *
      * @param array $reciever address(es) targeted by this email
@@ -22,20 +43,14 @@ class Email
      *
      * @return void
      */
-    public function sendHtmlEmail(array $reciever, string $title, string $body): void
+    public function sendHtmlEmail(string $reciever, string $title, string $body): void
     {
-        $transport = (new Swift_SmtpTransport($this->getENV('SMTP_SERVER'), $this->getENV('SMTP_PORT')))
-            ->setUsername($this->getENV('SMTP_USERNAME'))
-            ->setPassword($this->getENV('SMTP_PASSWORD'));
-
-        $mailer = new Swift_Mailer($transport);
-
         $message = (new Swift_Message($title))
-            ->setFrom(['team.overcode@example.com' => 'Over_code Team'])
-            ->setTo($reciever)
+            ->setFrom([self::getENV('ADMIN_MAIL') => self::getENV('ADMIN_NAME')])
+            ->setTo([$reciever])
             ->setBody($body, 'text/html');
 
-        $mailer->send($message);
+        $this->send($message);
     }
 
     /**
@@ -51,18 +66,11 @@ class Email
      */
     public function sendTextEmail(string $firstName, string $lastName, string $email, string $subject, string $content): void
     {
-        $transport = (new Swift_SmtpTransport($this->getENV('SMTP_SERVER'), $this->getENV('SMTP_PORT')))
-            ->setUsername($this->getENV('SMTP_USERNAME'))
-            ->setPassword($this->getENV('SMTP_PASSWORD'));
-
-        $mailer = new Swift_Mailer($transport);
-
-        // Create a message
         $message = (new Swift_Message($subject))
         ->setFrom([$email => $firstName . ' ' . $lastName])
-        ->setTo(['receiver@domain.org', 'other@domain.org' => 'A name'])
+        ->setTo([self::getENV('ADMIN_MAIL') => self::getENV('ADMIN_NAME')])
         ->setBody($content);
 
-        $mailer->send($message);
+        $this->send($message);
     }
 }
