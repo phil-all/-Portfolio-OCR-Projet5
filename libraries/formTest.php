@@ -138,7 +138,7 @@ class FormTest
      *
      * @return boolean
      */
-    private function isSubjectValid(string $subject):bool
+    private function isSubjectValid(string $subject): bool
     {
         return preg_match('~(?=.*[\w\-\+\@]){10}~', $subject);
     }
@@ -155,7 +155,7 @@ class FormTest
      *
      * @return boolean
      */
-    private function isMessageValid(string $message):bool
+    private function isMessageValid(string $message): bool
     {
         return preg_match('~(?=.*[\w\-\+\.\%]){30}~', $message);
     }

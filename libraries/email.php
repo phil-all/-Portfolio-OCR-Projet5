@@ -20,7 +20,7 @@ class Email
      * - send the message
      *
      * @param Swift_Message $message contain informations to, from, title/subject, content
-     * 
+     *
      * @return void
      */
     private function send(Swift_Message $message): void
@@ -56,18 +56,18 @@ class Email
     /**
      * Send a text email from contact form to site admin
      *
-     * @param string $firstName
-     * @param string $lastName
+     * @param string $f_Name first name
+     * @param string $l_Name last name
      * @param string $email
      * @param string $subject
      * @param string $content
-     * 
+     *
      * @return void
      */
-    public function sendTextEmail(string $firstName, string $lastName, string $email, string $subject, string $content): void
+    public function sendTextEmail(string $f_Name, string $l_Name, string $email, string $subject, string $content): void
     {
         $message = (new Swift_Message($subject))
-        ->setFrom([$email => $firstName . ' ' . $lastName])
+        ->setFrom([$email => $f_Name . ' ' . $l_Name])
         ->setTo([self::getENV('ADMIN_MAIL') => self::getENV('ADMIN_NAME')])
         ->setBody($content);
 

@@ -24,7 +24,7 @@ class ContactController extends MainController
             $lastName = $this->getPOST('last_name');
             $email = $this->getPOST('email');
             $subject = $this->getPOST('subject');
-            $content = $this->getPOST('content');   
+            $content = $this->getPOST('content');
             
             $mail = new Email();
             $mail->sendTextEmail(
