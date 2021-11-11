@@ -1,0 +1,21 @@
+{% extends 'layouts/layout.twig' %}
+
+{% block title %}
+    <title>{{ constant('SITE_NAME') }} - captcha...</title>
+{% endblock %}
+
+{% block body_class %} class="home min-vh-100"{% endblock %}
+
+{% block content %}
+    <main class="pt-5 pb-5">
+        <div class="container d-flex justify-content-center">
+            <dix class="px3 text-center">
+                <h1 class="mt-5 mb-5">Message <span class="green-txt">non envoyé</span></h1>
+                <h2><i class="bi bi-bookmark-x"></i> </h2>
+            <h3 class="mt-5 mb-5">Nous sommes au regret de vous informer que votre message n'a pas pus être envoyé.<br/><br/>
+            Veuillez nous excuser pour la gêne occasionnée...</h3>
+            <a {% autoescape %}href="{{ constant('SITE_ADRESS') }}"{% endautoescape %}><button class="btn btn-success mt-5 mb-5">Retour à l'accueil</button></a>
+            </dix>            
+        </div>
+    </main>    
+{% endblock %}
