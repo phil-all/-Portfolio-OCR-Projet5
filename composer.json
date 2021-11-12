@@ -15,7 +15,8 @@
         "php": "^8.0",
         "twig/twig": "^3.0",
         "symfony/dotenv": "^5.3",
-        "swiftmailer/swiftmailer": "^6.0"
+        "swiftmailer/swiftmailer": "^6.0",
+        "dompdf/dompdf": "^1.0"
     },
     "config": {
         "platform": {
