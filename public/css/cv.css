@@ -1,0 +1,26 @@
+/*@page {
+  size: 1654px 2339px;
+  margin: 27mm 16mm 27mm 16mm;
+ }
+
+div.chapter, div.appendix {
+  page-break-after: always;
+}
+*/
+
+body{
+  height: 386mm;
+  width: 273mm;
+  border: #000 1px solid;
+}
+
+.civil-pix {
+  min-width: 250px;
+  height: 250px;
+  background-color: aliceblue;
+  background-image: url(../images/trombi.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+}
