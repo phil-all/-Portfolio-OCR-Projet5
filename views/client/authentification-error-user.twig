@@ -4,13 +4,20 @@
     <title>Erreur d'authentification</title>
 {% endblock %}
 
+{% block body_class %} class="home min-vh-100"{% endblock %}
+
 {% block content %}
-    <main>
-        <h1>Erreur</h1>
-        <p>Il semblerait que votre email ou mot de passe soit erroné.</p>
-        {% autoescape %}
-        <a href="{{ constant('SITE_ADRESS') }}">Retour à l'accueil</a>
-        <a href="{{ constant('SITE_ADRESS') }}/membres/inscription-connexion">Réessayer...</a>
-        {% endautoescape %}        
-    </main>
+    <main class="pt-5 pb-5">
+        <section class="container-fluid col-md-8 justify-content-center mt-5 mb-5 text-center">
+            <h1><i class="bi bi-bug-fill"></i></h1>               
+        </section>
+        <section class="container-fluid mt-5 mb-5 pt-5 col-11 col-sm-8 col-md-6 col-lg-4">
+            <h3 class="mb-5">erreur d'authentification</h3>
+            {% autoescape %}
+        <a href="{{ constant('SITE_ADRESS') }}/membres/inscription-connexion" class="d-flex justify-content-center text-decoration-none">
+            <button type="submit" class="btn btn-success mb-5">Merci de retourner à la page précédente</button>
+        </a>
+        {% endautoescape %}             
+        </section>
+    </main>    
 {% endblock %}

@@ -4,10 +4,17 @@
     <title>{{ constant('SITE_NAME') }} - Inscription en attente de confirmation</title>
 {% endblock %}
 
+{% block body_class %} class="home min-vh-100"{% endblock %}
+
 {% block content %}
-    <main>
-        <h1>Formidable !</h1>
-        <p>Vous avec reçu un mail de validation, confirmez votre inscription dans les 20 minutes.</p>
-        <p>Passé ce délai, le lien ne sera plus valide.</p>
-    </main>
+    <main class="pt-5 pb-5">
+        <section class="container-fluid col-md-8 justify-content-center mt-5 mb-5 text-center">
+            <h1>Formidable !</h1>
+            <h2 class="green-txt"><i class="bi bi-heart-fill"></i></h2>
+        </section>
+        <section class="container-fluid mt-5 mb-5 pt-5 col-11 col-sm-8 col-md-6 col-lg-4">
+            <h3 class="mb-5">Vous avec reçu un mail de validation.</h3>
+            <p>Confirmez votre inscription dans les 15 minutes, passé ce délai, le lien ne sera plus valide.</p>
+        </section>
+    </main>    
 {% endblock %}
