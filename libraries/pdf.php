@@ -10,15 +10,18 @@ use Dompdf\Dompdf;
 class Pdf
 {
     /**
-     * Streams a pdf file generated from a given template
+     * Streams a pdf file generated from html.
      *
-     * @param string $content
+     * @param string $name name of the generated pdf
+     * @param string $content html to convert
      * 
      * @return void
      */
-    public function generatePdf(string $content): void
+    public function generatePdf(string $name, string $content): void
     {
         $pdf = new Dompdf();
+
+        $pdf->getOptions()->setChroot(PUBLIC_PATH);
 
         $pdf->loadHtml($content);
 
@@ -26,6 +29,6 @@ class Pdf
 
         $pdf->render();
 
-        $pdf->stream();
+        $pdf->stream($name);
     }
 }
