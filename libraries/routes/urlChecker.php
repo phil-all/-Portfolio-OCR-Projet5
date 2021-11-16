@@ -12,8 +12,8 @@ class UrlChecker
     use \Over_Code\Libraries\Helpers;
 
     /**
-     * Instanciates UrlParser, and initializes following attributes:
-     * - hub (client by default)
+     * Instanciates UrlChecker, and initializes following attributes:
+     * - hub : **client** for visitor or member and **admin** for admin
      * - class
      * - method
      * - params
@@ -21,8 +21,10 @@ class UrlChecker
     public function __construct()
     {
         $this->uri = new UrlParser();
-        $this->hub = 'Client';
-        $this->class = '\Over_Code\controllers\\' . $this->hub . '\\' . $this->uri->getControllerClass() . 'Controller';
+
+        $this->hub = ($this->uri->getControllerClass() === 'Admin') ? 'Admin' : 'Client';
+
+        $this->class = '\\Over_Code\\Controllers\\' . $this->hub . '\\' . $this->uri->getControllerClass() . 'Controller';
         $this->method = $this->undashedMethod($this->uri->getMethodName());
         $this->params = $this->uri->getAttributesList();
     }

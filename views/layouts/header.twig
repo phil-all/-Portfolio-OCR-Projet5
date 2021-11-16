@@ -1,11 +1,11 @@
-<header>
+{% if section != 'Admin' %}
+    <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
             <div class="container-fluid">
                 {% autoescape %}
                 <a class="navbar-brand" href="{{ constant('SITE_ADRESS') }}">
                     <img src="{{ constant('SITE_ADRESS') }}/public/images/logo80px.png" alt="Logo" width="55" height="55">
                     &lt; <span style="color: #fff;">{{ constant('SITE_NAME') }}</span> &gt;
-
                 </a>
                 {% endautoescape %}
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,6 +14,9 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         {% autoescape %}
+                        <li class="nav-item">
+                            {% include 'layouts/admin-button.twig' %}
+                        </li>
                         <li class="nav-item align-middle">                            
                             <a class="nav-link" href="{{ constant('SITE_ADRESS') }}">
                                 <i class="bi bi-house-fill"></i> Accueil
@@ -47,4 +50,5 @@
                 </div>  
             </div>
         </nav>
-</header>
+    </header>
+{% endif %}

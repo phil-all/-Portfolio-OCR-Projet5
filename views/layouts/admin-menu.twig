@@ -1,0 +1,124 @@
+<nav id="sidebarMenu" class="col-md-4 col-lg-3 col-xl-2 d-md-block bg-primary sidebar collapse">
+    <div class="position-sticky p-3">
+        <a class="navbar-brand" href="{{ constant('SITE_ADRESS') }}/admin/dashboard/{{ uriToken }}">
+            <img src="{{ constant('SITE_ADRESS') }}/public/images/logo80px.png" alt="Logo" width="38" height="38">
+            <span class="text-white fs-3"> Admin</span>
+        </a>
+        <ul class="nav flex-column">
+            <li class="nav-item mt-4 mb-4">
+                {% autoescape %}
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/admin/dashboard/{{ uriToken }}">
+                        <i class="bi bi-speedometer"></i> Dashboard
+                    </a>
+                {% endautoescape %}
+            </li>
+            <li class="nav-item mt-4 mb-4">
+                <div class="accordion">
+                    <h2 class="accordion-header">
+                        <button class="btn btn-primary collapsed w-100 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseTwo">
+                            <div>
+                                <i class="bi bi-back"></i> blog
+                            </div>
+                            <div>
+                                <i class="bi bi-caret-down-fill"></i>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    {% autoescape %}
+                                        <a class="nav-link active  text-white" href="#">articles</a>
+                                    {% endautoescape %}
+                                </li>
+                                <li class="nav-item">
+                                    {% autoescape %}
+                                        <a class="nav-link active  text-white" href="#">commentaires</a>
+                                    {% endautoescape %}
+                                </li>
+                                <li class="nav-item">
+                                    {% autoescape %}
+                                        <a class="nav-link active  text-white" href="#">catégories</a>
+                                    {% endautoescape %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item mt-4 mb-4">
+                <div class="accordion">
+                    <h2 class="accordion-header">
+                        <button class="btn btn-primary collapsed w-100 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <div>
+                                <i class="bi bi-people-fill"></i> membres
+                            </div>
+                            <div>
+                                <i class="bi bi-caret-down-fill"></i>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    {% autoescape %}
+                                        <a class="nav-link active  text-white" href="#">suspendre</a>
+                                    {% endautoescape %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item mt-4 mb-4">
+                <div class="accordion">
+                    <h2 class="accordion-header">
+                        <button class="btn btn-primary collapsed w-100 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+                            <div>
+                                <i class="bi bi-speedometer"></i> stats
+                            </div>
+                            <div>
+                                <i class="bi bi-caret-down-fill"></i>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    {% autoescape %}
+                                        <a class="nav-link active  text-white" href="#">membres</a>
+                                    {% endautoescape %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    {% autoescape %}
+                                        <a class="nav-link active  text-white" href="#">articles</a>
+                                    {% endautoescape %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    {% autoescape %}
+                                        <a class="nav-link active  text-white" href="#">CV</a>
+                                    {% endautoescape %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

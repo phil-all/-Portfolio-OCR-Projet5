@@ -5,6 +5,7 @@ namespace Over_Code\Controllers;
 use Over_Code\Libraries\Jwt;
 use Over_Code\Libraries\Twig;
 use Over_Code\Models\UserModel;
+use Over_Code\Libraries\Routes\UrlParser;
 
 /**
  * Generals methods for specialised controllers
@@ -12,6 +13,7 @@ use Over_Code\Models\UserModel;
 abstract class MainController
 {
     use \Over_Code\Libraries\Helpers;
+    use \Over_Code\Libraries\User\Tests;
 
     protected string $action;
     protected array $params = [];
@@ -48,8 +50,13 @@ abstract class MainController
                 $this->setCOOKIE('token', $user->getToken());
                 $this->setCOOKIE('token_obj', 'renewal');
 
+                $this->uri = new UrlParser();
+
                 $userToTwig = array(
-                    'user' => $user->userInArray($payload['email'])
+                    'user'     => $user->userInArray($payload['email']),
+                    'admin'    => $this->isAdmin($payload['email']),
+                    'section'  => $this->uri->getControllerClass(),
+                    'uriToken' => $jwt->tokenToUri($token)
                 );
             }
         }
