@@ -12,28 +12,27 @@ class AdminController extends MainController
 {
     use \Over_Code\Libraries\User\Tests;
 
+    /**
+     * Set template for admin dashboard
+     *
+     * @param array $params uri parameters after .../dashboard/
+     * 
+     * @return void
+     */
     public function dashboard(array $params)
     {
         $this->template = 'pageNotFound.twig';
 
         $jwt = new Jwt();
-        
+
         $token = $jwt->uriToToken($params);
+        $payload = $jwt->decodeDatas($token, 1);
         
-        if ($jwt->isSignatureCorrect($token)) {
-            $payload = $jwt->decodeDatas($token, 1);
+        if ($jwt->isSignatureCorrect($token) &&
+            $jwt->isNotExpired($payload) &&
+            $this->isAdmin($payload['email'])) {
 
-            if ($this->isAdmin($payload['email'])) {
                 $this->template = 'admin' . DS . 'dashboard.twig';
-            }
         }
-
-
-                // 4 infos: nombre de commentaires à valider, nombre de membres incrits en attente, actifs et suspendus.
-                // 5 item crud articles (sous menus): new, parcourrir les articles (pour read, update ou delete)
-                // 6 item crud catégories
-                // 7 stats articles lus, top 3 des articles likés, et consultation cv (http://www.finalclap.com/faq/71-php-compteur-visites-audience)
-                // bouton retour interface membre
-                // bouton déconnexion
     }
 }
