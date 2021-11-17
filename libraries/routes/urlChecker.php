@@ -22,7 +22,7 @@ class UrlChecker
     {
         $this->uri = new UrlParser();
 
-        $this->hub = ($this->uri->getControllerClass() === 'Admin') ? 'Admin' : 'Client';
+        $this->hub = (preg_match('~^Admin_~', $this->uri->getControllerClass())) ? 'Admin' : 'Client';
 
         $this->class = '\\Over_Code\\Controllers\\' . $this->hub . '\\' . $this->uri->getControllerClass() . 'Controller';
         $this->method = $this->undashedMethod($this->uri->getMethodName());

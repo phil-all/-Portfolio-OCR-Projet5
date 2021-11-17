@@ -29,8 +29,6 @@ class ArticlesController extends MainController
     {
         $model = new ArticlesModel();
 
-        $this->template = 'pageNotFound.twig';
-
         if ($model->idExist($params[0])) {
             $slug = $this->toSlug($model->getTitle((int)$params[0]));
 
@@ -65,7 +63,6 @@ class ArticlesController extends MainController
         $this->currentPage = (int)(explode('-', $params[1]))[1];
         $this->totalPosts = $model->getCount($params[0]);
         $this->totalPages = ceil($this->totalPosts / $this->perPage);
-        $this->template = 'pageNotFound.twig';
 
         if ($this->currentPage <= $this->totalPages && explode('-', $params[1])[0] === 'page') {
             $this->articles = $model->getArticlesList($this->currentPage, $this->perPage, $params[0]);

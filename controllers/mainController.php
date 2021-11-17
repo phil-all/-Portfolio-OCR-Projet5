@@ -6,6 +6,7 @@ use Over_Code\Libraries\Jwt;
 use Over_Code\Libraries\Twig;
 use Over_Code\Models\UserModel;
 use Over_Code\Libraries\Routes\UrlParser;
+use Twig\Template;
 
 /**
  * Generals methods for specialised controllers
@@ -18,6 +19,7 @@ abstract class MainController
     protected string $action;
     protected array $params = [];
     protected object $twig;
+    protected string $template = 'pageNotFound.twig';
 
     /**
      * Call method action, passing parameters, and send it to the display method
@@ -31,7 +33,9 @@ abstract class MainController
     {
         $jwt = new Jwt();
         $token = '';
-        $userToTwig = [];
+        $this->userToTwig = [
+            'admin' => false
+        ];
 
         if (!empty($this->getCOOKIE('token'))) {
             $token =  $this->getCOOKIE('token');
@@ -52,10 +56,9 @@ abstract class MainController
 
                 $this->uri = new UrlParser();
 
-                $userToTwig = array(
+                $this->userToTwig = array(
                     'user'     => $user->userInArray($payload['email']),
                     'admin'    => $this->isAdmin($payload['email']),
-                    'section'  => $this->uri->getControllerClass(),
                     'uriToken' => $jwt->tokenToUri($token)
                 );
             }
@@ -65,7 +68,7 @@ abstract class MainController
 
         $this->twig = new Twig();
 
-        $this->params = array_merge($userToTwig, $this->params);
+        $this->params = array_merge($this->userToTwig, $this->params);
 
         $this->twig->twigRender($this->template, $this->params);
     }
