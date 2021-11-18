@@ -42,10 +42,6 @@ class CommentController extends MainController
 
                 $this->setCOOKIE('token', $user->getToken());
                 $this->setCOOKIE('token_obj', 'renewal');
-
-                //$user = array(
-                    //$user->userInArray($payload['email'])
-                //);
             }
 
             $content = $this->getPOST('comment');

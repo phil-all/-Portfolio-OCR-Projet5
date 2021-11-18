@@ -15,8 +15,8 @@ use Over_Code\Controllers\UserController;
 class MembresController extends UserController
 {
     use \Over_Code\Libraries\Helpers;
-    use \Over_Code\Libraries\User\Register;
-    use \Over_Code\Libraries\User\ResetPassword;
+    use \Over_Code\Libraries\User\Process\Register;
+    use \Over_Code\Libraries\User\Process\ResetPassword;
 
     /**
      * Sets params and template to twig, regiser/login page

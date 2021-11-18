@@ -22,6 +22,9 @@ class admin_dashboardController extends MainController
     public function index(): void
     {
         if ($this->userToTwig['admin']) {
+
+            $this->userToTwig['template'] = 'admin';
+            
             $this->template = $this->template = 'admin' . DS . 'dashboard.twig';
         }
     }

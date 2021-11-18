@@ -37,4 +37,50 @@ trait Tests
 
         return $stmt->fetchColumn();
     }
+
+    /**
+     * Checks if an given user status is on pending, used on validation account process
+     *
+     * @param string $email
+     *
+     * @return boolean
+     */
+    public function isPending(string $email): bool
+    {
+        $this->pdo = new DbConnect();
+
+        $query = 'SELECT user_status_id FROM user WHERE email = :email';
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+    
+    /**
+     * Checks if an email already exists in database
+     *
+     * @param string $email
+     *
+     * @return boolean
+     */
+    public function isMailExists(string $email): bool   //// deprecated and actually unsed ////
+    {
+        $this->pdo = new DbConnect();
+        
+        $query = 'SELECT count(*)
+        FROM user
+        WHERE email = :email';
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
 }

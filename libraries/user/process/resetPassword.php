@@ -1,6 +1,6 @@
 <?php
 
-namespace Over_Code\Libraries\User;
+namespace Over_Code\Libraries\User\Process;
 
 use PDO;
 use Over_Code\Db\DbConnect;

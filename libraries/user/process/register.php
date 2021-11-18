@@ -1,6 +1,6 @@
 <?php
 
-namespace Over_Code\Libraries\User;
+namespace Over_Code\Libraries\User\Process;
 
 use PDO;
 use Over_Code\Db\DbConnect;
@@ -11,28 +11,6 @@ use Over_Code\Libraries\Jwt;
  */
 trait Register
 {
-    /**
-     * Checks if an given user status is on pending, used on validation account process
-     *
-     * @param string $email
-     *
-     * @return boolean
-     */
-    public function isPending(string $email): bool
-    {
-        $this->pdo = new DbConnect();
-
-        $query = 'SELECT user_status_id FROM user WHERE email = :email';
-
-        $stmt = $this->pdo->prepare($query);
-
-        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-
-        $stmt->execute();
-
-        return $stmt->fetchColumn();
-    }
-
     /**
      * Set status user on active
      *
@@ -81,29 +59,5 @@ trait Register
         }
 
         return true;
-    }
-    
-    /**
-     * Checks if an email already exists in database
-     *
-     * @param string $email
-     *
-     * @return boolean
-     */
-    public function isMailExists(string $email): bool   //// deprecated and actually unsed ////
-    {
-        $this->pdo = new DbConnect();
-        
-        $query = 'SELECT count(*)
-        FROM user
-        WHERE email = :email';
-
-        $stmt = $this->pdo->prepare($query);
-
-        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-
-        $stmt->execute();
-
-        return $stmt->fetchColumn();
     }
 }
