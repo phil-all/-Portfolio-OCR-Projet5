@@ -14,7 +14,7 @@
                 {% for article in articles %}
                 <article class="card mb-3 col-12 col-md-6 border-none">
                     {% autoescape %}
-                    <img src="{{ constant('SITE_ADRESS') }}/public/uploads/{{ article.img_path }}" class="card-img-top" alt="...">
+                    <img src="{{ constant('SITE_ADRESS') }}/public/uploads/article-{{ article.img }}.jpg" class="card-img-top" alt="...">
                     {% endautoescape %}
                     <div class="card-body">
                         <p class="card-text"><small class="text-muted">date : {{ article.created_at }}</small></p>

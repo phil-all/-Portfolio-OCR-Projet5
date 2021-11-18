@@ -10,7 +10,7 @@
             <h1 class="mt-5">{{ title }}</h1>
             <h3 class="mb-5">{{ chapo }}</h3>
             <div {% autoescape %}style="
-                background-image: url({{ constant('SITE_ADRESS') }}/public/uploads/{{ img_path }});
+                background-image: url({{ constant('SITE_ADRESS') }}/public/uploads/article-{{ img }}.jpg);
                 background-position: center;
                 background-size: cover;
                 background-repeat: no-repeat;
