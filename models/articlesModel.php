@@ -273,4 +273,24 @@ class ArticlesModel extends MainModel
 
         return $stmt->fetch()[0];
     }
+
+    /**
+     * Return string corresponding to the biggest number name of 
+     * articles image file
+     *
+     * @return string
+     */
+    public function biggestImg(): string
+    {
+        $query = 'SELECT img
+        FROM article
+        ORDER BY img DESC
+        LIMIT 1';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
 }
