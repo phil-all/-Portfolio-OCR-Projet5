@@ -9,6 +9,7 @@ use PDO;
  */
 class ArticlesModel extends MainModel
 {
+    use \Over_Code\Libraries\Helpers;
 
     /**
      * Get Title from article by id
@@ -292,5 +293,44 @@ class ArticlesModel extends MainModel
         $stmt->execute();
 
         return $stmt->fetchColumn();
+    }
+
+    /**
+     * Create a new article
+     *
+     * @param integer $user user serial
+     * @param string $img integer part of image article name
+     * 
+     * @return void
+     */
+    public function createArticle(int $user, string $img): void
+    {
+        $query = 'INSERT INTO article (
+            user_serial,
+            category_id,
+            title,
+            chapo,
+            content,
+            created_at,
+            img)
+        VALUES (
+            :user_serial,
+            :category_id,
+            :title,
+            :chapo,
+            :content,
+            NOW(),
+            :img)';
+        
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':user_serial', $user, PDO::PARAM_INT);
+        $stmt->bindValue(':category_id', $this->getPOST('category'), PDO::PARAM_INT);
+        $stmt->bindValue(':title', $this->getPOST('title'), PDO::PARAM_STR);
+        $stmt->bindValue(':chapo', $this->getPOST('chapo'), PDO::PARAM_STR);
+        $stmt->bindValue(':content', $this->getPOST('content'), PDO::PARAM_STR);
+        $stmt->bindValue(':img', $img, PDO::PARAM_STR);
+
+        $stmt->execute();
     }
 }

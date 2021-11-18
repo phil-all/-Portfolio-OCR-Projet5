@@ -10,24 +10,27 @@ use Over_Code\Models\ArticlesModel;
 trait Upload
 {
     /**
-     * Upload a new article image and return an array with message and img name.
+     * Upload a new article image and return an array with message and the
+     * inetger part of img name.
+     * img rerturn name example: **0015** (part of article-0015.jpg)
      *
-     * @return array
-     * message can have following values :
+     * @return array with two keys.
+     * 
+     * 'message': can have following values :
      * - 0: upload success
      * - 1: upload failed
      * - 2: file too big
      * - 3: no file exist or upload failed
      * 
-     * name null if unseccessed upload.
+     * 'img_name': **null** if unseccessed upload.
      */
-    public function newArticleImg(): array
+    public function uploadArticleImg(): array
     {
         $message = 3; // no file exist or upload failed
+        $img_name = null;
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
             $message = 'format de fichier incorrect';
-            $img_name = null;
 
             $allowed = [
                 'jpg'  => 'image/jpeg',
@@ -54,7 +57,7 @@ trait Upload
 
                     $newFileName = UPLOADS_PATH . $newName . $extension;
 
-                    $move = move_uploaded_file($_FILES['images']['tmp_name'], $newFileName);
+                    $move = move_uploaded_file($_FILES['image']['tmp_name'], $newFileName);
 
                     $message = (!$move) ? $message : 0;
 
