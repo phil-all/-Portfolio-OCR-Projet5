@@ -15,8 +15,6 @@ class ContactController extends MainController
 
     public function mail()
     {
-        $this->template = 'client' . DS . 'contact/failed.twig';
-
         $form = new FormTest();
 
         if ($form->contactTest()) {
