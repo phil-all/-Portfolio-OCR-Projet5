@@ -14,7 +14,7 @@ class Pdf
      *
      * @param string $name name of the generated pdf
      * @param string $content html to convert
-     * 
+     *
      * @return void
      */
     public function generatePdf(string $name, string $content): void

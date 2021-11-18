@@ -15,12 +15,12 @@ trait Tests
      * Used in mainController
      *
      * @param string $email
-     * 
+     *
      * @return boolean
      */
     public function isAdmin(string $email): bool
     {
-        $this->pdo = new DbConnect;
+        $this->pdo = new DbConnect();
 
         $query = 'SELECT count(*)
         FROM user_has_role AS r

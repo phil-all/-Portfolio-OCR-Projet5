@@ -8,7 +8,7 @@ use Over_Code\Db\DbConnect;
 /**
  * Trait used to update user datas in db
  */
-Trait Update
+trait Update
 {
     /**
      * Store a given token in database, in terms of email user

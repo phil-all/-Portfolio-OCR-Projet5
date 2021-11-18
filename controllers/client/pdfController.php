@@ -11,7 +11,7 @@ use Over_Code\Controllers\MainController;
 /**
  * Class to manage pdf call
  */
-class pdfController extends MainController
+class PdfController extends MainController
 {
     /**
      * Call the pdf generator and set the CV template to render

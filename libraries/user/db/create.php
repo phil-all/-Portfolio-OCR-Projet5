@@ -8,7 +8,7 @@ use Over_Code\Db\DbConnect;
 /**
  * Trait used to insert user in db
  */
-Trait Create
+trait Create
 {
     /**
      * Create in database an user with status on 'pending',

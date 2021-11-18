@@ -8,7 +8,7 @@ use Over_Code\Controllers\MainController;
 /**
  * Admin dashboard controller
  */
-class admin_dashboardController extends MainController
+class AdminDashboardController extends MainController
 {
     use \Over_Code\Libraries\User\Tests;
 
@@ -16,13 +16,12 @@ class admin_dashboardController extends MainController
      * Set template for admin dashboard
      *
      * @param array $params uri parameters after .../dashboard/
-     * 
+     *
      * @return void
      */
     public function index(): void
     {
         if ($this->userToTwig['admin']) {
-
             $this->userToTwig['template'] = 'admin';
             
             $this->template = $this->template = 'admin' . DS . 'dashboard.twig';

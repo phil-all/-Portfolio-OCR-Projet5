@@ -8,7 +8,7 @@ use Over_Code\Db\DbConnect;
 /**
  * Trait used to read user datas in db
  */
-Trait Read
+trait Read
 {
     /**
      * Read all datas from a given user, identified by its email
@@ -40,7 +40,7 @@ Trait Read
      * - email
      * - avatar image file name
      * - account creation date
-     * 
+     *
      * Used in main controller in $userTotwig variable
      *
      * @param string $email

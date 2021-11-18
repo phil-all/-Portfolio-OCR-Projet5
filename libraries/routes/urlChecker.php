@@ -22,9 +22,11 @@ class UrlChecker
     {
         $this->uri = new UrlParser();
 
-        $this->hub = (preg_match('~^Admin_~', $this->uri->getControllerClass())) ? 'Admin' : 'Client';
+        $class = $this->uri->getControllerClass();
 
-        $this->class = '\\Over_Code\\Controllers\\' . $this->hub . '\\' . $this->uri->getControllerClass() . 'Controller';
+        $this->hub = (preg_match('~^Admin~', $class)) ? 'Admin' : 'Client';
+
+        $this->class = '\\Over_Code\\Controllers\\' . $this->hub . '\\' . $class . 'Controller';
         $this->method = $this->undashedMethod($this->uri->getMethodName());
         $this->params = $this->uri->getAttributesList();
     }

@@ -15,13 +15,13 @@ trait Upload
      * img rerturn name example: **0015** (part of article-0015.jpg)
      *
      * @return array with two keys.
-     * 
+     *
      * 'message': can have following values :
      * - 0: upload success
      * - 1: upload failed
      * - 2: file too big
      * - 3: no file exist or upload failed
-     * 
+     *
      * 'img_name': **null** if unseccessed upload.
      */
     public function uploadArticleImg(): array
@@ -43,10 +43,10 @@ trait Upload
 
             $extension = strtolower((pathinfo($fileName, PATHINFO_EXTENSION)));
 
-            if(array_key_exists($extension, $allowed) || !in_array($fileType, $allowed)) {
+            if (array_key_exists($extension, $allowed) || !in_array($fileType, $allowed)) {
                 $message = 2; // file too big
 
-                if($fileSize < 60000) {
+                if ($fileSize < 60000) {
                     $message = 1; // upload failed
 
                     $article = new ArticlesModel();

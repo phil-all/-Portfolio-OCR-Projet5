@@ -8,20 +8,20 @@ use Over_Code\Controllers\MainController;
 
 /**
  * Admin articles controller, used to display:
- * - new article template uri: SITE_ADRESS/admin_article/nouveau/
- * - update article uri: SITE_ADRESS/admin_article/update/-serial-
- * - delete article uri: SITE_ADRESS/admin_article/delete/-serial
- * - list of all articles uri: SITE_ADRESS/admin_article/liste/all
- * - list of articles by category uri: SITE_ADRESS/admin_article/liste/all
+ * - new article template uri: SITE_ADRESS/adminArticle/nouveau/
+ * - update article uri: SITE_ADRESS/adminArticle/update/-serial-
+ * - delete article uri: SITE_ADRESS/adminArticle/delete/-serial
+ * - list of all articles uri: SITE_ADRESS/adminArticle/liste/all
+ * - list of articles by category uri: SITE_ADRESS/adminArticle/liste/all
  */
-class Admin_articlesController extends MainController
+class AdminArticlesController extends MainController
 {
     use \Over_Code\Libraries\Upload;
 
     public function nouveau()
     {
         if ($this->userToTwig['admin']) {
-            $category = new CategoryModel;
+            $category = new CategoryModel();
             $categories = $category->readAll();
 
             $this->params = [
@@ -39,7 +39,7 @@ class Admin_articlesController extends MainController
         if ($this->userToTwig['admin']) {
             $upload = $this->uploadArticleImg();
 
-            if(!is_null($upload['img_name'])) {
+            if (!is_null($upload['img_name'])) {
                 $user = $this->userToTwig['user']['serial'];
 
                 $img = $upload['img_name'];
@@ -50,7 +50,7 @@ class Admin_articlesController extends MainController
                 $this->userToTwig['template'] = 'admin';
 
                 $this->template = 'admin' . DS . 'post-confirmation.twig';
-            }            
+            }
         }
-    }    
+    }
 }

@@ -276,7 +276,7 @@ class ArticlesModel extends MainModel
     }
 
     /**
-     * Return string corresponding to the biggest number name of 
+     * Return string corresponding to the biggest number name of
      * articles image file
      *
      * @return string
@@ -300,7 +300,7 @@ class ArticlesModel extends MainModel
      *
      * @param integer $user user serial
      * @param string $img integer part of image article name
-     * 
+     *
      * @return void
      */
     public function createArticle(int $user, string $img): void

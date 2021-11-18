@@ -8,7 +8,7 @@ use Over_Code\Db\DbConnect;
 /**
  * Trait used to delete user datas in db
  */
-Trait Delete
+trait Delete
 {
     /**
      * Delete a given pending user.

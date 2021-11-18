@@ -1,13 +1,13 @@
 <nav id="sidebarMenu" class="col-md-4 col-lg-3 col-xl-2 d-md-block bg-primary sidebar collapse">
     <div class="position-sticky p-3">
-        <a class="navbar-brand" href="{{ constant('SITE_ADRESS') }}/admin_dashboard">
+        <a class="navbar-brand" href="{{ constant('SITE_ADRESS') }}/adminDashboard">
             <img src="{{ constant('SITE_ADRESS') }}/public/images/logo80px.png" alt="Logo" width="38" height="38">
             <span class="text-white fs-3"> Admin</span>
         </a>
         <ul class="nav flex-column">
             <li class="nav-item mt-4 mb-4">
                 {% autoescape %}
-                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/admin_dashboard">
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminDashboard">
                         <i class="bi bi-speedometer"></i> Dashboard
                     </a>
                 {% endautoescape %}
@@ -44,7 +44,7 @@
                                                 <ul class="nav flex-column">
                                                     <li class="nav-item">
                                                         {% autoescape %}
-                                                            <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/admin_articles/nouveau">nouveau</a>
+                                                            <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminArticles/nouveau">nouveau</a>
                                                         {% endautoescape %}
                                                     </li>
                                                     <li class="nav-item">
