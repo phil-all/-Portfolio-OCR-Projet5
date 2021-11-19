@@ -161,14 +161,14 @@ class AdminArticlesController extends MainController
      * Try to delete an article and set template failed or success
      *
      * @param array $params [0 => article id]
-     * 
+     *
      * @return void
      */
     public function delete(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
 
-        $article = new ArticlesModel;
+        $article = new ArticlesModel();
         
         if ($this->userToTwig['admin'] && $article->idExist((int)$params[0])) {
             $this->userToTwig['template'] = 'admin';
@@ -185,14 +185,14 @@ class AdminArticlesController extends MainController
      * Update article and set template
      *
      * @param array $params [0 => article id]
-     * 
+     *
      * @return void
      */
     public function modifier(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
 
-        $article = new ArticlesModel;
+        $article = new ArticlesModel();
         
         if ($this->userToTwig['admin'] && $article->idExist((int)$params[0])) {
             $this->userToTwig['template'] = 'admin';

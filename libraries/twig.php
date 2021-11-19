@@ -2,6 +2,7 @@
 
 namespace Over_Code\Libraries;
 
+use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
@@ -24,7 +25,7 @@ class Twig
     {
         $loader = new FilesystemLoader(VIEWS_PATH);
 
-        $twig = new \Twig\Environment($loader, [
+        $twig = new Environment($loader, [
             'debug' => true,
             'cache' => false,
         ]);
