@@ -18,7 +18,7 @@ class PdfController extends MainController
      *
      * @return void
      */
-    public function CV(): void
+    public function curriculum(): void
     {
         $twig = new Twig();
         $template = 'client' . DS . 'pdf' . DS . 'curriculum-vitae.twig';

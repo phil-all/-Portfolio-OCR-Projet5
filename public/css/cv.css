@@ -1,18 +1,10 @@
-/*@page {
-  size: 1654px 2339px;
-  margin: 27mm 16mm 27mm 16mm;
- }
-
-div.chapter, div.appendix {
-  page-break-after: always;
-}
-*/
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
 
-body{
+body {
   height: 386mm;
   width: 273mm;
   color: white;
@@ -36,7 +28,7 @@ h3 {
   font-size: 18px;
 }
 
-h4  {
+h4 {
   margin-top: 0;
   margin-bottom: 0.5rem;
   padding: 0;
@@ -77,5 +69,5 @@ td {
 }
 
 .justify-content-around {
-  justify-content:space-around;
+  justify-content: space-around;
 }

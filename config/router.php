@@ -32,11 +32,8 @@ class Router
     /**
      * Return class for routing
      *
-     * @param boolean $test
-     *
      * @return string
      */
-
     private function getClass(): string
     {
         if (!$this->match->controllerCheck() || !$this->match->methodCheck()) {

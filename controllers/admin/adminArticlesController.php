@@ -39,7 +39,7 @@ class AdminArticlesController extends MainController
         if ($this->userToTwig['admin']) {
             $upload = $this->uploadArticleImg();
 
-            if (!is_null($upload['img_name'])) {
+            if ($upload['img_name'] !== null) {
                 $user = $this->userToTwig['user']['serial'];
 
                 $img = $upload['img_name'];

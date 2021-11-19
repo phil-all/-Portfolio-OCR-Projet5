@@ -1,10 +1,9 @@
 /* --- variables --- */
-:root
-{
-    --green-hover: #1f927b;
-    --green: #198754;
-    --dark-grey: #2c2c2c;
-    --light-black: #0b0d0e;
+:root {
+  --green-hover: #1f927b;
+  --green: #198754;
+  --dark-grey: #2c2c2c;
+  --light-black: #0b0d0e;
 }
 
 /* --- bootstrap elements --- */
@@ -23,7 +22,7 @@
 }
 
 .bg-dark {
-  background-color: var(--light-black) !important;
+  background-color: var(--light-black)!important;
 }
 
 /* --- html --- */

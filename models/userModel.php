@@ -23,7 +23,6 @@ class UserModel extends MainModel
     private $email;
     private $pseudo;
     private $token;
-    private $ip_log;
 
     /**
      * Checks if a **password** is correct for a given **email**
