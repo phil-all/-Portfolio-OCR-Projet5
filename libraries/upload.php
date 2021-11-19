@@ -9,6 +9,8 @@ use Over_Code\Models\ArticlesModel;
  */
 trait Upload
 {
+    use \Over_Code\Libraries\Helpers;
+
     /**
      * Upload a new article image and return an array with message and the
      * inetger part of img name.
@@ -29,7 +31,7 @@ trait Upload
         $message = 3; // no file exist or upload failed
         $img_name = null;
 
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+        if ((null !== $this->getFILES('image')) && ($this->getFILES('image')['error'] === 0)) {
             $message = 'format de fichier incorrect';
 
             $allowed = [
@@ -37,9 +39,9 @@ trait Upload
                 'jpeg' => 'image/jpeg'
             ];
 
-            $fileName = $_FILES['image']['name'];
-            $fileType = $_FILES['image']['type'];
-            $fileSize = $_FILES['image']['size'];
+            $fileName = $this->getFILES('image')['name'];
+            $fileType = $this->getFILES('image')['type'];
+            $fileSize = $this->getFILES('image')['size'];
 
             $extension = strtolower((pathinfo($fileName, PATHINFO_EXTENSION)));
 
@@ -57,7 +59,7 @@ trait Upload
 
                     $newFileName = UPLOADS_PATH . $newName . $extension;
 
-                    $move = move_uploaded_file($_FILES['image']['tmp_name'], $newFileName);
+                    $move = move_uploaded_file($this->getFILES('image')['tmp_name'], $newFileName);
 
                     $message = (!$move) ? $message : 0;
 
