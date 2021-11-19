@@ -219,8 +219,6 @@ class AdminArticlesController extends MainController
     {
         $this->template = 'client' . DS . 'accueil.twig';
 
-        //var_dump(preg_replace('~[a-zA-Z\/\:\_]~', '', $this->getSERVER('HTTP_REFERER')), $_POST);die;
-
         if ($this->userToTwig['admin']) {
             $articleId = preg_replace('~[a-zA-Z\/\:\_\-]~', '', $this->getSERVER('HTTP_REFERER'));
 
