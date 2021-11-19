@@ -8,7 +8,12 @@
             <div class="container-fluid container-md p-5">
                 <article class="container col-md-8 justify-content-center">
                     {% autoescape %}
-                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/delete/{{ article.id }}">
+                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/modifier/{{ id }}">
+                        <button type="button" class="btn btn-outline-success"><i class="bi bi-check-circle-fill"></i> Modifier</button>
+                    </a>
+                    {% endautoescape %}
+                    {% autoescape %}
+                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/delete/{{ id }}">
                         <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle-fill"></i> Supprimer</button>
                     </a>
                     {% endautoescape %}
@@ -75,7 +80,12 @@
                 </section><!-- end comments -->
                 <section class="container col-md-8 justify-content-center mt-5 mb-5">
                     {% autoescape %}
-                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/delete/{{ article.id }}">
+                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/modifier/{{ id }}">
+                        <button type="button" class="btn btn-outline-success"><i class="bi bi-check-circle-fill"></i> Modifier</button>
+                    </a>
+                    {% endautoescape %}
+                    {% autoescape %}
+                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/delete/{{ id }}">
                         <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle-fill"></i> Supprimer</button>
                     </a>
                     {% endautoescape %}
