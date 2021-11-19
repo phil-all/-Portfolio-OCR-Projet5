@@ -129,5 +129,7 @@ final class Superglobals
         $this->COOKIE = filter_input_array(INPUT_COOKIE) ?? [];
 
         $this->SERVER = filter_input_array(INPUT_SERVER) ?? [];
+
+        $this->FILES = $_FILES ?? [];
     }
 }
