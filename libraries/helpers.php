@@ -149,6 +149,17 @@ trait Helpers
     }
 
     /**
+     * * Gets an input FILES by its key
+     *
+     * @param string $key
+     * @return string
+     */
+    public static function getFILES(string $key): string
+    {
+        return self::globals()->getFILES($key);
+    }
+
+    /**
      * Sets a cookie without options
      *
      * @param string $name

@@ -11,6 +11,7 @@ final class Superglobals
     private array $POST;
     private array $COOKIE;
     private array $SERVER;
+    private array $FILES;
 
     /**
      * Use collectSuperglobals method, to collect PHP superglobals and
@@ -84,6 +85,22 @@ final class Superglobals
         }
 
         return $this->SERVER;
+    }
+
+        /**
+     * Returns a key value from $_FILES
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function getFILES(string $key = null): mixed
+    {
+        if ($key !== null) {
+            return strip_tags(htmlspecialchars($this->FILES[$key])) ?? null;
+        }
+
+        return $this->FILES;
     }
 
     /**
