@@ -5,16 +5,22 @@
 ## <span style="color: #269d24; text-decoration:underline;">Table of Contents</span>
 
 -   [General info](#general-info)
+
 -   [Project status](#project-status)
+
 -   [Technologies](#technologies)
+
 -   [Getting started](#getting-started)
     -   Composer
     -   .env file needed
     -   Database
+
 -   [Features](#features)
     -   Dynamic routing
     -   JWT autentification
+
 -   [Author](#author)
+
 -   [Contributing](#contributing)
 
 ## <span style="color: #269d24; text-decoration:underline;">General info</span>
