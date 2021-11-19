@@ -1,0 +1,47 @@
+{% extends 'layouts/layout.twig' %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            {% include 'layouts/admin-menu.twig' %}
+            <main class="col-md-8 ms-sm-auto col-lg-9 col-xl-10 p-0" style="height: 100vh;">
+                <div class="container-fluid container-md p-5">
+                    <h1>Modifier l'article</h1>
+                    <!-- Start form -->
+                    <form enctype="multipart/form-data" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/adminArticles/update"{% endautoescape %} method="POST" class="row g-3">
+                        <div class="col-12">
+                            <label for="title" class="form-label">Titre</label>
+                            <input type="text" class="form-control shadow" id="title" name="title"  value="{{ title }}">
+                        </div>
+                        <div class="col-12">
+                            <label for="chapo" class="form-label">Chapo</label>
+                            <input type="text" class="form-control shadow" id="chapo" name="chapo" value="{{ chapo }}">
+                        </div>
+                        <div class="col-12">
+                            <label for="category" class="form-label">Catégorie</label>
+                            <select class="form-select" aria-label="article category" name="category" id="category">
+                                {% for cat_item in categories %}
+                                    {% if cat_item.id == category_id %}
+                                        <option  value={% autoescape %}"{{ cat_item.id }}"{% endautoescape %} selected>{{ cat_item.category }}</option> 
+                                    {% endif %}                                                                        
+                                {% endfor %}
+                                {% for cat_item in categories %}
+                                    {% if cat_item.id != category_id %}
+                                        <option value={% autoescape %}"{{ cat_item.id }}"{% endautoescape %}>{{ cat_item.category }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="d-flex flex-row align-items-start">
+                            <textarea name="content" class="form-control shadow textarea" style="height: 300px">{{ content }}</textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Valider</button>
+                        </div>
+                    </form>
+                    <!-- End Form -->
+                </div>
+            </main>
+        </div>
+    </div>  
+{% endblock %}

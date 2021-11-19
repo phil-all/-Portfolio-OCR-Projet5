@@ -48,10 +48,14 @@ class ArticlesModel extends MainModel
             a.created_at,
             a.last_update,
             a.chapo, a.content,
-            a.img
+            a.img,
+            a.category_id,
+            c.category
         FROM article AS a
         JOIN user AS u
             ON a.user_serial = u.serial
+        JOIN category AS c
+            ON a.category_id = c.id
         WHERE a.id = :id;';
 
         $stmt = $this->pdo->getPdo()->prepare($query);
@@ -354,5 +358,33 @@ class ArticlesModel extends MainModel
         $stmt->execute();
 
         return !$this->idExist($articleId);
+    }
+
+    /**
+     * Update an article
+     *
+     * @param integer $articleId
+     * 
+     * @return void
+     */
+    public function updateArticle(int $articleId): void
+    {
+        $query = 'UPDATE article
+        SET
+            category_id = :category_id,
+            title = :title,
+            chapo = :chapo,
+            content = :content
+        WHERE id = :id';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':category_id', $this->getPOST('category'), PDO::PARAM_INT);
+        $stmt->bindValue(':title', $this->getPOST('title'), PDO::PARAM_STR);
+        $stmt->bindValue(':chapo', $this->getPOST('chapo'), PDO::PARAM_STR);
+        $stmt->bindValue(':content', $this->getPOST('content'), PDO::PARAM_STR);
+        $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
+
+        $stmt->execute();
     }
 }

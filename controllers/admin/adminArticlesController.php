@@ -69,7 +69,7 @@ class AdminArticlesController extends MainController
 
                 $this->userToTwig['template'] = 'admin';
 
-                $this->template = 'admin' . DS . 'post-confirmation.twig';
+                $this->template = 'admin' . DS . 'article-post-confirmation.twig';
             }
         }
     }
@@ -134,31 +134,36 @@ class AdminArticlesController extends MainController
     public function numero(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
+        
+        $article = new ArticlesModel();
 
-        if ($this->userToTwig['admin']) {
+        if ($this->userToTwig['admin'] && $article->idExist($params[0])) {
             $this->userToTwig['template'] = 'admin';
 
-            $model = new ArticlesModel();
+            $slug = $this->toSlug($article->getTitle((int)$params[0]));
+    
+            if ($slug != $params[1]) {
+                $url = SITE_ADRESS . DS . 'articles' . DS . 'numero' . DS . $params[0] . DS . $slug;
+                $this->redirect($url);
+            }
 
-            if ($model->idExist($params[0])) {
-                $slug = $this->toSlug($model->getTitle((int)$params[0]));
-    
-                if ($slug != $params[1]) {
-                    $url = SITE_ADRESS . DS . 'articles' . DS . 'numero' . DS . $params[0] . DS . $slug;
-                    $this->redirect($url);
-                }
-    
-                $this->template = 'admin' . DS . 'single-article.twig';
-                $this->params = $model->getSingleArticle($params[0]);
-    
-                $comment = new CommentModel();
-                if (!empty($comment->readValidated($params[0]))) {
-                    $this->params['comments'] =  $comment->readValidated($params[0]);
-                }
+            $this->template = 'admin' . DS . 'single-article.twig';
+            $this->params = $article->getSingleArticle($params[0]);
+
+            $comment = new CommentModel();
+            if (!empty($comment->readValidated($params[0]))) {
+                $this->params['comments'] =  $comment->readValidated($params[0]);
             }
         }
     }
 
+    /**
+     * Try to delete an article and set template failed or success
+     *
+     * @param array $params [0 => article id]
+     * 
+     * @return void
+     */
     public function delete(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
@@ -166,11 +171,65 @@ class AdminArticlesController extends MainController
         $article = new ArticlesModel;
         
         if ($this->userToTwig['admin'] && $article->idExist((int)$params[0])) {
+            $this->userToTwig['template'] = 'admin';
+
             $this->template = 'admin' . DS . 'article-deletion-failed.twig';
 
             if ($article->deleteArticle((int)$params[0])) {
                 $this->template = 'admin' . DS . 'article-deleted.twig';
             }
+        }
+    }
+
+    /**
+     * Update article and set template
+     *
+     * @param array $params [0 => article id]
+     * 
+     * @return void
+     */
+    public function modifier(array $params): void
+    {
+        $this->template = 'client' . DS . 'accueil.twig';
+
+        $article = new ArticlesModel;
+        
+        if ($this->userToTwig['admin'] && $article->idExist((int)$params[0])) {
+            $this->userToTwig['template'] = 'admin';
+
+            $category = new CategoryModel();
+            $categories = $category->readAll();
+
+            $this->params = [
+                'categories' => $categories
+            ];
+
+            $this->params = array_merge($this->params, $article->getSingleArticle($params[0]));
+
+            $this->template = 'admin' . DS . 'update-article.twig';
+        }
+    }
+
+    /**
+     * Processes article update from form post
+     *
+     * @return void
+     */
+    public function update(): void
+    {
+        $this->template = 'client' . DS . 'accueil.twig';
+
+        //var_dump(preg_replace('~[a-zA-Z\/\:\_]~', '', $this->getSERVER('HTTP_REFERER')), $_POST);die;
+
+        if ($this->userToTwig['admin']) {
+            $articleId = preg_replace('~[a-zA-Z\/\:\_]~', '', $this->getSERVER('HTTP_REFERER'));
+
+            $article = new articlesModel();
+            $article->updateArticle($articleId);
+
+            $this->userToTwig['template'] = 'admin';
+
+            $this->template = 'admin' . DS . 'article-update-confirmation.twig';
         }
     }
 }

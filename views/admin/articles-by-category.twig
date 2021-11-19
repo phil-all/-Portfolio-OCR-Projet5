@@ -27,6 +27,11 @@
                                     </a>
                                     {% endautoescape %}
                                     {% autoescape %}
+                                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/modifier/{{ article.id }}">
+                                        <button type="button" class="btn btn-outline-success"><i class="bi bi-check-circle-fill"></i> Modifier</button>
+                                    </a>
+                                    {% endautoescape %}
+                                    {% autoescape %}
                                     <a href="{{ constant('SITE_ADRESS') }}/adminArticles/delete/{{ article.id }}">
                                         <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle-fill"></i> Supprimer</button>
                                     </a>
@@ -41,15 +46,15 @@
                     <ul class="pagination justify-content-center">
                         {% autoescape %}
                         <li class="page-item {{ statePrev }}">
-                            <a href="{{ constant('SITE_ADRESS') }}/articles/liste/{{ category }}/page-{{ prev }}" class="page-link"><i class="bi bi-caret-left-fill"></i></i></a>
+                            <a href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/{{ category }}/page-{{ prev }}" class="page-link"><i class="bi bi-caret-left-fill"></i></i></a>
                         </li>
                         {% for i in 1.. totalPages %}
                             <li class="page-item {% if i == page %} active{% endif %}">
-                                <a href="{{ constant('SITE_ADRESS') }}/articles/liste/{{ category }}/page-{{ i }}" class="page-link">{{ i }}</a>
+                                <a href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/{{ category }}/page-{{ i }}" class="page-link">{{ i }}</a>
                             </li>
                         {% endfor %}
                         <li class="page-item {{ stateNext }}">
-                            <a href="{{ constant('SITE_ADRESS') }}/articles/liste/{{ category }}/page-{{ next }}" class="page-link"><i class="bi bi-caret-right-fill"></i></i></a>
+                            <a href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/{{ category }}/page-{{ next }}" class="page-link"><i class="bi bi-caret-right-fill"></i></i></a>
                         </li>                    
                         {% endautoescape %}
                     </ul>
