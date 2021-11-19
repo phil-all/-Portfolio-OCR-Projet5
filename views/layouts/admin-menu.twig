@@ -13,69 +13,49 @@
                 {% endautoescape %}
             </li>
             <li class="nav-item mt-4 mb-4">
-                <div class="accordion" id="accordionBlog">
+                <div class="accordion" id="accordionArticles">
                     <h2 class="accordion-header">
-                        <button class="btn btn-primary collapsed w-100 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBlog" aria-expanded="false" aria-controls="collapseBlog">
+                        <button class="btn btn-primary collapsed w-100 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapseArticles" aria-expanded="false" aria-controls="collapseArticles">
                             <div>
-                                <i class="bi bi-back"></i> blog
+                                <i class="bi bi-newspaper"></i> articles
                             </div>
                             <div>
                                 <i class="bi bi-caret-down-fill"></i>
                             </div>
                         </button>
                     </h2>
-                    <div id="collapseBlog" class="accordion-collapse collapse" aria-labelledby="headingBlog" data-bs-parent="#accordionBlog">
+                    <div id="collapseArticles" class="accordion-collapse collapse" aria-labelledby="headingArticles" data-bs-parent="#accordionArticles">
                         <div class="accordion-body">
                             <ul class="nav flex-column">
-                                <li class="nav-item mt-4 mb-4">
-                                    <div class="accordion" id="accordionArticles">
-                                        <h2 class="accordion-header">
-                                            <button class="btn btn-primary collapsed w-100 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapseArticles" aria-expanded="false" aria-controls="collapseArticles">
-                                                <div>
-                                                    <i class="bi bi-back"></i> articles
-                                                </div>
-                                                <div>
-                                                    <i class="bi bi-caret-down-fill"></i>
-                                                </div>
-                                            </button>
-                                        </h2>
-                                        <div id="collapseArticles" class="accordion-collapse collapse" aria-labelledby="headingArticles" data-bs-parent="#accordionArticles">
-                                            <div class="accordion-body">
-                                                <ul class="nav flex-column">
-                                                    <li class="nav-item">
-                                                        {% autoescape %}
-                                                            <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminArticles/nouveau">nouveau</a>
-                                                        {% endautoescape %}
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        {% autoescape %}
-                                                            <a class="nav-link active  text-white" href="#">tous les articles</a>
-                                                        {% endautoescape %}
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        {% autoescape %}
-                                                            <a class="nav-link active  text-white" href="#">articles par catégorie</a>
-                                                        {% endautoescape %}
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
                                 <li class="nav-item">
                                     {% autoescape %}
-                                        <a class="nav-link active  text-white" href="#">commentaires</a>
+                                        <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminArticles/nouveau">nouveau</a>
                                     {% endautoescape %}
                                 </li>
                                 <li class="nav-item">
                                     {% autoescape %}
-                                        <a class="nav-link active  text-white" href="#">catégories</a>
+                                        <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/tous/page-1">tous les articles</a>
+                                    {% endautoescape %}
+                                </li>
+                                <li class="nav-item">
+                                    {% autoescape %}
+                                        <a class="nav-link active  text-white" href="#">articles par catégorie</a>
                                     {% endautoescape %}
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
+            </li>
+            <li class="nav-item mt-4 mb-4">
+                {% autoescape %}
+                    <a class="nav-link active  text-white" href="#"><i class="bi bi-back"></i> commentaires</a>
+                {% endautoescape %}
+            </li>
+            <li class="nav-item mt-4 mb-4">
+                {% autoescape %}
+                    <a class="nav-link active  text-white" href="#"><i class="bi bi-signpost-split-fill"></i> catégories</a>
+                {% endautoescape %}
             </li>
             <li class="nav-item mt-4 mb-4">
                 <div class="accordion">
@@ -150,5 +130,15 @@
                 </div>
             </li>
         </ul>
+        <a class="nav-link" {% autoescape %}href="{{ constant('SITE_ADRESS') }}"{% endautoescape %}>
+            <button type="button" class="btn btn-warning btn-sm col-12">
+                <i class="bi bi-globe"></i> Retour site
+            </button>
+        </a>
+        <a class="nav-link" {% autoescape %}href="{{ constant('SITE_ADRESS') }}/membres/deconnexion"{% endautoescape %}>
+            <button type="button" class="btn btn-danger btn-sm col-12">
+                <i class="bi bi-lightning-fill"></i> Déconnexion
+            </button>
+        </a>
     </div>
 </nav>

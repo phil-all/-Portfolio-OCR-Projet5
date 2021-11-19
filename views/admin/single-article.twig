@@ -7,6 +7,11 @@
         <main class="col-md-8 ms-sm-auto col-lg-9 col-xl-10 p-0" style="min-height: 100vh;">
             <div class="container-fluid container-md p-5">
                 <article class="container col-md-8 justify-content-center">
+                    {% autoescape %}
+                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/delete/{{ article.id }}">
+                        <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle-fill"></i> Supprimer</button>
+                    </a>
+                    {% endautoescape %}
                     <h1 class="mt-5">{{ title }}</h1>
                     <h3 class="mb-5">{{ chapo }}</h3>
                     <div {% autoescape %}style="
@@ -70,8 +75,10 @@
                 </section><!-- end comments -->
                 <section class="container col-md-8 justify-content-center mt-5 mb-5">
                     {% autoescape %}
-                    <a href="{{ constant('SITE_ADRESS') }}/articles/liste/tous/page-1" class="btn btn-success">Tous les articles</a>     
-                    {% endautoescape %}   
+                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/delete/{{ article.id }}">
+                        <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle-fill"></i> Supprimer</button>
+                    </a>
+                    {% endautoescape %}
                 </section>
             </div>
         </main>

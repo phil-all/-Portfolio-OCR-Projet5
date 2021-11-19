@@ -20,11 +20,18 @@
                                 <p class="card-text"><small class="text-muted">date : {{ article.created_at }}</small></p>
                                 <h5 class="card-title">{{ article.title }}</h5>
                                 <p class="card-text">{{ article.chapo }}</p>                        
-                                {% autoescape %}
-                                <a href="{{ constant('SITE_ADRESS') }}/articles/numero/{{ article.id }}/{{ article.slug }}">
-                                {% endautoescape %}
-                                    <button type="button" class="btn btn-light"><i class="bi bi-arrow-right-square"></i> lire plus...</button>
-                                </a>
+                                <div class="d-flex justify-content-between">
+                                    {% autoescape %}
+                                    <a href="{{ constant('SITE_ADRESS') }}/articles/numero/{{ article.id }}/{{ article.slug }}">
+                                        <button type="button" class="btn btn-light"><i class="bi bi-arrow-right-square"></i> lire plus...</button>
+                                    </a>
+                                    {% endautoescape %}
+                                    {% autoescape %}
+                                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/delete/{{ article.id }}">
+                                        <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle-fill"></i> Supprimer</button>
+                                    </a>
+                                    {% endautoescape %}
+                                </div>
                             </div>
                         </article>            
                         {% endfor %}            

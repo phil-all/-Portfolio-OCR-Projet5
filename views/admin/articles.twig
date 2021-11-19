@@ -23,9 +23,14 @@
                                 <div  class="d-flex justify-content-between">
                                     {% autoescape %}
                                     <a href="{{ constant('SITE_ADRESS') }}/adminArticles/numero/{{ article.id }}/{{ article.slug }}">
-                                    {% endautoescape %}
                                         <button type="button" class="btn btn-light"><i class="bi bi-arrow-right-square"></i> lire plus...</button>
                                     </a>
+                                    {% endautoescape %}
+                                    {% autoescape %}
+                                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/delete/{{ article.id }}">
+                                        <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle-fill"></i> Supprimer</button>
+                                    </a>
+                                    {% endautoescape %}
                                     {% autoescape %}
                                     <div>
                                         <span>Catégorie: </span><a href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/{{ article.category }}/page-1">{{ article.category }}</a>

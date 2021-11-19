@@ -31,6 +31,8 @@ class AdminArticlesController extends MainController
      */
     public function nouveau(): void
     {
+        $this->template = 'client' . DS . 'accueil.twig';
+        
         if ($this->userToTwig['admin']) {
             $category = new CategoryModel();
             $categories = $category->readAll();
@@ -52,6 +54,8 @@ class AdminArticlesController extends MainController
      */
     public function post(): void
     {
+        $this->template = 'client' . DS . 'accueil.twig';
+
         if ($this->userToTwig['admin']) {
             $upload = $this->uploadArticleImg();
 
@@ -81,6 +85,8 @@ class AdminArticlesController extends MainController
      */
     public function liste(array $params): void
     {
+        $this->template = 'client' . DS . 'accueil.twig';
+
         if ($this->userToTwig['admin']) {
             $this->userToTwig['template'] = 'admin';
 
@@ -127,6 +133,8 @@ class AdminArticlesController extends MainController
      */
     public function numero(array $params): void
     {
+        $this->template = 'client' . DS . 'accueil.twig';
+
         if ($this->userToTwig['admin']) {
             $this->userToTwig['template'] = 'admin';
 
@@ -147,6 +155,21 @@ class AdminArticlesController extends MainController
                 if (!empty($comment->readValidated($params[0]))) {
                     $this->params['comments'] =  $comment->readValidated($params[0]);
                 }
+            }
+        }
+    }
+
+    public function delete(array $params): void
+    {
+        $this->template = 'client' . DS . 'accueil.twig';
+
+        $article = new ArticlesModel;
+        
+        if ($this->userToTwig['admin'] && $article->idExist((int)$params[0])) {
+            $this->template = 'admin' . DS . 'article-deletion-failed.twig';
+
+            if ($article->deleteArticle((int)$params[0])) {
+                $this->template = 'admin' . DS . 'article-deleted.twig';
             }
         }
     }

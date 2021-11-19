@@ -333,4 +333,26 @@ class ArticlesModel extends MainModel
 
         $stmt->execute();
     }
+
+    /**
+     *Delete an article and return false if failed
+     *
+     * @param integer $articleId
+     * 
+     * @return boolean
+     */
+    public function deleteArticle(int $articleId): bool
+    {
+        $query = 'DELETE
+        FROM article
+        WHERE id = :id';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return !$this->idExist($articleId);
+    }
 }
