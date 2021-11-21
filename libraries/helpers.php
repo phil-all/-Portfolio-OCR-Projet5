@@ -141,6 +141,7 @@ trait Helpers
      * * Gets an input SERVER by its key
      *
      * @param string $key
+     * 
      * @return string
      */
     public static function getSERVER(string $key): string
@@ -152,9 +153,10 @@ trait Helpers
      * * Gets an input FILES by its key
      *
      * @param string $key
-     * @return string
+     * 
+     * @return mixed
      */
-    public static function getFILES(string $key): string
+    public static function getFILES(string $key): mixed
     {
         return self::globals()->getFILES($key);
     }

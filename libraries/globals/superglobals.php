@@ -87,7 +87,7 @@ final class Superglobals
         return $this->SERVER;
     }
 
-        /**
+    /**
      * Returns a key value from $_FILES
      *
      * @param string $key
@@ -97,7 +97,7 @@ final class Superglobals
     public function getFILES(string $key = null): mixed
     {
         if ($key !== null) {
-            return strip_tags(htmlspecialchars($this->FILES[$key])) ?? null;
+            return $this->FILES[$key] ?? null;
         }
 
         return $this->FILES;
