@@ -11,10 +11,10 @@ use Over_Code\Libraries\Jwt;
 class UserModel extends MainModel
 {
     use \Over_Code\Libraries\Helpers;
-    use \Over_Code\Libraries\User\Db\Read;
-    use \Over_Code\Libraries\User\Db\Create;
-    use \Over_Code\Libraries\User\Db\Delete;
-    use \Over_Code\Libraries\User\Db\Update;
+    use \Over_Code\Models\UserCrud\Read;
+    use \Over_Code\Models\UserCrud\Create;
+    use \Over_Code\Models\UserCrud\Delete;
+    use \Over_Code\Models\UserCrud\Update;
 
     private $serial;
     private $avatar_id;
