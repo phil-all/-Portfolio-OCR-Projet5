@@ -1,6 +1,6 @@
 <?php
 
-namespace Over_Code\Libraries\User\Db;
+namespace Over_Code\Models\UserCrud;
 
 use PDO;
 use Over_Code\Db\DbConnect;
