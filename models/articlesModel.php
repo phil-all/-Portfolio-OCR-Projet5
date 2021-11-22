@@ -402,4 +402,25 @@ class ArticlesModel extends MainModel
 
         return $stmt->fetchColumn();
     }
+
+    /**
+     * Uncategorized articles from a given category in setting their category id on 1,
+     * which correspond to uncategorized
+     *
+     * @param integer $categoryId
+     * 
+     * @return void
+     */
+    public function uncategorized(int $categoryId): void
+    {
+        $query = 'UPDATE article
+        SET category_id = 1
+        WHERE category_id = :categoryId';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':categoryId', $categoryId, PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
 }

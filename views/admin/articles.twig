@@ -6,11 +6,23 @@
         {% include 'layouts/admin-menu.twig' %}
         <main class="col-md-8 ms-sm-auto col-lg-9 col-xl-10 p-0" style="min-height: 100vh;">
             <div class="container-fluid container-md p-5">
-                <p>page {{ page }} / {{ totalPages }}</p>        
                 <section class="container mt-5 news">
                     <div class="row mt-3">
-                        <p class="green-txt mb-0 text-uppercase">Archives des articles</p>
-                        <h2 class="pb-5">Tous les articles</h2>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <p class="green-txt mb-0 text-uppercase">Archives des articles</p>
+                                <h2 class="pb-5">Tous les articles</h2>
+                            </div>
+                            <div>
+                                {% autoescape %}
+                                <a class="nav-link active ms-2" href="{{ constant('SITE_ADRESS') }}/adminArticles/nouveau">
+                                    <button class="btn btn-primary">
+                                        nouveau
+                                    </button>
+                                </a>
+                                {% endautoescape %}
+                            </div>
+                        </div>
                         {% for article in articles %}
                         <article class="card mb-3 col-12 col-md-6 border-none">
                             {% autoescape %}

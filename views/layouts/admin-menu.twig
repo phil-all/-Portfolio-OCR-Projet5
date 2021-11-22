@@ -13,39 +13,9 @@
                 {% endautoescape %}
             </li>
             <li class="nav-item mt-4 mb-4">
-                <div class="accordion" id="accordionArticles">
-                    <h2 class="accordion-header">
-                        <button class="btn btn-primary collapsed w-100 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapseArticles" aria-expanded="false" aria-controls="collapseArticles">
-                            <div>
-                                <i class="bi bi-newspaper"></i> articles
-                            </div>
-                            <div>
-                                <i class="bi bi-caret-down-fill"></i>
-                            </div>
-                        </button>
-                    </h2>
-                    <div id="collapseArticles" class="accordion-collapse collapse" aria-labelledby="headingArticles" data-bs-parent="#accordionArticles">
-                        <div class="accordion-body">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    {% autoescape %}
-                                        <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminArticles/nouveau">nouveau</a>
-                                    {% endautoescape %}
-                                </li>
-                                <li class="nav-item">
-                                    {% autoescape %}
-                                        <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/tous/page-1">tous les articles</a>
-                                    {% endautoescape %}
-                                </li>
-                                <li class="nav-item">
-                                    {% autoescape %}
-                                        <a class="nav-link active  text-white" href="#">articles par catégorie</a>
-                                    {% endautoescape %}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                {% autoescape %}
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/tous/page-1"><i class="bi bi-newspaper"></i> articles</a>
+                {% endautoescape %}
             </li>
             <li class="nav-item mt-4 mb-4">
                 {% autoescape %}
@@ -54,7 +24,7 @@
             </li>
             <li class="nav-item mt-4 mb-4">
                 {% autoescape %}
-                    <a class="nav-link active  text-white" href="#"><i class="bi bi-signpost-split-fill"></i> catégories</a>
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminCategory"><i class="bi bi-signpost-split-fill"></i> catégories</a>
                 {% endautoescape %}
             </li>
             <li class="nav-item mt-4 mb-4">
