@@ -32,7 +32,7 @@ class CategoryModel extends MainModel
      * Check if a given category exist
      *
      * @param string $category
-     * 
+     *
      * @return boolean
      */
     public function isExist(string $category): bool
@@ -74,7 +74,7 @@ class CategoryModel extends MainModel
      *
      * @param integer $categoryId
      * @param string $name
-     * 
+     *
      * @return void
      */
     public function update(int $categoryId, string $name): void
@@ -95,7 +95,7 @@ class CategoryModel extends MainModel
      * Delete a category
      *
      * @param integer $categoryId
-     * 
+     *
      * @return void
      */
     public function delete(int $categoryId)

@@ -120,7 +120,7 @@ class AdminArticlesController extends MainController
                     'statePrev'  => ($this->currentPage === 1) ? ' disabled' : '',
                     'stateNext'  => ($this->currentPage === $this->totalPages) ? ' disabled' : '',
                     'prev'       => ($this->currentPage === 1) ? 1 : $this->currentPage - 1,
-                    'next'       => ($this->currentPage === $this->totalPages) ? $this->totalPages : $this->currentPage + 1
+                    'next' => ($this->currentPage === $this->totalPages) ? $this->totalPages : $this->currentPage + 1
                 ));
             }
         }

@@ -104,7 +104,7 @@ class AdminCategoryController extends MainController
                 'category' => $params[1]
             ];
 
-            $this->template = 'admin' . DS . 'categories-update.twig';            
+            $this->template = 'admin' . DS . 'categories-update.twig';
         }
     }
 
@@ -112,7 +112,7 @@ class AdminCategoryController extends MainController
      * Process to update a given category
      *
      * @param integer $categoryId
-     * 
+     *
      * @return void
      */
     public function updateProcess(int $categoryId): void
@@ -142,7 +142,7 @@ class AdminCategoryController extends MainController
      * @param array $params array from uri :
      * - $params[0] is an integer wich correspond to category id
      * - $params[1] is a string which correspond to a category name
-     * 
+     *
      * @return void
      */
     public function delete(array $params): void

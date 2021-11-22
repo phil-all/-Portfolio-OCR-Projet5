@@ -342,7 +342,7 @@ class ArticlesModel extends MainModel
      *Delete an article and return false if failed
      *
      * @param integer $articleId
-     * 
+     *
      * @return boolean
      */
     public function deleteArticle(int $articleId): bool
@@ -364,7 +364,7 @@ class ArticlesModel extends MainModel
      * Update an article
      *
      * @param integer $articleId
-     * 
+     *
      * @return void
      */
     public function updateArticle(int $articleId): void
@@ -408,7 +408,7 @@ class ArticlesModel extends MainModel
      * which correspond to uncategorized
      *
      * @param integer $categoryId
-     * 
+     *
      * @return void
      */
     public function uncategorized(int $categoryId): void
