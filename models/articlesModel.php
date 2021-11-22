@@ -387,4 +387,19 @@ class ArticlesModel extends MainModel
 
         $stmt->execute();
     }
+
+    public function getImg(int $articleId): string
+    {
+        $query = 'SELECT img
+        FROM article
+        WHERE id = :id';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
 }

@@ -59,18 +59,20 @@ class AdminArticlesController extends MainController
         if ($this->userToTwig['admin']) {
             $upload = $this->uploadArticleImg();
 
-            if ($upload['img_name'] !== null) {
-                $user = $this->userToTwig['user']['serial'];
+            $img = '0000'; // default article image
 
+            if ($upload['message'] === 0) { // 3: no file exist
                 $img = $upload['img_name'];
-
-                $article = new articlesModel();
-                $article->createArticle($user, $img);
-
-                $this->userToTwig['template'] = 'admin';
-
-                $this->template = 'admin' . DS . 'article-post-confirmation.twig';
             }
+            
+            $user = $this->userToTwig['user']['serial'];
+
+            $article = new articlesModel();
+            $article->createArticle($user, $img);
+
+            $this->userToTwig['template'] = 'admin';
+
+            $this->template = 'admin' . DS . 'article-post-confirmation.twig';
         }
     }
 
@@ -222,8 +224,16 @@ class AdminArticlesController extends MainController
         if ($this->userToTwig['admin']) {
             $articleId = preg_replace('~[a-zA-Z\/\:\_\-]~', '', $this->getSERVER('HTTP_REFERER'));
 
+            $img = null;
+
             $article = new articlesModel();
-            $article->updateArticle($articleId);
+
+            if ($this->getFILES('image')['error'] !== 4) { // error 4: UPLOAD_ERR_NO_FILE no download file
+                echo "ici";
+                $upload = $this->uploadArticleImg($article->getImg($articleId));
+            }
+            
+            $article->updateArticle($articleId, $img);
 
             $this->userToTwig['template'] = 'admin';
 

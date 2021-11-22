@@ -15,6 +15,8 @@ trait Upload
      * Upload a new article image and return an array with message and the
      * inetger part of img name.
      * img rerturn name example: **0015** (part of article-0015.jpg)
+     * 
+     * @param int $name inetger part of img name.
      *
      * @return array with two keys.
      *
@@ -24,12 +26,11 @@ trait Upload
      * - 2: file too big
      * - 3: no file exist or upload failed
      *
-     * 'img_name': **null** if unseccessed upload.
+     * 'img_name': **null** if unseccessed upload, or not defined.
      */
-    public function uploadArticleImg(): array
+    public function uploadArticleImg(string $img_name = null): array
     {
         $message = 3; // no file exist or upload failed
-        $img_name = null;
 
         if ((null !== $this->getFILES('image')) && ($this->getFILES('image')['error'] === 0)) {
             $message = 'format de fichier incorrect';
@@ -48,16 +49,19 @@ trait Upload
             if (array_key_exists($extension, $allowed) || !in_array($fileType, $allowed)) {
                 $message = 2; // file too big
 
-                if ($fileSize < 60000) {
+                if ($fileSize < 500000) { // 500 Ko
                     $message = 1; // upload failed
 
                     $article = new ArticlesModel();
 
-                    $img_name = intval($article->biggestImg()) + 1;
-                    $img_name = substr_replace('0000', $img_name, -strlen($img_name));
+                    if ($img_name === null) { // if no $img_name specified, case of new image
+                        $img_name = intval($article->biggestImg()) + 1;
+                        $img_name = substr_replace('0000', $img_name, -strlen($img_name));
+                    }
+
                     $newName = 'article-' . $img_name;
 
-                    $newFileName = UPLOADS_PATH . $newName . $extension;
+                    $newFileName = UPLOADS_PATH . $newName . '.' . $extension;
 
                     $move = move_uploaded_file($this->getFILES('image')['tmp_name'], $newFileName);
 
