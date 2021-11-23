@@ -1,0 +1,53 @@
+{% extends 'layouts/layout.twig' %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            {% include 'layouts/admin-menu.twig' %}
+            <main class="col-md-8 ms-sm-auto col-lg-9 col-xl-10 p-0" style="height: 100vh;">
+                <div class="container mt-5">
+                    {% for article in articles %}
+                        <div class="alert alert-primary" role="alert">
+                            <h5>Lien vers l'article : {{ article.title }}</h5>
+                            {% for comment in list %}
+                                {% if comment.comment_status == 'pending' and comment.article_id == article.article_id %}
+                                    <div class="m-2 d-flex flex-column comment-section">
+                                        <div class="shadow p-1 mb-1 p-lg-2 bg-body rounded">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex flex-row">
+                                                    <div class="me-2 px-3 align-self-center alert alert-primary">id {{ comment.comment_id }}</div>
+                                                    <div class="d-flex flex-column justify-content-start ml-2">
+                                                        <span class="d-block fw-bold">{{ comment.pseudo }} - [ id {{ comment.user_serial }} ]</span>
+                                                        <span class="date text-black-50">Publié le - {{ comment.created_at }}</span>
+                                                    </div>
+                                                </div>
+                                                {% autoescape %}
+                                                    <a href="{{ constant('SITE_ADRESS') }}/adminComment/valid/{{ comment.comment_id }}">
+                                                        <div><button type="button" class="btn btn-success">Valider</button></div>
+                                                    </a>
+                                                {% endautoescape %}
+                                                {% autoescape %}
+                                                <a href="{{ constant('SITE_ADRESS') }}/adminComment/suspend/{{ comment.comment_id }}">
+                                                    <div><button type="button" class="btn btn-danger">Suspendre</button></div>
+                                                </a>
+                                                {% endautoescape %}
+                                            </div>
+                                            <div class="mt-2">
+                                                <p class="comment-text">{{ comment.content }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    {% if empty == true %}
+                    <div class="alert alert-success" role="alert">
+                        <h5>Aucun commentaire en attente de validation</h5>
+                    </div>
+                    {% endif %}
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}
