@@ -3,13 +3,37 @@
 namespace Over_Code\Models\UserCrud;
 
 use PDO;
-use Over_Code\Db\DbConnect;
 
 /**
  * Trait used to update user datas in db
  */
 trait Update
 {
+    /**
+     * Update user status as follow :
+     * - 1 = pending
+     * - 2 = active
+     * - 3 = suspended
+     *
+     * @param integer $serial user id
+     * @param integer $newStatusId
+     *
+     * @return void
+     */
+    public function statusUpdate(int $serial, int $newStatusId): void
+    {
+        $query = 'UPDATE user
+        SET user_status_id = :newStatusId
+        WHERE serial = :serial';
+
+        $stmt = $this->pdo()->getPdo()->prepare($query);
+
+        $stmt->bindValue(':newStatusId', $newStatusId, PDO::PARAM_INT);
+        $stmt->bindValue(':serial', $serial, PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
+
     /**
      * Store a given token in database, in terms of email user
      *

@@ -78,7 +78,7 @@ class CommentModel extends MainModel
 
     /**
      * Get all pending and validated comments,
-     * only from articles containing pending comments 
+     * only from articles containing pending comments
      *
      * @return array
      */
@@ -135,7 +135,7 @@ class CommentModel extends MainModel
      *
      * @param integer $commentId
      * @param integer $newStatusId
-     * 
+     *
      * @return void
      */
     public function statusUpdate(int $commentId, int $newStatusId): void

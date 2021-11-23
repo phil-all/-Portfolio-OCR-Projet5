@@ -28,29 +28,9 @@
                 {% endautoescape %}
             </li>
             <li class="nav-item mt-4 mb-4">
-                <div class="accordion">
-                    <h2 class="accordion-header">
-                        <button class="btn btn-primary collapsed w-100 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <div>
-                                <i class="bi bi-people-fill"></i> membres
-                            </div>
-                            <div>
-                                <i class="bi bi-caret-down-fill"></i>
-                            </div>
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    {% autoescape %}
-                                        <a class="nav-link active  text-white" href="#">suspendre</a>
-                                    {% endautoescape %}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                {% autoescape %}
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminUser"><i class="bi bi-people-fill"></i> membres</a>
+                {% endautoescape %}
             </li>
             <li class="nav-item mt-4 mb-4">
                 <div class="accordion">

@@ -3,13 +3,65 @@
 namespace Over_Code\Models\UserCrud;
 
 use PDO;
-use Over_Code\Db\DbConnect;
 
 /**
  * Trait used to read user datas in db
  */
 trait Read
 {
+    /**
+     * Read datas from all valid users (active and suspended)
+     *
+     * @return array
+     */
+    public function readValid(): array
+    {
+        $query = 'SELECT
+            u.serial,
+            u.first_name,
+            u.last_name,
+            u.pseudo,
+            u.email,
+            s.status,
+            DATE_FORMAT(u.created_at, "%d-%m-%Y") AS since
+        FROM user AS u
+        JOIN user_status AS s
+            ON u.user_status_id = s.id
+        WHERE u.user_status_id != 1';
+        
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Read datas from all users
+     *
+     * @return array
+     */
+    public function readPending(): array
+    {
+        $query = 'SELECT
+            u.serial,
+            u.first_name,
+            u.last_name,
+            u.pseudo,
+            u.email,
+            DATE_FORMAT(u.created_at, "%d-%m-%Y") AS since
+        FROM user AS u
+        JOIN user_status AS s
+            ON u.user_status_id = s.id
+        WHERE u.user_status_id = 1';
+        
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     /**
      * Read all datas from a given user, identified by its email
      *
