@@ -11,6 +11,30 @@ use Over_Code\Db\DbConnect;
 trait Update
 {
     /**
+     * Update user password
+     *
+     * @param string $email
+     * @param string $pass
+     * 
+     * @return void
+     */
+    public function updatePass(string $email, string $pass): void
+    {
+        $this->pdo = new DbConnect();
+
+        $query = 'UPDATE user
+        SET password = :password
+        WHERE email = :email';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':password', $pass, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
+    /**
      * Update user status as follow :
      * - 1 = pending
      * - 2 = active

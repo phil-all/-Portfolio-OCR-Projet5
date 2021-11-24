@@ -11,8 +11,9 @@ use Over_Code\Libraries\Jwt;
  */
 trait ResetPassword
 {
-        /**
-     * Set status user on active
+    use \Over_Code\Models\UserCrud\Update;
+    /**
+     * Set a new user password, using pass from POST
      *
      * @param string $email
      *
@@ -22,18 +23,10 @@ trait ResetPassword
     {
         //argon2id only available if PHP has been compiled with Argon2 support
         $algo = (defined('PASSWORD_ARGON2ID')) ? PASSWORD_ARGON2ID : PASSWORD_DEFAULT;
-        
-        $this->pdo = new DbConnect();
 
-        $query = 'UPDATE user
-        SET password = :password
-        WHERE email = :email';
-
-        $stmt = $this->pdo->getPdo()->prepare($query);
-
-        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-        $stmt->bindValue(':password', password_hash($this->getPOST('password'), $algo), PDO::PARAM_STR);
-
-        $stmt->execute();
+        $this->updatePass(
+            $email,
+            password_hash($this->getPOST('password'), $algo)
+        );
     }
 }
