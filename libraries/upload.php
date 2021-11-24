@@ -15,7 +15,7 @@ trait Upload
      * Upload a new article image and return an array with message and the
      * inetger part of img name.
      * img rerturn name example: **0015** (part of article-0015.jpg)
-     * 
+     *
      * @param int $name inetger part of img name.
      *
      * @return array with two keys.

@@ -12,6 +12,7 @@ use Over_Code\Controllers\MainController;
 class AdminCommentController extends MainController
 {
     use \Over_Code\Libraries\Helpers;
+
     /**
      * Set Template for pending comments list
      *
@@ -45,7 +46,7 @@ class AdminCommentController extends MainController
 
     /**
      * Set a comment status as follow and redicrect to admin comment list section.
-     * 
+     *
      * Status are as follow :
      * - 0 = pending
      * - 1 = validated
@@ -53,14 +54,14 @@ class AdminCommentController extends MainController
      *
      * @param array $uriParams
      * @param integer $newStatusId
-     * 
+     *
      * @return void
      */
     public function updateStatus(array $uriParams, int $newStatusId): void
     {
         if ($this->userToTwig['admin'] && count($uriParams) === 1 && $this->onlyInteger($uriParams[0])) {
             $comment = new CommentModel();
-            $comment->statusUpdate((int)$uriParams[0], $newStatusId);    
+            $comment->statusUpdate((int)$uriParams[0], $newStatusId);
         }
 
         $this->redirect(SITE_ADRESS . '/adminComment');
