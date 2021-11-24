@@ -114,6 +114,11 @@ class CommentModel extends MainModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Returns id and title of articles with pending comments
+     *
+     * @return array
+     */
     public function getPendingJoinArticles(): array
     {
         $query = 'SELECT c.article_id, a.title
@@ -131,7 +136,7 @@ class CommentModel extends MainModel
     }
 
     /**
-     * Undocumented function
+     * Update a comment status
      *
      * @param integer $commentId
      * @param integer $newStatusId

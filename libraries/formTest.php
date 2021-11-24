@@ -39,6 +39,11 @@ class FormTest
         );
     }
 
+    /**
+     * heks datas from contact form
+     *
+     * @return boolean
+     */
     public function contactTest(): bool
     {
         return (

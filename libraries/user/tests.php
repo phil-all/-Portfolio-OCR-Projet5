@@ -39,7 +39,9 @@ trait Tests
     }
 
     /**
-     * Checks if an given user status is on pending, used on validation account process
+     * Checks if an given user status is on pending, used on validation account process.
+     * return 1 (pending id) if user is pending
+     * return 0 (count of user id) if user unknown
      *
      * @param string $email
      *
@@ -67,10 +69,10 @@ trait Tests
      *
      * @return boolean
      */
-    public function isMailExists(string $email): bool   //// deprecated and actually unsed ////
+    public function isMailExists(string $email): bool
     {
         $this->pdo = new DbConnect();
-        
+
         $query = 'SELECT count(*)
         FROM user
         WHERE email = :email';

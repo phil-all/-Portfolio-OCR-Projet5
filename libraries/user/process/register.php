@@ -28,6 +28,14 @@ trait Register
         $this->statusUpdate($serial, 2);
     }
 
+    /**
+     * Delete a pending user if validation token is expired
+     *
+     * @param integer $timestamp
+     * @param string $email
+     * 
+     * @return boolean
+     */
     private function expiredValidation(int $timestamp, string $email): bool
     {
         if ($this->isMailExists($email)) {

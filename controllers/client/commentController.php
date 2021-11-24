@@ -14,7 +14,12 @@ class CommentController extends MainController
 {
     use \Over_Code\Libraries\Helpers;
 
-    public function post()
+    /**
+     * Create an article comment from POST
+     *
+     * @return void
+     */
+    public function post(): void
     {
         $articleParam = preg_replace(
             '~' . SINGLE_ARTICLE . '~',

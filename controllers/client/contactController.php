@@ -13,7 +13,12 @@ class ContactController extends MainController
 {
     use \Over_Code\Libraries\Helpers;
 
-    public function mail()
+    /**
+     * Send a text email from contact form to site admin
+     *
+     * @return void
+     */
+    public function mail(): void
     {
         $form = new FormTest();
 

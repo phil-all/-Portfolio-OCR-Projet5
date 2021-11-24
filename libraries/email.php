@@ -54,7 +54,7 @@ class Email
     }
 
     /**
-     * Send a text email from contact form to site admin
+     * Send a text email to site admin
      *
      * @param string $f_Name first name
      * @param string $l_Name last name
