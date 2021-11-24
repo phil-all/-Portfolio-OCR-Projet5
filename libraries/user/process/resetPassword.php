@@ -29,7 +29,7 @@ trait ResetPassword
         SET password = :password
         WHERE email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->bindValue(':password', password_hash($this->getPOST('password'), $algo), PDO::PARAM_STR);

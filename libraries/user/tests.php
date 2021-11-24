@@ -51,7 +51,7 @@ trait Tests
 
         $query = 'SELECT user_status_id FROM user WHERE email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
@@ -75,7 +75,7 @@ trait Tests
         FROM user
         WHERE email = :email';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 

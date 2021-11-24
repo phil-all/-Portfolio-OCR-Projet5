@@ -3,6 +3,7 @@
 namespace Over_Code\Models\UserCrud;
 
 use PDO;
+use Over_Code\Db\DbConnect;
 
 /**
  * Trait used to delete user datas in db
@@ -18,6 +19,8 @@ trait Delete
      */
     public function deletePendingUser(string $email): void
     {
+        $this->pdo = new DbConnect();
+
         $query = 'DELETE FROM user
         WHERE email = :email AND user_status_id = 1';
 
@@ -37,6 +40,8 @@ trait Delete
      */
     public function delete(int $serial): void
     {
+        $this->pdo = new DbConnect();
+        
         $query = 'DELETE FROM user
         WHERE serial = :serial AND user_status_id = 1';
 

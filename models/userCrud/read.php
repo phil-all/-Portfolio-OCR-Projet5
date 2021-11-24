@@ -3,6 +3,7 @@
 namespace Over_Code\Models\UserCrud;
 
 use PDO;
+use Over_Code\Db\DbConnect;
 
 /**
  * Trait used to read user datas in db
@@ -16,6 +17,8 @@ trait Read
      */
     public function readValid(): array
     {
+        $this->pdo = new DbConnect();
+
         $query = 'SELECT
             u.serial,
             u.first_name,
@@ -43,6 +46,8 @@ trait Read
      */
     public function readPending(): array
     {
+        $this->pdo = new DbConnect();
+
         $query = 'SELECT
             u.serial,
             u.first_name,
@@ -71,6 +76,8 @@ trait Read
      */
     public function readUser(string $email): array
     {
+        $this->pdo = new DbConnect();
+
         $query = 'SELECT *
         FROM user
         WHERE email = :email';
@@ -101,6 +108,8 @@ trait Read
      */
     public function userInArray(string $email): array
     {
+        $this->pdo = new DbConnect();
+
         $query = 'SELECT
             u.serial,
             u.first_name,
@@ -133,6 +142,8 @@ trait Read
      */
     public function getStatus(string $email): string
     {
+        $this->pdo = new DbConnect();
+
         $query = 'SELECT s.status
         FROM user as u
         JOIN user_status as s
@@ -157,6 +168,8 @@ trait Read
      */
     public function readPass(string $email): string
     {
+        $this->pdo = new DbConnect();
+
         $query = 'SELECT password
         FROM user
         WHERE email = :email';
@@ -179,6 +192,8 @@ trait Read
      */
     public function readIpLog(string $email): string
     {
+        $this->pdo = new DbConnect();
+        
         $query = 'SELECT ip_log
         FROM user
         WHERE email = :email';

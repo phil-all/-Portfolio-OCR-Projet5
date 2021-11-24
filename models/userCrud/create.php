@@ -24,6 +24,8 @@ trait Create
         //argon2id only available if PHP has been compiled with Argon2 support
         $algo = (defined('PASSWORD_ARGON2ID')) ? PASSWORD_ARGON2ID : PASSWORD_DEFAULT;
 
+        $this->pdo = new DbConnect();
+
         $query = 'INSERT INTO user (
             first_name,
             last_name,

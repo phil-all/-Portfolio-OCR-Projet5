@@ -2,7 +2,6 @@
 
 namespace Over_Code\Models;
 
-use PDO;
 use Over_Code\Libraries\Jwt;
 
 /**

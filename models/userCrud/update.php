@@ -3,6 +3,7 @@
 namespace Over_Code\Models\UserCrud;
 
 use PDO;
+use Over_Code\Db\DbConnect;
 
 /**
  * Trait used to update user datas in db
@@ -22,11 +23,13 @@ trait Update
      */
     public function statusUpdate(int $serial, int $newStatusId): void
     {
+        $this->pdo = new DbConnect();
+
         $query = 'UPDATE user
         SET user_status_id = :newStatusId
         WHERE serial = :serial';
 
-        $stmt = $this->pdo()->getPdo()->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':newStatusId', $newStatusId, PDO::PARAM_INT);
         $stmt->bindValue(':serial', $serial, PDO::PARAM_INT);
@@ -44,6 +47,8 @@ trait Update
      */
     public function updateToken(string $token, string $email): void
     {
+        $this->pdo = new DbConnect();
+
         $query = 'UPDATE user
         SET token = :token
         WHERE email = :email';
@@ -66,6 +71,8 @@ trait Update
      */
     public function updateTokenDatetime(string $datetime, string $email): void
     {
+        $this->pdo = new DbConnect();
+
         $query = 'UPDATE user
         SET token_datetime = :datetime
         WHERE email = :email';
@@ -85,6 +92,8 @@ trait Update
      */
     public function updateIpLog($email): void
     {
+        $this->pdo = new DbConnect();
+
         $query = 'UPDATE user
         SET ip_log = :ip
         WHERE email = :email';
