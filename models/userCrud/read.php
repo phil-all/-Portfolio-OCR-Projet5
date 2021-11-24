@@ -193,9 +193,32 @@ trait Read
     public function readIpLog(string $email): string
     {
         $this->pdo = new DbConnect();
-        
+
         $query = 'SELECT ip_log
         FROM user
+        WHERE email = :email';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Read user token in database
+     *
+     * @param string $email
+     * 
+     * @return string
+     */
+    public function readToken(string $email): string
+    {
+        $this->pdo = new DbConnect();
+
+        $query = 'SELECT token FROM user
         WHERE email = :email';
 
         $stmt = $this->pdo->getPdo()->prepare($query);

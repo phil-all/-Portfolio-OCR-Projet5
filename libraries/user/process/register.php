@@ -11,6 +11,9 @@ use Over_Code\Libraries\Jwt;
  */
 trait Register
 {
+    use \Over_Code\Models\UserCrud\Read;
+    use \Over_Code\Models\UserCrud\Update;
+
     /**
      * Set status user on active
      *
@@ -20,36 +23,18 @@ trait Register
      */
     public function accountValidation(string $email): void
     {
-        $this->pdo = new DbConnect();
+        $serial = (int)$this->userInArray($email)['serial'];
 
-        $query = 'UPDATE user
-        SET user_status_id = 2
-        WHERE email = :email';
-
-        $stmt = $this->pdo->getPdo()->prepare($query);
-
-        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-
-        $stmt->execute();
+        $this->statusUpdate($serial, 2);
     }
 
     private function expiredValidation(int $timestamp, string $email): bool
     {
-        $this->pdo = new DbConnect();
-
         if ($this->isMailExists($email)) {
-            $query = 'SELECT token FROM user
-            WHERE email = :email';
-
-            $stmt = $this->pdo->getPdo()->prepare($query);
-
-            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-
-            $stmt->execute();
-            $result = $stmt->fetchColumn();
+            $token = $this->readToken($email);
 
             $jwt = new Jwt();
-            $payload = $jwt->decodeDatas($result, 1);
+            $payload = $jwt->decodeDatas($token, 1);
 
             if ($payload['exp'] > $timestamp) {
                 return false;
