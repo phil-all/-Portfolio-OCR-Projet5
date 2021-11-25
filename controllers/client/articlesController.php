@@ -50,10 +50,18 @@ class ArticlesController extends MainController
 
                 $this->params = array_merge($this->params, $rating);
             }
-//var_dump($this->userToTwig, $this->params);die;
+
             $comment = new CommentModel();
             if (!empty($comment->readValidated($params[0]))) {
-                $this->params['comments'] =  $comment->readValidated($params[0]);
+                $this->comments = [
+                    'comments'      => $comment->readValidated($params[0]),
+                    'count_comment' => $comment->countOnArticle($params[0])
+                ];
+
+                $this->params = (array_merge($this->params, [
+                    'comments'      => $comment->readValidated($params[0]),
+                    'count_comment' => $comment->countOnArticle($params[0])
+                ]));
             }
         }
     }

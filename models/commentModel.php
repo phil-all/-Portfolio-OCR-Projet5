@@ -77,6 +77,28 @@ class CommentModel extends MainModel
     }
 
     /**
+     * Get validated comments count from one given article
+     *
+     * @param integer $article_id
+     *
+     * @return array
+     */
+    public function countOnArticle(int $articleId): int
+    {
+        $query = 'SELECT COUNT(*)
+        FROM comment
+        WHERE article_id = :id AND comment_status_id = 2';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
      * Get all pending and validated comments,
      * only from articles containing pending comments
      *
