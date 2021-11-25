@@ -4,7 +4,6 @@ test/
 public/images/logo3.png
 public/images/logo60px.png
 public/uploads/*.jpg
-doc/*
 
 #---PHPDoumentor
 phpDocumentor.phar

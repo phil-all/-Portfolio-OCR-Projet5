@@ -14,6 +14,8 @@
 
 -   [Getting started](#getting-started)
 
+-   [Database](#database)
+
 -   [Features](#features)
 
 -   [Author](#author)
@@ -75,24 +77,15 @@ DB_PASSWORD=a_cray_pass
 
 ### Database
 
+Use a Mariadb 8.0 or Mysql 8.0 server.
+
 #### 1. Database install
 
-// procedure to install database
+Please consult the [database wiki](https://github.com/phil-all/Portfolio-OCR-Projet5/wiki/Database-install) to create schema and make a demo seeding.
 
 #### 2. Database Entity Relationship Diagram
 
-// Modèle physique de données
-
-#### 3. Enumeration list tables
-
-User section:
-
--   role <span style="color: #6f80a7">*a list of roles (1-admlin, 2-member)*</span>
--   user status <span style="color: #6f80a7">*a list of different status (1-pending, 2-active, 3-suspended)*</span>
-
-Blog section:
-
--   comment_status <span style="color: #6f80a7">*a list of different status (1-pending, 2-validate, 3-suspended)*</span>
+![MPD](doc/database/model.png)
 
 ## Features
 
