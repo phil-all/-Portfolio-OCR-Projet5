@@ -50,7 +50,10 @@ class ArticlesModel extends MainModel
             a.chapo, a.content,
             a.img,
             a.category_id,
-            c.category
+            c.category,
+            (SELECT COUNT(*)
+            FROM rating
+            WHERE article_id = :id) AS count_rating
         FROM article AS a
         JOIN user AS u
             ON a.user_serial = u.serial

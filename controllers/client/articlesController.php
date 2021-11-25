@@ -5,6 +5,7 @@ namespace Over_Code\Controllers\Client;
 use Over_Code\Models\CommentModel;
 use Over_Code\Models\ArticlesModel;
 use Over_Code\Controllers\MainController;
+use Over_Code\Models\RatingModel;
 
 /**
  * Articles pages controller
@@ -27,10 +28,10 @@ class ArticlesController extends MainController
      */
     public function numero(array $params): void
     {
-        $model = new ArticlesModel();
+        $article = new ArticlesModel();
 
-        if ($model->idExist($params[0])) {
-            $slug = $this->toSlug($model->getTitle((int)$params[0]));
+        if ($article->idExist($params[0])) {
+            $slug = $this->toSlug($article->getTitle((int)$params[0]));
 
             if ($slug != $params[1]) {
                 $url = SITE_ADRESS . DS . 'articles' . DS . 'numero' . DS . $params[0] . DS . $slug;
@@ -38,8 +39,19 @@ class ArticlesController extends MainController
             }
 
             $this->template = 'client' . DS . 'single-article.twig';
-            $this->params = $model->getSingleArticle($params[0]);
 
+            $this->params = $article->getSingleArticle($params[0]);
+
+            if (array_key_exists('user', $this->userToTwig)) {
+
+                $rating = new RatingModel();
+                $rating = [
+                    'rating' => $rating->isUserRate((int)$this->userToTwig['user']['serial'], (int)$params[0])
+                ];
+
+                $this->params = array_merge($this->params, $rating);
+            }
+//var_dump($this->userToTwig, $this->params);die;
             $comment = new CommentModel();
             if (!empty($comment->readValidated($params[0]))) {
                 $this->params['comments'] =  $comment->readValidated($params[0]);
