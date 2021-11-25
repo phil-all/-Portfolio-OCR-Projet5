@@ -43,7 +43,6 @@ class ArticlesController extends MainController
             $this->params = $article->getSingleArticle($params[0]);
 
             if (array_key_exists('user', $this->userToTwig)) {
-
                 $rating = new RatingModel();
                 $rating = [
                     'rating' => $rating->isUserRate((int)$this->userToTwig['user']['serial'], (int)$params[0])

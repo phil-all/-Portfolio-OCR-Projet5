@@ -15,7 +15,7 @@ trait Update
      *
      * @param string $email
      * @param string $pass
-     * 
+     *
      * @return void
      */
     public function updatePass(string $email, string $pass): void

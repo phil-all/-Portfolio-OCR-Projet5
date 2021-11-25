@@ -33,7 +33,7 @@ trait Register
      *
      * @param integer $timestamp
      * @param string $email
-     * 
+     *
      * @return boolean
      */
     private function expiredValidation(int $timestamp, string $email): bool

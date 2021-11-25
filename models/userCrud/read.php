@@ -211,7 +211,7 @@ trait Read
      * Read user token in database
      *
      * @param string $email
-     * 
+     *
      * @return string
      */
     public function readToken(string $email): string

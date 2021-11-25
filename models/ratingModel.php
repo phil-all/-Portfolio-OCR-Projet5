@@ -16,7 +16,7 @@ class RatingModel extends MainModel
      *
      * @param integer $userSerial
      * @param integer $articleId
-     * 
+     *
      * @return boolean
      */
     public function isUserRate(int $userSerial, int $articleId): bool
@@ -33,7 +33,7 @@ class RatingModel extends MainModel
      *
      * @param integer $userSerial
      * @param integer $articleId
-     * 
+     *
      * @return void
      */
     public function addLike(int $userSerial, int $articleId): void
@@ -53,7 +53,7 @@ class RatingModel extends MainModel
      *
      * @param integer $userSerial
      * @param integer $articleId
-     * 
+     *
      * @return void
      */
     public function unLike(int $userSerial, int $articleId): void
@@ -68,17 +68,17 @@ class RatingModel extends MainModel
      * Execute a prepared query on **rating** table with user serial and article id
      *
      * @param string $query query on rating table
-     * @param integer $userSerial
+     * @param integer $user user serial
      * @param integer $articleId
      * @param boolean $returnFetchColumn set on **true** to return a boolean statement fecth column
-     * 
+     *
      * @return null|boolean
      */
-    private function modify(string $query, int $userSerial, int $articleId, bool $returnFetchColumn = false): null|bool
+    private function modify(string $query, int $user, int $articleId, bool $returnFetchColumn = false): ?bool
     {
         $stmt = $this->pdo->getPdo()->prepare($query);
 
-        $stmt->bindValue(':user', $userSerial, PDO::PARAM_INT);
+        $stmt->bindValue(':user', $user, PDO::PARAM_INT);
         $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
 
         $stmt->execute();

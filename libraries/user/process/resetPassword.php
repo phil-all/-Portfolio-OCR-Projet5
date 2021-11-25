@@ -12,6 +12,7 @@ use Over_Code\Libraries\Jwt;
 trait ResetPassword
 {
     use \Over_Code\Models\UserCrud\Update;
+    
     /**
      * Set a new user password, using pass from POST
      *
