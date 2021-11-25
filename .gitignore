@@ -3,7 +3,6 @@ test/
 .env
 public/images/logo3.png
 public/images/logo60px.png
-public/uploads/*.jpg
 
 #---PHPDoumentor
 phpDocumentor.phar
