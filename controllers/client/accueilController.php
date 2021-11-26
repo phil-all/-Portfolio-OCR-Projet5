@@ -35,7 +35,7 @@ class AccueilController extends MainController
 
         $this->params = array(
             'lastNews' => $this->lastNews,
-            'captcha'  => $captcha->get_b64Captcha()
+            'captcha'  => $captcha->getB64EncodedCaptcha()
         );
     }
 }

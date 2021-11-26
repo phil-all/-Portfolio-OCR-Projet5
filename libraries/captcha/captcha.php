@@ -27,9 +27,9 @@ final class Captcha
     /**
      * Generate a random number, create a base64 encode image jpeg of it,
      * and set number in a token.
-     * 
+     *
      * @param null|string $captcha set a string value to just instanciate the token
-     * 
+     *
      * @return void
      */
     public function __construct(string $captcha = null)
@@ -37,7 +37,7 @@ final class Captcha
         $this->token = new Token();
 
         if ($captcha === null) {
-            $rand = mt_rand(0,99999);
+            $rand = mt_rand(0, 99999);
             
             $stringToImg = sprintf('%05d', $rand);
 
@@ -45,13 +45,13 @@ final class Captcha
 
             $this->token->set($hash);
             
-            $image = new Image();        
+            $image = new Image();
             $this->b64Captcha = $image->create($stringToImg);
         }
     }
 
     /**
-     * Deletes zeros in begening of string, convert first to integer, and so in 
+     * Deletes zeros in begening of string, convert first to integer, and so in
      * hexdecimal, and then hashes it.
      *
      * @param string $string
@@ -72,7 +72,7 @@ final class Captcha
      *
      * @return string
      */
-    public function get_b64Captcha(): string
+    public function getB64EncodedCaptcha(): string
     {
         return $this->b64Captcha;
     }
