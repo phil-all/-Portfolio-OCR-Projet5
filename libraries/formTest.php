@@ -2,6 +2,8 @@
 
 namespace Over_Code\Libraries;
 
+use Over_Code\Libraries\Captcha\Captcha;
+
 /**
  * Contain methods used to check forms
  */
@@ -51,7 +53,9 @@ class FormTest
             $this->isNamevalid($this->getPOST('last_name')) &&
             $this->isSubjectValid($this->getPOST('subject')) &&
             $this->isMailValid($this->getPOST('email')) &&
-            $this->isMessageValid($this->getPOST('content'))
+            $this->isMessageValid($this->getPOST('content')) &&
+            $this->isntBot($this->getPOST('bottrap')) &&
+            $this->isCaptchaValid($this->getPOST('captcha'))
         );
     }
 
@@ -163,5 +167,31 @@ class FormTest
     private function isMessageValid(string $message): bool
     {
         return preg_match('~(?=.*[\w\-\+\.\%]){30}~', $message);
+    }
+
+    /**
+     * Checks if hidden form field have been filled by bot
+     *
+     * @param string $bottrap
+     *
+     * @return boolean
+     */
+    private function isntBot(string $bottrap): bool
+    {
+        return ($bottrap === '');
+    }
+
+    /**
+     * Checks if a contact captcha is valid
+     *
+     * @param string $postCaptcha
+     *
+     * @return boolean
+     */
+    private function isCaptchaValid(string $postCaptcha): bool
+    {
+        $captcha = new Captcha('test');
+
+        return $captcha->verify($postCaptcha);
     }
 }

@@ -3,6 +3,7 @@
 namespace Over_Code\Controllers\Client;
 
 use Over_Code\Models\ArticlesModel;
+use Over_Code\Libraries\Captcha\Captcha;
 use Over_Code\Controllers\MainController;
 
 /**
@@ -30,8 +31,11 @@ class AccueilController extends MainController
             array_push($this->lastNews, $key);
         }
 
+        $captcha = new Captcha();
+
         $this->params = array(
-            'lastNews' => $this->lastNews
+            'lastNews' => $this->lastNews,
+            'captcha'  => $captcha->get_b64Captcha()
         );
     }
 }

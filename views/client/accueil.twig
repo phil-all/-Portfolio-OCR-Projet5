@@ -77,7 +77,7 @@
                         <p>Toute suggestion, idée ou retour sera fortement apprécié. N'hésitez pas à m'écrire.</p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 p-5 contact2">
+                <div class="col-12 col-md-6 p-3 contact2">
                     <form {% autoescape %}action="{{ constant('SITE_ADRESS') }}/contact/mail"{% endautoescape %} method="POST">
                         <div class="row mb-3">
                             <div class="col-lg-6">
@@ -95,13 +95,16 @@
                             <input type="text" class="form-control" placeholder="Sujet" name="subject">
                         </div>
                         <div class="mb-3">
-                            <textarea class="form-control" placeholder="Votre message" rows="5" name="content"></textarea>
+                            <textarea class="form-control" placeholder="Votre message" rows="8" name="content"></textarea>
                         </div>
-                        <div class="mb-3 form-check">
-                            <input id="prodId" name="prodId" type="hidden" value="xm234jq">
-
-                            <input type="checkbox" class="form-check-input" id="Check" name="bot">
-                            <label class="form-check-label" for="Check">Je ne suis pas un robot !</label>
+                        <div class="row mb-3">
+                            <input id="bottrap" name="bottrap" type="hidden" value="">
+                            <div class="col-lg-6">
+                                <img src="data:image/jpeg;base64, {{ captcha }}"  width="250" height="38" class="rounded">
+                            </div>
+                            <div class="col-lg-6">
+                                <input  class="form-control" type="text" placeholder="Confirmez le nombre de gauche" aria-label="Prénom" name="captcha">
+                            </div>                            
                         </div>
                         <button type="submit" class="btn btn-primary">Envoyer</button>
                     </form>

@@ -21,7 +21,7 @@ class ContactController extends MainController
     public function mail(): void
     {
         $form = new FormTest();
-
+//var_dump($_POST);die;
         if ($form->contactTest()) {
             $firstName = $this->getPOST('first_name');
             $lastName = $this->getPOST('last_name');
