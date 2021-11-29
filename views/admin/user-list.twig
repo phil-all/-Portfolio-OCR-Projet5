@@ -12,10 +12,10 @@
                             <ul class="m-0 nav nav-tabs">
                                 {% autoescape %}
                                     <li class="nav-item">
-                                    <a class=" nav-link {{ valid }}" aria-current="page" href="{{ constant('SITE_ADRESS') }}/adminUser"><h6 class="fw-bolder text-primary">Validés</h6></a>
+                                    <a class=" nav-link {{ valid }}" aria-current="page" href="{{ constant('SITE_ADRESS') }}/adminUser/liste/{{ CSRF }}"><h6 class="fw-bolder text-primary">Validés</h6></a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class=" nav-link {{ pending }}" aria-current="page" href="{{ constant('SITE_ADRESS') }}/adminUser/pending"><h6 class="fw-bolder text-primary">En attente de validation</h6></a>
+                                        <a class=" nav-link {{ pending }}" aria-current="page" href="{{ constant('SITE_ADRESS') }}/adminUser/pending/{{ CSRF }}"><h6 class="fw-bolder text-primary">En attente de validation</h6></a>
                                     </li>                                    
                                 {% endautoescape %}
                             </ul>
@@ -47,14 +47,14 @@
                                                         <td class="d-none d-md-table-cell">actif</td>
                                                         <td class="text-center">
                                                             {% autoescape %}
-                                                                <a href="{{ constant('SITE_ADRESS') }}/adminUser/suspend/{{ user.serial }}"><button class="btn btn-outline-danger btn-sm"  style="width: 105px;">suspendre</button></a>                                                    
+                                                                <a href="{{ constant('SITE_ADRESS') }}/adminUser/suspend/{{ user.serial }}/{{ CSRF }}"><button class="btn btn-outline-danger btn-sm"  style="width: 105px;">suspendre</button></a>                                                    
                                                             {% endautoescape %}
                                                         </td>
                                                     {% elseif user.status ==  'suspended' %}
                                                         <td class="d-none d-md-table-cell">suspendu</td>
                                                         <td class="text-center">
                                                             {% autoescape %}
-                                                                <a href="{{ constant('SITE_ADRESS') }}/adminUser/valid/{{ user.serial }}"><button class="btn btn-outline-success  btn-sm"  style="width: 105px;">activer</button></a>                                                    
+                                                                <a href="{{ constant('SITE_ADRESS') }}/adminUser/valid/{{ user.serial }}/{{ CSRF }}"><button class="btn btn-outline-success  btn-sm"  style="width: 105px;">activer</button></a>                                                    
                                                             {% endautoescape %}
                                                         </td>
                                                     {% endif %}
@@ -90,7 +90,7 @@
                                                     <td class="d-none d-sm-table-cell">{{ user.since}}</td>
                                                     <td class="text-center">
                                                             {% autoescape %}
-                                                                <a href="{{ constant('SITE_ADRESS') }}/adminUser/suspend/{{ user.serial }}"><button class="btn btn-outline-danger btn-sm"  style="width: 105px;">supprimer</button></a>                                                    
+                                                                <a href="{{ constant('SITE_ADRESS') }}/adminUser/suspend/{{ user.serial }}/{{ CSRF }}"><button class="btn btn-outline-danger btn-sm"  style="width: 105px;">supprimer</button></a>                                                    
                                                             {% endautoescape %}
                                                     </td>
                                                 </tr>

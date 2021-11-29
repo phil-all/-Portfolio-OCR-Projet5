@@ -38,20 +38,19 @@ class ArticlesController extends MainController
                 $this->redirect($url);
             }
 
-            $this->template = 'client' . DS . 'single-article.twig';
-
             $this->params = $article->getSingleArticle($params[0]);
 
             if (array_key_exists('user', $this->userToTwig)) {
                 $rating = new RatingModel();
-                $rating = [
-                    'rating' => $rating->isUserRate((int)$this->userToTwig['user']['serial'], (int)$params[0])
-                ];
 
-                $this->params = array_merge($this->params, $rating);
+                $this->params['rating'] = $rating->isUserRate(
+                    (int)$this->userToTwig['user']['serial'],
+                    (int)$params[0]
+                );
             }
 
             $comment = new CommentModel();
+
             if (!empty($comment->readValidated($params[0]))) {
                 $this->comments = [
                     'comments'      => $comment->readValidated($params[0]),
@@ -63,9 +62,13 @@ class ArticlesController extends MainController
                     'count_comment' => $comment->countOnArticle($params[0])
                 ]));
             }
+
+            $this->preventCsrf();
+
+            $this->template = 'client' . DS . 'single-article.twig';
         }
     }
-    
+
     /**
      * Sets params and template to twig, about list of articles:
      * - all articles

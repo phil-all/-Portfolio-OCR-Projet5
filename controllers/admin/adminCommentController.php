@@ -2,7 +2,6 @@
 
 namespace Over_Code\Controllers\Admin;
 
-use Over_Code\Models\ArticlesModel;
 use Over_Code\Models\CommentModel;
 use Over_Code\Controllers\MainController;
 
@@ -16,13 +15,17 @@ class AdminCommentController extends MainController
     /**
      * Set Template for pending comments list
      *
+     * @param array $params
+     *
      * @return void
      */
-    public function index(): void
+    public function liste(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
-        
-        if ($this->userToTwig['admin']) {
+
+        $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
+
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $comment = new CommentModel();
             $commentList = $comment->readPending();
             $articlesJoinPending = $comment->getPendingJoinArticles();
@@ -39,6 +42,8 @@ class AdminCommentController extends MainController
             }
 
             $this->userToTwig['template'] = 'admin';
+
+            $this->preventCsrf();
 
             $this->template = $this->template = 'admin' . DS . 'comment-validation.twig';
         }
@@ -59,12 +64,14 @@ class AdminCommentController extends MainController
      */
     public function updateStatus(array $uriParams, int $newStatusId): void
     {
-        if ($this->userToTwig['admin'] && count($uriParams) === 1 && $this->onlyInteger($uriParams[0])) {
+        $testParams = count($uriParams) === 2 && $uriParams[1] === $this->getCOOKIE('CSRF');
+
+        if ($this->userToTwig['admin'] && $testParams) {
             $comment = new CommentModel();
             $comment->statusUpdate((int)$uriParams[0], $newStatusId);
         }
 
-        $this->redirect(SITE_ADRESS . '/adminComment');
+        $this->redirect(SITE_ADRESS . '/adminComment/liste/' . $this->getCOOKIE('CSRF'));
     }
 
     /**
@@ -88,6 +95,6 @@ class AdminCommentController extends MainController
      */
     public function suspend(array $params): void
     {
-        $this->updateStatus($params, 3);
+        $this->updateStatus($params[0], 3);
     }
 }

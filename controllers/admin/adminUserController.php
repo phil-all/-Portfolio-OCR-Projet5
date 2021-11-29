@@ -13,27 +13,41 @@ class AdminUserController extends MainController
     /**
      * Set template for active and suspended users list
      *
+     * @param array $params
+     *
      * @return void
      */
-    public function index(): void
+    public function liste(array $params): void
     {
-        $this->params = [
-            'valid' => 'active'
-        ];
+        $this->template = $this->template = 'admin' . DS . 'dashboard.twig';
 
-        $this->listing('all');
+        $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
+
+        if ($this->userToTwig['admin'] && $paramsTest) {
+            $this->params['valid'] = 'active';
+
+            $this->listing('all');
+        }
     }
 
     /**
      * set template for pending users list
+     *
+     * @param array $params
+     *
+     * @return void
      */
-    public function pending(): void
+    public function pending(array $params): void
     {
-        $this->params = [
-            'pending' => 'active'
-        ];
+        $this->template = $this->template = 'admin' . DS . 'dashboard.twig';
 
-        $this->listing('pending');
+        $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
+
+        if ($this->userToTwig['admin'] && $paramsTest) {
+            $this->params['pending'] = 'active';
+
+            $this->listing('pending');
+        }
     }
 
     /**
@@ -45,23 +59,17 @@ class AdminUserController extends MainController
      */
     public function listing(string $type): void
     {
-        $this->template = 'client' . DS . 'accueil.twig';
-        
-        if ($this->userToTwig['admin']) {
-            $user = new UserModel();
+        $user = new UserModel();
 
-            $userList = ($type === 'all') ? $user->readValid() : $user->readPending();
+        $userList = ($type === 'all') ? $user->readValid() : $user->readPending();
 
-            $addParams = [
-                'users'  => $userList
-            ];
+        $this->params['users'] = $userList;
 
-            $this->params = array_merge($this->params, $addParams);
+        $this->userToTwig['template'] = 'admin';
 
-            $this->userToTwig['template'] = 'admin';
+        $this->preventCsrf();
 
-            $this->template = $this->template = 'admin' . DS . 'user-list.twig';
-        }
+        $this->template = $this->template = 'admin' . DS . 'user-list.twig';
     }
 
     /**
@@ -73,12 +81,16 @@ class AdminUserController extends MainController
      */
     public function valid(array $params): void
     {
-        if ($this->userToTwig['admin'] && count($params) === 1 && $this->onlyInteger($params[0])) {
+        $paramsTest = count($params) === 2 &&
+            $this->onlyInteger($params[0]) &&
+            $params[1] = $this->getCOOKIE('CSRF');
+
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $user = new UserModel();
             $user->statusUpdate((int)$params[0], 2);
         }
 
-        $this->redirect(SITE_ADRESS . '/adminUser');
+        $this->redirect(SITE_ADRESS . '/adminUser/liste/' . $this->getCOOKIE('CSRF'));
     }
 
     /**
@@ -90,21 +102,36 @@ class AdminUserController extends MainController
      */
     public function suspend(array $params): void
     {
-        if ($this->userToTwig['admin'] && count($params) === 1 && $this->onlyInteger($params[0])) {
+        $paramsTest = count($params) === 2 &&
+            $this->onlyInteger($params[0]) &&
+            $params[1] = $this->getCOOKIE('CSRF');
+
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $user = new UserModel();
             $user->statusUpdate((int)$params[0], 3);
         }
 
-        $this->redirect(SITE_ADRESS . '/adminUser');
+        $this->redirect(SITE_ADRESS . '/adminUser/liste/' . $this->getCOOKIE('CSRF'));
     }
 
+    /**
+     * Delete user
+     *
+     * @param array $params
+     *
+     * @return void
+     */
     public function delete(array $params): void
     {
-        if ($this->userToTwig['admin'] && count($params) === 1 && $this->onlyInteger($params[0])) {
+        $paramsTest = count($params) === 2 &&
+            $this->onlyInteger($params[0]) &&
+            $params[1] = $this->getCOOKIE('CSRF');
+
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $user = new UserModel();
             $user->delete((int)$params[0]);
         }
 
-        $this->redirect(SITE_ADRESS . '/adminUser');
+        $this->redirect(SITE_ADRESS . '/adminUser/liste/' . $this->getCOOKIE('CSRF'));
     }
 }

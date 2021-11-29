@@ -2,7 +2,6 @@
 
 namespace Over_Code\Controllers\Admin;
 
-use Over_Code\Libraries\Jwt;
 use Over_Code\Controllers\MainController;
 
 /**
@@ -22,6 +21,8 @@ class AdminDashboardController extends MainController
     public function index(): void
     {
         if ($this->userToTwig['admin']) {
+            $this->preventCsrf();
+
             $this->userToTwig['template'] = 'admin';
             
             $this->template = $this->template = 'admin' . DS . 'dashboard.twig';

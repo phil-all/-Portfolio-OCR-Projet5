@@ -3,6 +3,7 @@
 namespace Over_Code\Controllers;
 
 use Over_Code\Libraries\Jwt;
+use Over_Code\Libraries\Csrf;
 use Over_Code\Libraries\Twig;
 use Over_Code\Models\UserModel;
 use Over_Code\Libraries\Routes\UrlParser;
@@ -80,4 +81,17 @@ abstract class MainController
     {
         $this->template = 'pageNotFound.twig';
     }
+
+    /**
+     * Sets a CSRF token and put it in CSRF twig param to be added to specific links
+     *
+     * @return void
+     */
+    protected function preventCsrf(): void
+    {
+        $csrf = new Csrf();
+
+        $this->params['CSRF'] = $csrf->get();
+    }
+
 }

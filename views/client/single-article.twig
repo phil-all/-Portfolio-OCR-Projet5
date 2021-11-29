@@ -93,7 +93,7 @@
                             {% endif %}<!-- End pending comments-->
                         {% endfor %}
                         {% if user is defined %}
-                            <form class="mx-4 bg-light p-2 rounded" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/comment/post"{% endautoescape %} method="POST" id="comment">
+                            <form class="mx-4 bg-light p-2 rounded" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/comment/post/{{CSRF}}"{% endautoescape %} method="POST" id="comment">
                                 <div class="d-flex flex-row align-items-start">
                                     <img class="rounded-circle" {% autoescape %}src="{{ constant('SITE_ADRESS') }}/public/images/avatar/{{ user.img_path }}" width="30">{% endautoescape %}
                                     <textarea name="comment" class="form-control ml-1 shadow-none textarea" placeholder="..." style="height: 100px"></textarea>

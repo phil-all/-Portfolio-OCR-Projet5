@@ -16,21 +16,25 @@ class AdminCategoryController extends MainController
     /**
      * Set template for category list
      *
+     * @param array $params
+     *
      * @return void
      */
-    public function index()
+    public function liste(array $params)
     {
         $this->template = 'client' . DS . 'accueil.twig';
+
+        $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
         
-        if ($this->userToTwig['admin']) {
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $category = new CategoryModel();
             $categories = $category->readAll();
 
-            $this->params = [
-                'categories' => $categories
-            ];
+            $this->params['categories'] = $categories;
 
             $this->userToTwig['template'] = 'admin';
+
+            $this->preventCsrf();
             
             $this->template = $this->template = 'admin' . DS . 'categories-read.twig';
         }
@@ -39,14 +43,20 @@ class AdminCategoryController extends MainController
     /**
      * Set template form to create new category
      *
+     * @param array $params
+     *
      * @return void
      */
-    public function nouvelle(): void
+    public function nouvelle(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
+
+        $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
         
-        if ($this->userToTwig['admin']) {
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $this->userToTwig['template'] = 'admin';
+
+            $this->preventCsrf();
             
             $this->template = $this->template = 'admin' . DS . 'categories-new.twig';
         }
@@ -55,13 +65,17 @@ class AdminCategoryController extends MainController
     /**
      * Process to new category creation
      *
+     * @param array $params
+     *
      * @return void
      */
-    public function newProcess(): void
+    public function newProcess(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
+
+        $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
         
-        if ($this->userToTwig['admin']) {
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $this->template = 'admin' . DS . 'categories-allready-exist.twig';
 
             $post = ucfirst(strtolower($this->getPOST('category')));
@@ -71,8 +85,7 @@ class AdminCategoryController extends MainController
             if (!$category->isEXist($post)) {
                 $category->create($post);
 
-                $url = SITE_ADRESS . DS . 'adminCategory';
-                $this->redirect($url);
+                $this->redirect(SITE_ADRESS . '/adminCategory/liste/' . $this->getCOOKIE('CSRF'));
             }
         }
     }
@@ -89,15 +102,20 @@ class AdminCategoryController extends MainController
 
         $category = new CategoryModel();
 
-        $test = count($params) === 2 && $category->isExist($params[1]) && $params[1] !== 'aucune';
+        $paramsTest = count($params) === 3 &&
+            $category->isExist($params[1]) &&
+            $params[1] !== 'aucune' &&
+            $params[2] === $this->getCOOKIE('CSRF');
 
-        if ($this->userToTwig['admin'] && $test) {
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $this->userToTwig['template'] = 'admin';
 
             $this->params = [
                 'id'       => $params[0],
                 'category' => $params[1]
             ];
+
+            $this->preventCsrf();
 
             $this->template = 'admin' . DS . 'categories-update.twig';
         }
@@ -106,15 +124,17 @@ class AdminCategoryController extends MainController
     /**
      * Process to update a given category
      *
-     * @param integer $categoryId
+     * @param array $params
      *
      * @return void
      */
-    public function updateProcess(int $categoryId): void
+    public function updateProcess(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
+
+        $paramsTest = count($params) === 2 && $params[1] === $this->getCOOKIE('CSRF');
         
-        if ($this->userToTwig['admin']) {
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $this->template = 'admin' . DS . 'categories-allready-exist.twig';
 
             $post = ucfirst(strtolower($this->getPOST('category')));
@@ -122,10 +142,9 @@ class AdminCategoryController extends MainController
             $category = new CategoryModel();
 
             if (!$category->isEXist($post)) {
-                $category->update((int) $categoryId, $post);
+                $category->update((int)$params[0], $post);
     
-                $url = SITE_ADRESS . DS . 'adminCategory';
-                $this->redirect($url);
+                $this->redirect(SITE_ADRESS . '/adminCategory/liste/' . $this->getCOOKIE('CSRF'));
             }
         }
     }
@@ -146,16 +165,18 @@ class AdminCategoryController extends MainController
 
         $category = new CategoryModel();
 
-        $test = count($params) === 2 && $category->isExist($params[1]) && $params[1] !== 'aucune';
+        $paramsTest = count($params) === 3 &&
+            $category->isExist($params[1]) &&
+            $params[1] !== 'aucune' &&
+            $params[2] === $this->getCOOKIE('CSRF');
 
-        if ($this->userToTwig['admin'] && $test) {
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $article = new ArticlesModel();
             $article->uncategorized((int)$params[0]);
 
             $category->delete((int)$params[0]);
 
-            $url = SITE_ADRESS . DS . 'adminCategory';
-            $this->redirect($url);
+            $this->redirect(SITE_ADRESS . '/adminCategory/liste/' . $this->getCOOKIE('CSRF'));
         }
     }
 }
