@@ -16,7 +16,9 @@
         "twig/twig": "^3.0",
         "symfony/dotenv": "^5.3",
         "swiftmailer/swiftmailer": "^6.0",
-        "dompdf/dompdf": "^1.0"
+        "dompdf/dompdf": "^1.0",
+        "twig/markdown-extra": "3.x-dev",
+        "league/commonmark": "2.1.x-dev"
     },
     "config": {
         "platform": {

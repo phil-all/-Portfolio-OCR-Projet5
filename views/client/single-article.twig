@@ -19,7 +19,11 @@
             "{% endautoescape %}> </div>
             <p>Auteur : {{ first_name }} {{ last_name }}</p>
             <p>Date : {{ created_at }}</p>
-            <p class="mt-5">{{ content }}</p>
+            <p class="mt-5">
+                {% apply markdown_to_html %}
+                    {{ content|nl2br }}
+                {% endapply %}
+            </p>
         </article>
         <section><!-- start infos -->
             <div class="container col-md-8 justify-content-center">

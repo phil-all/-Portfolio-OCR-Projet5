@@ -3,8 +3,12 @@
 namespace Over_Code\Libraries;
 
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
+use Twig\Extension\DebugExtension;
+use Twig\Extra\Markdown\MarkdownRuntime;
+use Twig\Extra\Markdown\DefaultMarkdown;
+use Twig\Extra\Markdown\MarkdownExtension;
+use Twig\RuntimeLoader\RuntimeLoaderInterface;
 
 /**
  * Template rendering
@@ -31,6 +35,16 @@ class Twig
         ]);
 
         $twig->addExtension(new DebugExtension());
+
+        $twig->addExtension(new MarkdownExtension());
+
+        $twig->addRuntimeLoader(new class implements RuntimeLoaderInterface {
+            public function load($class) {
+                if (MarkdownRuntime::class === $class) {
+                    return new MarkdownRuntime(new DefaultMarkdown());
+                }
+            }
+        });
 
         $this->twig = $twig;
     }
