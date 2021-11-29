@@ -22,22 +22,26 @@ class AdminArticlesController extends MainController
     /**
      * Sets params and template to twig, about create new article
      *
+     * @param array $params
+     *
      * @return void
      */
-    public function nouveau(): void
+    public function nouveau(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
+
+        $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
         
-        if ($this->userToTwig['admin']) {
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $category = new CategoryModel();
             $categories = $category->readAll();
 
-            $this->params = [
-                'categories' => $categories
-            ];
+            $this->params['categories'] = $categories;
 
             $this->userToTwig['template'] = 'admin';
-            
+
+            $this->preventCsrf();
+
             $this->template = $this->template = 'admin' . DS . 'new-article.twig';
         }
     }
@@ -45,13 +49,17 @@ class AdminArticlesController extends MainController
     /**
      * Processes article creation from form post
      *
+     * @param array $params
+     *
      * @return void
      */
-    public function post(): void
+    public function post(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
 
-        if ($this->userToTwig['admin']) {
+        $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
+
+        if ($this->userToTwig['admin'] && $paramsTest) {
             $upload = $this->uploadArticleImg();
 
             $img = '0000'; // default article image
@@ -66,6 +74,8 @@ class AdminArticlesController extends MainController
             $article->createArticle($user, $img);
 
             $this->userToTwig['template'] = 'admin';
+
+            $this->preventCsrf();
 
             $this->template = 'admin' . DS . 'article-post-confirmation.twig';
         }
@@ -84,7 +94,9 @@ class AdminArticlesController extends MainController
     {
         $this->template = 'client' . DS . 'accueil.twig';
 
-        if ($this->userToTwig['admin']) {
+        $paramsTest = count($params) === 3 && $params[2] === $this->getCOOKIE('CSRF');
+
+        if ($this->userToTwig['admin']  && $paramsTest) {
             $this->userToTwig['template'] = 'admin';
 
             $model = new ArticlesModel();
@@ -107,6 +119,8 @@ class AdminArticlesController extends MainController
                     array_shift($this->articles);
                     array_push($this->articles, $key);
                 }
+
+                $this->preventCsrf();
     
                 $this->params = array_merge($this->params, array(
                     'page'       => $this->currentPage,
@@ -124,17 +138,19 @@ class AdminArticlesController extends MainController
     /**
      * Sets params and template to twig, about single article page
      *
-     * @param array $params slug given in URL
+     * @param array $params
      *
      * @return void
      */
     public function numero(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
+
+        $paramsTest = count($params) === 3 && $params[2] === $this->getCOOKIE('CSRF');
         
         $article = new ArticlesModel();
 
-        if ($this->userToTwig['admin'] && $article->idExist($params[0])) {
+        if ($this->userToTwig['admin'] && $article->idExist($params[0]) && $paramsTest) {
             $this->userToTwig['template'] = 'admin';
 
             $slug = $this->toSlug($article->getTitle((int)$params[0]));
@@ -151,13 +167,15 @@ class AdminArticlesController extends MainController
             if (!empty($comment->readValidated($params[0]))) {
                 $this->params['comments'] =  $comment->readValidated($params[0]);
             }
+
+            $this->preventCsrf();
         }
     }
 
     /**
      * Try to delete an article and set template failed or success
      *
-     * @param array $params [0 => article id]
+     * @param array $params
      *
      * @return void
      */
@@ -165,10 +183,14 @@ class AdminArticlesController extends MainController
     {
         $this->template = 'client' . DS . 'accueil.twig';
 
+        $paramsTest = count($params) === 2 && $params[1] === $this->getCOOKIE('CSRF');
+
         $article = new ArticlesModel();
         
-        if ($this->userToTwig['admin'] && $article->idExist((int)$params[0])) {
+        if ($this->userToTwig['admin'] && $article->idExist((int)$params[0]) && $paramsTest) {
             $this->userToTwig['template'] = 'admin';
+
+            $this->preventCsrf();
 
             $this->template = 'admin' . DS . 'article-deletion-failed.twig';
 
@@ -181,7 +203,7 @@ class AdminArticlesController extends MainController
     /**
      * Update article and set template
      *
-     * @param array $params [0 => article id]
+     * @param array $params
      *
      * @return void
      */
@@ -189,19 +211,24 @@ class AdminArticlesController extends MainController
     {
         $this->template = 'client' . DS . 'accueil.twig';
 
+        $paramsTest = count($params) === 2 && $params[1] === $this->getCOOKIE('CSRF');
+
         $article = new ArticlesModel();
         
-        if ($this->userToTwig['admin'] && $article->idExist((int)$params[0])) {
-            $this->userToTwig['template'] = 'admin';
+        if ($this->userToTwig['admin'] && $article->idExist((int)$params[0]) && $paramsTest) {
+            $this->userToTwig['template'] = 'admin';            
 
             $category = new CategoryModel();
             $categories = $category->readAll();
 
             $this->params = [
-                'categories' => $categories
+                'categories' => $categories,
+                'id'         => $params[0]
             ];
 
             $this->params = array_merge($this->params, $article->getSingleArticle($params[0]));
+
+            $this->preventCsrf();
 
             $this->template = 'admin' . DS . 'update-article.twig';
         }
@@ -210,25 +237,30 @@ class AdminArticlesController extends MainController
     /**
      * Processes article update from form post
      *
+     * @param array $params
+     *
      * @return void
      */
-    public function update(): void
+    public function update(array $params): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
 
-        if ($this->userToTwig['admin']) {
-            $articleId = preg_replace('~[a-zA-Z\/\:\_\-]~', '', $this->getSERVER('HTTP_REFERER'));
+        $paramsTest = count($params) === 2 && $params[1] === $this->getCOOKIE('CSRF');
+
+        if ($this->userToTwig['admin'] && $paramsTest) {
+            $articleId = $params[0];
 
             $img = null;
 
             $article = new articlesModel();
 
             if ($this->getFILES('image')['error'] !== 4) { // error 4: UPLOAD_ERR_NO_FILE no download file
-                echo "ici";
                 $upload = $this->uploadArticleImg($article->getImg($articleId));
             }
             
-            $article->updateArticle($articleId, $img);
+            $article->updateArticle($params[0]);
+
+            $this->preventCsrf();
 
             $this->userToTwig['template'] = 'admin';
 

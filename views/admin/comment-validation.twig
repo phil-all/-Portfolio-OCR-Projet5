@@ -22,12 +22,12 @@
                                                     </div>
                                                 </div>
                                                 {% autoescape %}
-                                                    <a href="{{ constant('SITE_ADRESS') }}/adminComment/valid/{{ comment.comment_id }}">
+                                                    <a href="{{ constant('SITE_ADRESS') }}/adminComment/valid/{{ comment.comment_id }}/{{ CSRF }}">
                                                         <div><button type="button" class="btn btn-success">Valider</button></div>
                                                     </a>
                                                 {% endautoescape %}
                                                 {% autoescape %}
-                                                <a href="{{ constant('SITE_ADRESS') }}/adminComment/suspend/{{ comment.comment_id }}">
+                                                <a href="{{ constant('SITE_ADRESS') }}/adminComment/suspend/{{ comment.comment_id }}/{{ CSRF }}">
                                                     <div><button type="button" class="btn btn-danger">Suspendre</button></div>
                                                 </a>
                                                 {% endautoescape %}

@@ -7,7 +7,7 @@
         <main class="col-md-8 ms-sm-auto col-lg-9 col-xl-10 p-0" style="height: 100vh;">
             <div class="container-fluid container-md p-5">
                 <h1>Modifier catégorie</h1>
-                <form enctype="multipart/form-data" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/adminCategory/updateProcess/{{ id }}"{% endautoescape %} method="POST" class="row g-3">
+                <form enctype="multipart/form-data" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/adminCategory/updateProcess/{{ id }}/{{ CSRF }}"{% endautoescape %} method="POST" class="row g-3">
                     <fieldset disabled>
                         <div class="col-12">
                             <label for="disabledTextInput" class="form-label">Nom actuel</label>

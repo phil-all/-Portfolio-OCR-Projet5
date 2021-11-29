@@ -17,9 +17,11 @@ class CommentController extends MainController
     /**
      * Create an article comment from POST
      *
+     * @param array $params
+     *
      * @return void
      */
-    public function post(): void
+    public function post(array $params): void
     {
         $articleParam = preg_replace(
             '~' . SINGLE_ARTICLE . '~',

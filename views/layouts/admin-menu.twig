@@ -14,22 +14,22 @@
             </li>
             <li class="nav-item mt-4 mb-4">
                 {% autoescape %}
-                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/tous/page-1"><i class="bi bi-newspaper"></i> articles</a>
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/tous/page-1/{{ CSRF }}"><i class="bi bi-newspaper"></i> articles</a>
                 {% endautoescape %}
             </li>
             <li class="nav-item mt-4 mb-4">
                 {% autoescape %}
-                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminComment"><i class="bi bi-back"></i> commentaires</a>
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminComment/liste/{{ CSRF }}"><i class="bi bi-back"></i> commentaires</a>
                 {% endautoescape %}
             </li>
             <li class="nav-item mt-4 mb-4">
                 {% autoescape %}
-                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminCategory"><i class="bi bi-signpost-split-fill"></i> catégories</a>
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminCategory/liste/{{ CSRF }}"><i class="bi bi-signpost-split-fill"></i> catégories</a>
                 {% endautoescape %}
             </li>
             <li class="nav-item mt-4 mb-4">
                 {% autoescape %}
-                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminUser"><i class="bi bi-people-fill"></i> membres</a>
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminUser/liste/{{ CSRF }}"><i class="bi bi-people-fill"></i> membres</a>
                 {% endautoescape %}
             </li>
             <li class="nav-item mt-4 mb-4">
