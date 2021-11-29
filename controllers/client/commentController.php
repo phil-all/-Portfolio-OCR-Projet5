@@ -23,42 +23,41 @@ class CommentController extends MainController
      */
     public function post(array $params): void
     {
-        $articleParam = preg_replace(
-            '~' . SINGLE_ARTICLE . '~',
-            '',
-            $this->getSERVER('HTTP_REFERER')
-        );
-        $url = SINGLE_ARTICLE . $articleParam . "/#comment";
+        $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
 
-        $jwt = new Jwt();
-        $token = '';
+        if ($paramsTest) {
+            $articleParam = preg_replace(
+                '~' . SINGLE_ARTICLE . '~',
+                '',
+                $this->getSERVER('HTTP_REFERER')
+            );
 
-        if (!empty($this->getCOOKIE('token'))) {
-            $token =  $this->getCOOKIE('token');
-        }
+            $token = (empty($this->getCOOKIE('token'))) ? '' : $this->getCOOKIE('token');
 
-        if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
-            $user = new UserModel();
-
-            $payload = $jwt->decodeDatas($token, 1);
-            $ipLog = $user->readIpLog($payload['email']);
-            $remoteIp = $this->getSERVER('REMOTE_ADDR');
-
-            if ($jwt->isNotExpired($payload) && ($ipLog === $remoteIp)) {
-                $user->hydrate('renewal', $payload['email'], 900); // exp 15 min
-
-                $this->setCOOKIE('token', $user->getToken());
-                $this->setCOOKIE('token_obj', 'renewal');
+            $jwt = new Jwt();    
+            if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
+                $user = new UserModel();
+    
+                $payload = $jwt->decodeDatas($token, 1);
+                $ipLog = $user->readIpLog($payload['email']);
+                $remoteIp = $this->getSERVER('REMOTE_ADDR');
+    
+                if ($jwt->isNotExpired($payload) && ($ipLog === $remoteIp)) {
+                    $user->hydrate('renewal', $payload['email'], 900); // exp 15 min
+    
+                    $this->setCOOKIE('token', $user->getToken());
+                    $this->setCOOKIE('token_obj', 'renewal');
+                }
+    
+                $content = $this->getPOST('comment');
+                $serial = $user->getSerial();
+                $article = explode('/', $articleParam)[0];
+    
+                $comment = new commentModel();
+                $comment->create($content, $serial, $article);
+    
+                $this->redirect(SINGLE_ARTICLE . $articleParam . "/#comment");
             }
-
-            $content = $this->getPOST('comment');
-            $serial = $user->getSerial();
-            $article = explode('/', $articleParam)[0];
-
-            $comment = new commentModel();
-            $comment->create($content, $serial, $article);
-
-            $this->redirect($url);
         }
         
         $this->redirect(SITE_ADRESS);
