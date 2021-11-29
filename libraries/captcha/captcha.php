@@ -2,7 +2,6 @@
 
 namespace Over_Code\Libraries\Captcha;
 
-use \Over_code\Libraries\Captcha\Token;
 use \Over_Code\Libraries\Captcha\Image;
 
 /**
@@ -10,6 +9,8 @@ use \Over_Code\Libraries\Captcha\Image;
  */
 final class Captcha
 {
+    use \Over_Code\Libraries\Helpers;
+
     /**
      * Captcha jpeg image encode in base64
      *
@@ -34,16 +35,14 @@ final class Captcha
      */
     public function __construct(string $captcha = null)
     {
-        $this->token = new Token();
-
         if ($captcha === null) {
-            $rand = mt_rand(0, 99999);
+            $rand = mt_rand(1, 99999);
             
             $stringToImg = sprintf('%05d', $rand);
 
             $hash = $this->hash(strrev($stringToImg));
 
-            $this->token->set($hash);
+            $this->setCOOKIE('FRWT', $hash);
             
             $image = new Image();
             $this->b64Captcha = $image->create($stringToImg);
@@ -89,6 +88,6 @@ final class Captcha
         $stringToImg = strrev(sprintf('%05d', $postCaptcha));
         $stringToImg = dechex((int)preg_replace('~^0+(?!$)~', '', $stringToImg));
 
-        return password_verify($stringToImg, $this->token->get());
+        return password_verify($stringToImg, $this->getCOOKIE('FRWT'));
     }
 }

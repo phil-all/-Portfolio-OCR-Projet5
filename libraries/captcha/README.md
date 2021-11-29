@@ -8,8 +8,6 @@
 
 -   [Captcha class](#captcha-class)
 
--   [Token class](#token-class)
-
 ## Working principle
 
 1.  When page containing form with captcha is called, a `random number` is generated as well as an `image` of this number and a `hash` of this number is stored in a token.
@@ -30,7 +28,7 @@ Used to generate **random number** and its **hash**.
 
 ### Random number
 
-It will be a five figures number between 00000 and 99999.
+It will be a five digits number between 00001 and 99999.
 
 ### Hash
 
@@ -41,7 +39,3 @@ To obtain hash, the *random number* is manipulated as follow :
 2.  This new number is converted in hexadecimal.
 
 3.  This hexa value is encrypt with a noon reversible way to obtain hash.
-
-## Token class
-
-Used to generate token containing random number hash, to be setted and getted in using cookie.
