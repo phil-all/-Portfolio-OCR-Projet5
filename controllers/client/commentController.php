@@ -34,7 +34,7 @@ class CommentController extends MainController
 
             $token = (empty($this->getCOOKIE('token'))) ? '' : $this->getCOOKIE('token');
 
-            $jwt = new Jwt();    
+            $jwt = new Jwt();
             if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
                 $user = new UserModel();
     

@@ -216,7 +216,7 @@ class AdminArticlesController extends MainController
         $article = new ArticlesModel();
         
         if ($this->userToTwig['admin'] && $article->idExist((int)$params[0]) && $paramsTest) {
-            $this->userToTwig['template'] = 'admin';            
+            $this->userToTwig['template'] = 'admin';
 
             $category = new CategoryModel();
             $categories = $category->readAll();

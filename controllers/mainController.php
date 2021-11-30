@@ -93,5 +93,4 @@ abstract class MainController
 
         $this->params['CSRF'] = $csrf->get();
     }
-
 }

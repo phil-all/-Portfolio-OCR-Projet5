@@ -3,11 +3,10 @@
     <description>The coding standard for PHP_CodeSniffer itself.</description>
 
     <file>config</file>
-    <file>cvontrollers</file>
+    <file>controllers</file>
     <file>db</file>
     <file>libraries</file>
     <file>models</file>
-    <file>public/css</file>
     <file>index.php</file>
 
     <exclude-pattern>*/.phpdoc/*</exclude-pattern>
