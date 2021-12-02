@@ -26,9 +26,9 @@ trait Upload
      * - 2: file too big
      * - 3: no file exist or upload failed
      *
-     * 'img_name': **null** if unseccessed upload, or not defined.
+     * 'imgName': **null** if unseccessed upload, or not defined.
      */
-    public function uploadArticleImg(string $img_name = null): array
+    public function uploadArticleImg(string $imgName = null): array
     {
         $message = 3; // no file exist or upload failed
 
@@ -54,12 +54,12 @@ trait Upload
 
                     $article = new ArticlesModel();
 
-                    if ($img_name === null) { // if no $img_name specified, case of new image
-                        $img_name = intval($article->biggestImg()) + 1;
-                        $img_name = substr_replace('0000', $img_name, -strlen($img_name));
+                    if ($imgName === null) { // if no $imgName specified, case of new image
+                        $imgName = intval($article->biggestImg()) + 1;
+                        $imgName = substr_replace('0000', $imgName, -strlen($imgName));
                     }
 
-                    $newName = 'article-' . $img_name;
+                    $newName = 'article-' . $imgName;
 
                     $newFileName = UPLOADS_PATH . $newName . '.' . $extension;
 
@@ -74,7 +74,7 @@ trait Upload
 
         return array(
             'message'  => $message,
-            'img_name' => $img_name
+            'img_name' => $imgName
         );
     }
 }

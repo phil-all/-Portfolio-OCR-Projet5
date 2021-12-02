@@ -118,7 +118,7 @@ class MembresController extends UserController
     {
         $this->template = 'client' . DS . 'invalid-validation-link.twig';
 
-        $jwt = new Jwt();
+        $jwt   = new Jwt();
         $token = $jwt->uriToToken($params);
 
         if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
@@ -160,7 +160,9 @@ class MembresController extends UserController
         $token = $jwt->generateToken('reset password enquiry', $this->getPOST('email'), 900); // 900s = 15 min
 
         $twigMail = new Twig();
+
         $mailTemplate = 'emails' . DS . 'reset-password-enquiry.twig';
+
         $params = [
             'token' => $jwt->tokenToUri($token)
         ];
@@ -195,7 +197,7 @@ class MembresController extends UserController
             $email = $payload['email'];
                 
             if ((time() < $payload['exp'])) {
-                $jwt = new Jwt();
+                $jwt   = new Jwt();
                 $token = $jwt->generateToken('reset password', $email, 900); // 900s = 15 min
 
                 $this->params = array(
