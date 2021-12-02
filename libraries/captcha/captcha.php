@@ -23,7 +23,7 @@ final class Captcha
      *
      * @var string
      */
-    private object $token;
+    private string $token;
 
     /**
      * Generate a random number, create a base64 encode image jpeg of it,
