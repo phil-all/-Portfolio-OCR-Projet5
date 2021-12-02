@@ -48,11 +48,11 @@ class CommentModel extends MainModel
     /**
      * Get all pending and validated comments from one article
      *
-     * @param integer $article_id
+     * @param integer $articleId
      *
      * @return array
      */
-    public function readValidated(int $article_id): array
+    public function readValidated(int $articleId): array
     {
         $query = 'SELECT
             c.id "comment_id", c.content, c.created_at, u.pseudo, u.email, s.status, a.img_path
@@ -69,7 +69,7 @@ class CommentModel extends MainModel
 
         $stmt = $this->pdo->getPdo()->prepare($query);
 
-        $stmt->bindValue(':article_id', $article_id, PDO::PARAM_INT);
+        $stmt->bindValue(':article_id', $articleId, PDO::PARAM_INT);
 
         $stmt->execute();
 
@@ -79,7 +79,7 @@ class CommentModel extends MainModel
     /**
      * Get validated comments count from one given article
      *
-     * @param integer $article_id
+     * @param integer $articleId
      *
      * @return array
      */

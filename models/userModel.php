@@ -16,9 +16,9 @@ class UserModel extends MainModel
     use \Over_Code\Models\UserCrud\Update;
 
     private $serial;
-    private $avatar_id;
-    private $last_name;
-    private $first_name;
+    private $avatarId;
+    private $lastName;
+    private $firstName;
     private $email;
     private $pseudo;
     private $token;
@@ -73,33 +73,33 @@ class UserModel extends MainModel
     }
 
     /**
-     * Get the value of avatar_id
+     * Get the value of avatarId
      *
      * @return int
      */
     public function getAvatarId(): int
     {
-        return (int)$this->avatar_id;
+        return (int)$this->avatarId;
     }
 
     /**
-     * Get the value of last_name
+     * Get the value of lastName
      *
      * @return string
      */
     public function getLastName(): string
     {
-        return $this->last_name;
+        return $this->lastName;
     }
 
     /**
-     * Get the value of first_name
+     * Get the value of firstName
      *
      * @return string
      */
     public function getFirstName(): string
     {
-        return $this->first_name;
+        return $this->firstName;
     }
 
     /**

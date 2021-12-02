@@ -34,12 +34,12 @@ class DbConnect
      */
     public function getPdo(): PDO
     {
-        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $pdoOptions[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
         
-        $pdo_options[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET NAMES utf8';
+        $pdoOptions[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET NAMES utf8';
  
         try {
-            return $this->pdo ?? $this->pdo = new PDO($this->dsn, $this->user, $this->pass, $pdo_options);
+            return $this->pdo ?? $this->pdo = new PDO($this->dsn, $this->user, $this->pass, $pdoOptions);
         } catch (Exception $e) {
             return "Erreur de connexion :" . $e->getMessage();
         }

@@ -15,11 +15,11 @@ trait Create
      * from getPOST datas
      *
      * @param string $token
-     * @param string $date_time
+     * @param string $dateTime
      *
      * @return void
      */
-    public function createUser(string $token, string $date_time): void
+    public function createUser(string $token, string $dateTime): void
     {
         //argon2id only available if PHP has been compiled with Argon2 support
         $algo = (defined('PASSWORD_ARGON2ID')) ? PASSWORD_ARGON2ID : PASSWORD_DEFAULT;
@@ -58,9 +58,9 @@ trait Create
         $stmt->bindValue(':password', password_hash($this->getPOST('password'), $algo), PDO::PARAM_STR);
         $stmt->bindValue(':avatar_id', (int)$this->getPOST('avatar_id'), PDO::PARAM_INT);
         $stmt->bindValue(':token', $token, PDO::PARAM_STR);
-        $stmt->bindValue(':token_datetime', $date_time, PDO::PARAM_STR);
+        $stmt->bindValue(':token_datetime', $dateTime, PDO::PARAM_STR);
         $stmt->bindValue(':user_status_id', 1, PDO::PARAM_INT);
-        $stmt->bindValue(':created_at', $date_time, PDO::PARAM_STR);
+        $stmt->bindValue(':created_at', $dateTime, PDO::PARAM_STR);
 
         $stmt->execute();
     }

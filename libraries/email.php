@@ -56,18 +56,18 @@ class Email
     /**
      * Send a text email to site admin
      *
-     * @param string $f_Name first name
-     * @param string $l_Name last name
+     * @param string $firstName first name
+     * @param string $lastName last name
      * @param string $email
      * @param string $subject
      * @param string $content
      *
      * @return void
      */
-    public function sendTextEmail(string $f_Name, string $l_Name, string $email, string $subject, string $content): void
+    public function sendTextEmail(string $firstName, string $lastName, string $email, string $subject, string $content): void
     {
         $message = (new Swift_Message($subject))
-        ->setFrom([$email => $f_Name . ' ' . $l_Name])
+        ->setFrom([$email => $firstName . ' ' . $lastName])
         ->setTo([self::getENV('ADMIN_MAIL') => self::getENV('ADMIN_NAME')])
         ->setBody($content);
 
