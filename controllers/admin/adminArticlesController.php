@@ -232,7 +232,7 @@ class AdminArticlesController extends MainController
         if ($this->userToTwig['admin'] && $article->idExist((int)$params[0]) && $paramsTest) {
             $this->userToTwig['template'] = 'admin';
 
-            $category = new CategoryModel();
+            $category   = new CategoryModel();
             $categories = $category->readAll();
 
             $this->params = [

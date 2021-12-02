@@ -26,7 +26,7 @@ class UrlChecker
 
         $this->hub = (preg_match('~^Admin~', $class)) ? 'Admin' : 'Client';
 
-        $this->class = '\\Over_Code\\Controllers\\' . $this->hub . '\\' . $class . 'Controller';
+        $this->class  = '\\Over_Code\\Controllers\\' . $this->hub . '\\' . $class . 'Controller';
         $this->method = $this->undashedMethod($this->uri->getMethodName());
         $this->params = $this->uri->getAttributesList();
     }

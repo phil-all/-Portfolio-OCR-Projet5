@@ -22,7 +22,7 @@ class DbConnect
      */
     public function __construct()
     {
-        $this->dsn = self::getEnv('DSN');
+        $this->dsn  = self::getEnv('DSN');
         $this->user = self::getEnv('DB_USERNAME');
         $this->pass = self::getEnv('DB_PASSWORD');
     }
