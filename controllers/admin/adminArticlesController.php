@@ -108,12 +108,9 @@ class AdminArticlesController extends MainController
             if ($this->currentPage <= $this->totalPages && explode('-', $params[1])[0] === 'page') {
                 $this->articles = $model->getArticlesList($this->currentPage, $this->perPage, $params[0]);
                 $this->template = 'admin' . DS . 'articles.twig';
-    
-                if ($model->categoryExist($params[0])) {
-                    $this->template = 'admin' . DS . 'articles-by-category.twig';
-                    $this->params['category'] = $params[0];
-                }
-    
+
+                $this->setCategoryTemplate($model, $params[0]);
+            
                 foreach ($this->articles as $key) {
                     $key['slug'] = $this->toSlug($key['title']);
                     array_shift($this->articles);
@@ -132,6 +129,22 @@ class AdminArticlesController extends MainController
                     'next' => ($this->currentPage === $this->totalPages) ? $this->totalPages : $this->currentPage + 1
                 ));
             }
+        }
+    }
+
+    /**
+     * Defines twig template file and a category param for a given category, if category exists
+     *
+     * @param ArticlesModel $model
+     * @param string $param
+     *
+     * @return void
+     */
+    public function setCategoryTemplate(ArticlesModel $model, string $param): void
+    {
+        if ($model->categoryExist($param)) {
+            $this->template = 'admin' . DS . 'articles-by-category.twig';
+            $this->params['category'] = $param;
         }
     }
 
