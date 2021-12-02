@@ -45,6 +45,7 @@ final class Captcha
             $this->setCOOKIE('FRWT', $hash);
             
             $image = new Image();
+            
             $this->b64Captcha = $image->create($stringToImg);
         }
     }

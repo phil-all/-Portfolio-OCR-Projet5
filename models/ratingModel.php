@@ -58,7 +58,7 @@ class RatingModel extends MainModel
      */
     public function unLike(int $userSerial, int $articleId): void
     {
-        $query  = 'DELETE FROM rating 
+        $query = 'DELETE FROM rating 
         WHERE user_serial = :user AND article_id = :id';
 
         $this->modify($query, $userSerial, $articleId);

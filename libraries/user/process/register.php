@@ -41,7 +41,7 @@ trait Register
         if ($this->isMailExists($email)) {
             $token = $this->readToken($email);
 
-            $jwt = new Jwt();
+            $jwt     = new Jwt();
             $payload = $jwt->decodeDatas($token, 1);
 
             if ($payload['exp'] > $timestamp) {

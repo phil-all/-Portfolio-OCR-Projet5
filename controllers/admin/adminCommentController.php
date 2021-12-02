@@ -26,8 +26,9 @@ class AdminCommentController extends MainController
         $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
 
         if ($this->userToTwig['admin'] && $paramsTest) {
-            $comment = new CommentModel();
+            $comment     = new CommentModel();
             $commentList = $comment->readPending();
+
             $articlesJoinPending = $comment->getPendingJoinArticles();
 
             $this->params = [

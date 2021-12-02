@@ -26,7 +26,7 @@ class RatingController extends MainController
         if (array_key_exists('user', $this->userToTwig)) {
             $rating = new RatingModel();
 
-            $user = (int)$this->userToTwig['user']['serial'];
+            $user      = (int)$this->userToTwig['user']['serial'];
             $articleId = preg_replace('~[a-zA-Z\/\:\_\-]~', '', $this->getSERVER('HTTP_REFERER'));
 
             if ($rating->isUserRate($user, $articleId)) {

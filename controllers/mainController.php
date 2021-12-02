@@ -33,7 +33,9 @@ abstract class MainController
     public function __construct(string $action, array $params = [])
     {
         $jwt = new Jwt();
+
         $token = '';
+        
         $this->userToTwig = [
             'admin' => false
         ];
@@ -45,8 +47,8 @@ abstract class MainController
         if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
             $user = new UserModel();
 
-            $payload = $jwt->decodeDatas($token, 1);
-            $ipLog = $user->readIpLog($payload['email']);
+            $payload  = $jwt->decodeDatas($token, 1);
+            $ipLog    = $user->readIpLog($payload['email']);
             $remoteIp = $this->getSERVER('REMOTE_ADDR');
 
             if ($jwt->isNotExpired($payload) && ($ipLog === $remoteIp)) {

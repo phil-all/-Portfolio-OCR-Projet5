@@ -39,8 +39,8 @@ class Jwt
             'email' => $email
         ];
 
-        $encodedHeader = $this->encodedatas($this->header);
-        $encodedPayload = $this->encodedatas($payload);
+        $encodedHeader    = $this->encodedatas($this->header);
+        $encodedPayload   = $this->encodedatas($payload);
         $encodedSignature = $this->encodeSignature($encodedHeader, $encodedPayload);
 
         return $encodedHeader . '.' . $encodedPayload . '.' . $encodedSignature;
@@ -72,7 +72,7 @@ class Jwt
      */
     private function encodeSignature(string $encodedHeader, string $encodedPayload): string
     {
-        $message = $encodedHeader . '.' . $encodedPayload;
+        $message   = $encodedHeader . '.' . $encodedPayload;
         $signature = base64_encode(hash_hmac('sha256', $message, base64_encode($this->key), true));
 
         return $this->clean($signature);
@@ -138,10 +138,10 @@ class Jwt
      */
     public function isSignatureCorrect(string $token): bool
     {
-        $token = explode('.', $token);
-        $header = $token[0];
-        $payload = $token[1];
-        $givenSignature = $token [2];
+        $token            = explode('.', $token);
+        $header           = $token[0];
+        $payload          = $token[1];
+        $givenSignature   = $token [2];
         $correctSignature = $this->encodeSignature($header, $payload);
 
         return ($givenSignature === $correctSignature);
@@ -182,6 +182,7 @@ class Jwt
     private function setkey(): void
     {
         $env = $this->Env();
+        
         $this->key = $env->get('JWT_KEY');
     }
 

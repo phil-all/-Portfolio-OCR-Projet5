@@ -38,8 +38,8 @@ class CommentController extends MainController
             if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
                 $user = new UserModel();
     
-                $payload = $jwt->decodeDatas($token, 1);
-                $ipLog = $user->readIpLog($payload['email']);
+                $payload  = $jwt->decodeDatas($token, 1);
+                $ipLog    = $user->readIpLog($payload['email']);
                 $remoteIp = $this->getSERVER('REMOTE_ADDR');
     
                 if ($jwt->isNotExpired($payload) && ($ipLog === $remoteIp)) {
@@ -50,7 +50,7 @@ class CommentController extends MainController
                 }
     
                 $content = $this->getPOST('comment');
-                $serial = $user->getSerial();
+                $serial  = $user->getSerial();
                 $article = explode('/', $articleParam)[0];
     
                 $comment = new commentModel();

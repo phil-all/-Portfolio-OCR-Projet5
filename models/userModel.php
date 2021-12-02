@@ -48,6 +48,7 @@ class UserModel extends MainModel
     public function hydrate(string $subject, string $email, ?int $gap): void
     {
         $jwt = new Jwt();
+        
         $token = $jwt->generateToken($subject, $email, $gap);
 
         $this->updateToken($token, $email);
