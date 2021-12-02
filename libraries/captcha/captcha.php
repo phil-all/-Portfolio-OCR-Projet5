@@ -40,9 +40,9 @@ final class Captcha
             
             $stringToImg = sprintf('%05d', $rand);
 
-            $hash = $this->hash(strrev($stringToImg));
+            $this->token = $this->hash(strrev($stringToImg));
 
-            $this->setCOOKIE('FRWT', $hash);
+            $this->setCOOKIE('FRWT', $this->token);
             
             $image = new Image();
             
