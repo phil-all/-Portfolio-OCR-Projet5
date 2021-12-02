@@ -35,11 +35,10 @@ class MembresController extends UserController
      */
     public function login(): void
     {
-        $user = new UserModel();
+        $user    = new UserModel();
         $logmail = $this->getPOST('logmail');
         $logpass = $this->getPOST('logpass');
-
-        $auth = $user->auth($logmail, $logpass);
+        $auth    = $user->auth($logmail, $logpass);
 
         $status = ($auth) ? $user->getStatus($logmail) : 'authentification-error';
 
@@ -83,10 +82,13 @@ class MembresController extends UserController
 
         if ($form->registerTest()) {
             $jwt = new Jwt();
+            
             $token = $jwt->generateToken('registration', $this->getPOST('email'), 900); // 900s = 15 min
 
             $twigMail = new Twig();
+
             $mailTemplate = 'emails' . DS . 'validation-link.twig';
+
             $params = [
                 'token' => $jwt->tokenToUri($token)
             ];

@@ -20,9 +20,9 @@ class PdfController extends MainController
      */
     public function curriculum(): void
     {
-        $twig = new Twig();
+        $twig     = new Twig();
         $template = 'client' . DS . 'pdf' . DS . 'curriculum-vitae.twig';
-        $param = array(
+        $param    = array(
             'public' => PUBLIC_PATH
         );
 

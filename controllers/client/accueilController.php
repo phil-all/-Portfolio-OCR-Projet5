@@ -23,6 +23,7 @@ class AccueilController extends MainController
         $this->template = 'client' . DS . 'accueil.twig';
         
         $lastNews = new ArticlesModel();
+        
         $this->lastNews = $lastNews->getNews(4);
 
         foreach ($this->lastNews as $key) {

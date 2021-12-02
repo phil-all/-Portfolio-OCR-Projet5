@@ -33,7 +33,7 @@ class AdminArticlesController extends MainController
         $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
         
         if ($this->userToTwig['admin'] && $paramsTest) {
-            $category = new CategoryModel();
+            $category   = new CategoryModel();
             $categories = $category->readAll();
 
             $this->params['categories'] = $categories;
@@ -102,8 +102,8 @@ class AdminArticlesController extends MainController
             $model = new ArticlesModel();
         
             $this->currentPage = (int)(explode('-', $params[1]))[1];
-            $this->totalPosts = $model->getCount($params[0]);
-            $this->totalPages = ceil($this->totalPosts / $this->perPage);
+            $this->totalPosts  = $model->getCount($params[0]);
+            $this->totalPages  = ceil($this->totalPosts / $this->perPage);
     
             if ($this->currentPage <= $this->totalPages && explode('-', $params[1])[0] === 'page') {
                 $this->articles = $model->getArticlesList($this->currentPage, $this->perPage, $params[0]);
@@ -144,6 +144,7 @@ class AdminArticlesController extends MainController
     {
         if ($model->categoryExist($param)) {
             $this->template = 'admin' . DS . 'articles-by-category.twig';
+
             $this->params['category'] = $param;
         }
     }
@@ -174,7 +175,7 @@ class AdminArticlesController extends MainController
             }
 
             $this->template = 'admin' . DS . 'single-article.twig';
-            $this->params = $article->getSingleArticle($params[0]);
+            $this->params   = $article->getSingleArticle($params[0]);
 
             $comment = new CommentModel();
             if (!empty($comment->readValidated($params[0]))) {

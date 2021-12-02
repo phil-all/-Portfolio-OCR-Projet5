@@ -21,13 +21,13 @@ class ContactController extends MainController
     public function mail(): void
     {
         $form = new FormTest();
-//var_dump($_POST);die;
+
         if ($form->contactTest()) {
             $firstName = $this->getPOST('first_name');
-            $lastName = $this->getPOST('last_name');
-            $email = $this->getPOST('email');
-            $subject = $this->getPOST('subject');
-            $content = $this->getPOST('content');
+            $lastName  = $this->getPOST('last_name');
+            $email     = $this->getPOST('email');
+            $subject   = $this->getPOST('subject');
+            $content   = $this->getPOST('content');
             
             $mail = new Email();
             $mail->sendTextEmail(

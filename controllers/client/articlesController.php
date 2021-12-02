@@ -83,8 +83,8 @@ class ArticlesController extends MainController
         $model = new ArticlesModel();
         
         $this->currentPage = (int)(explode('-', $params[1]))[1];
-        $this->totalPosts = $model->getCount($params[0]);
-        $this->totalPages = ceil($this->totalPosts / $this->perPage);
+        $this->totalPosts  = $model->getCount($params[0]);
+        $this->totalPages  = ceil($this->totalPosts / $this->perPage);
 
         if ($this->currentPage <= $this->totalPages && explode('-', $params[1])[0] === 'page') {
             $this->articles = $model->getArticlesList($this->currentPage, $this->perPage, $params[0]);
@@ -92,6 +92,7 @@ class ArticlesController extends MainController
 
             if ($model->categoryExist($params[0])) {
                 $this->template = 'client' . DS . 'articles-by-category.twig';
+                
                 $this->params['category'] = $params[0];
             }
 

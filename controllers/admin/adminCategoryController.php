@@ -27,7 +27,7 @@ class AdminCategoryController extends MainController
         $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
         
         if ($this->userToTwig['admin'] && $paramsTest) {
-            $category = new CategoryModel();
+            $category   = new CategoryModel();
             $categories = $category->readAll();
 
             $this->params['categories'] = $categories;
