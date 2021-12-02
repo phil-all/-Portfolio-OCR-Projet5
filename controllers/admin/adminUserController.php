@@ -125,7 +125,7 @@ class AdminUserController extends MainController
     {
         $paramsTest = count($params) === 2 &&
             $this->onlyInteger($params[0]) &&
-            $params[1] = $this->getCOOKIE('CSRF');
+            $params[1] === $this->getCOOKIE('CSRF');
 
         if ($this->userToTwig['admin'] && $paramsTest) {
             $user = new UserModel();

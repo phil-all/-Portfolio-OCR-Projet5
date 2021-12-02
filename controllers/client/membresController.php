@@ -156,7 +156,7 @@ class MembresController extends UserController
      */
     public function resetPasswordEnquiry(): void
     {
-        $jwt = new Jwt();
+        $jwt   = new Jwt();
         $token = $jwt->generateToken('reset password enquiry', $this->getPOST('email'), 900); // 900s = 15 min
 
         $twigMail = new Twig();
@@ -201,9 +201,10 @@ class MembresController extends UserController
                 $token = $jwt->generateToken('reset password', $email, 900); // 900s = 15 min
 
                 $this->params = array(
-                    'email' => $email,
+                    'email'      => $email,
                     'tokenToUri' => $jwt->tokenToUri($token)
                 );
+                
                 $this->template = 'client' . DS . 'pass/reset-password.twig';
             }
 
