@@ -261,15 +261,7 @@ class AdminArticlesController extends MainController
         $paramsTest = count($params) === 2 && $params[1] === $this->getCOOKIE('CSRF');
 
         if ($this->userToTwig['admin'] && $paramsTest) {
-            $articleId = $params[0];
-
-            $img = null;
-
             $article = new articlesModel();
-
-            if ($this->getFILES('image')['error'] !== 4) { // error 4: UPLOAD_ERR_NO_FILE no download file
-                $upload = $this->uploadArticleImg($article->getImg($articleId));
-            }
             
             $article->updateArticle($params[0]);
 
