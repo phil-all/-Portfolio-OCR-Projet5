@@ -25,6 +25,8 @@ class MembresController extends UserController
      */
     public function inscriptionConnexion(): void
     {
+        $this->params['register'] = true;
+        
         $this->template = 'client' . DS . 'signin-login.twig';
     }
 
