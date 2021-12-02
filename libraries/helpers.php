@@ -44,14 +44,14 @@ trait Helpers
      * - expiration: timestamp + gap
      *
      * @param integer|null $gap **given in seconds**, delay to expiration
-     * 
+     *
      * @return array
      */
-    public function arrayDate(?int $gap = NULL): array
+    public function arrayDate(?int $gap = null): array
     {
         $now = new DateTime();
 
-        return array(            
+        return array(
             'date_time'  => $now->format('Y-m-d H:i:s'),
             'timestamp'  => $now->getTimestamp(),
             'expiration' => $now->getTimestamp() + $gap

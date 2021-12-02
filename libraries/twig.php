@@ -39,7 +39,8 @@ class Twig
         $twig->addExtension(new MarkdownExtension());
 
         $twig->addRuntimeLoader(new class implements RuntimeLoaderInterface {
-            public function load($class) {
+            public function load($class)
+            {
                 if (MarkdownRuntime::class === $class) {
                     return new MarkdownRuntime(new DefaultMarkdown());
                 }
