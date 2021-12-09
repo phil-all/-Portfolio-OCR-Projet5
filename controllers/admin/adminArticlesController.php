@@ -5,12 +5,12 @@ namespace Over_Code\Controllers\Admin;
 use Over_Code\Models\CommentModel;
 use Over_Code\Models\ArticlesModel;
 use Over_Code\Models\CategoryModel;
-use Over_Code\Controllers\MainController;
+use Over_Code\Controllers\Client\ArticlesController;
 
 /**
  * Admin articles controller
  */
-class AdminArticlesController extends MainController
+class AdminArticlesController extends ArticlesController
 {
     use \Over_Code\Libraries\Upload;
 
@@ -112,15 +112,7 @@ class AdminArticlesController extends MainController
                 $this->slugify();
                 $this->preventCsrf();
     
-                $this->params = array_merge($this->params, array(
-                    'page'       => $this->currentPage,
-                    'totalPages' => $this->totalPages,
-                    'articles'   => $this->articles,
-                    'statePrev'  => ($this->currentPage === 1) ? ' disabled' : '',
-                    'stateNext'  => ($this->currentPage === $this->totalPages) ? ' disabled' : '',
-                    'prev'       => ($this->currentPage === 1) ? 1 : $this->currentPage - 1,
-                    'next' => ($this->currentPage === $this->totalPages) ? $this->totalPages : $this->currentPage + 1
-                ));
+                $this->addPagination();
             }
         }
     }

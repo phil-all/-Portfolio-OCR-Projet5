@@ -133,15 +133,25 @@ class ArticlesController extends MainController
                 array_push($this->articles, $key);
             }
 
-            $this->params = array_merge($this->params, array(
-                'page'       => $this->currentPage,
-                'totalPages' => $this->totalPages,
-                'articles'   => $this->articles,
-                'statePrev'  => ($this->currentPage === 1) ? ' disabled' : '',
-                'stateNext'  => ($this->currentPage === $this->totalPages) ? ' disabled' : '',
-                'prev'       => ($this->currentPage === 1) ? 1 : $this->currentPage - 1,
-                'next'       => ($this->currentPage === $this->totalPages) ? $this->totalPages : $this->currentPage + 1
-            ));
+            $this->addPagination();
         }
+    }
+
+    /**
+     * Add pagination to parameters for template
+     *
+     * @return void
+     */
+    public function addPagination(): void
+    {
+        $this->params = array_merge($this->params, array(
+            'page'       => $this->currentPage,
+            'totalPages' => $this->totalPages,
+            'articles'   => $this->articles,
+            'statePrev'  => ($this->currentPage === 1) ? ' disabled' : '',
+            'stateNext'  => ($this->currentPage === $this->totalPages) ? ' disabled' : '',
+            'prev'       => ($this->currentPage === 1) ? 1 : $this->currentPage - 1,
+            'next'       => ($this->currentPage === $this->totalPages) ? $this->totalPages : $this->currentPage + 1
+        ));
     }
 }
