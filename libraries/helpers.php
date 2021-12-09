@@ -5,9 +5,11 @@ namespace Over_Code\Libraries;
 use DateTime;
 use ReflectionClass;
 use Over_Code\Libraries\Globals\Env;
-use Over_Code\Libraries\Globals\Session;
 use Over_Code\Libraries\Globals\Superglobals;
 
+/**
+ * Trait containing miscallaneous methos, used in classes as a tool box
+ */
 trait Helpers
 {
     /**
@@ -27,7 +29,7 @@ trait Helpers
      * Return a reflection class instance
      *
      * @param string $class
-     * 
+     *
      * @return mixed
      */
     public function getReflection(string $class): mixed
@@ -42,14 +44,14 @@ trait Helpers
      * - expiration: timestamp + gap
      *
      * @param integer|null $gap **given in seconds**, delay to expiration
-     * 
+     *
      * @return array
      */
-    public function arrayDate(?int $gap = NULL): array
+    public function arrayDate(?int $gap = null): array
     {
         $now = new DateTime();
 
-        return array(            
+        return array(
             'date_time'  => $now->format('Y-m-d H:i:s'),
             'timestamp'  => $now->getTimestamp(),
             'expiration' => $now->getTimestamp() + $gap
@@ -68,7 +70,7 @@ trait Helpers
      * - result: "hello-world-i-m-happy"
      *
      * @param string $string
-     * 
+     *
      * @return string
      */
     public static function toSlug(string $string): string
@@ -99,7 +101,7 @@ trait Helpers
      * Check if a string contain only numbers
      *
      * @param string $param
-     * 
+     *
      * @return boolean
      */
     public function onlyInteger(string $param): bool
@@ -118,54 +120,80 @@ trait Helpers
      */
     private static function globals(): object
     {
-        return new Superglobals;
+        return new Superglobals();
     }
 
     /**
      * Gets an input GET by its key
      *
      * @param string $key
-     * 
+     *
      * @return string
      */
-    public static function get_GET(string $key): string
+    public static function getGET(string $key): string
     {
-        return self::globals()->get_GET($key);
+        return self::globals()->getGET($key);
     }
 
     /**
      * Gets an input POST by its key
      *
      * @param string $key
-     * 
+     *
      * @return string
      */
-    public static function get_POST(string $key): string
+    public static function getPOST(string $key): string
     {
-        return self::globals()->get_POST($key);
+        return self::globals()->getPOST($key);
     }
 
     /**
      * Gets an input COOKIE by its key
      *
      * @param string $key
-     * 
+     *
      * @return string
      */
-    public static function get_COOKIE(string $key): string
+    public static function getCOOKIE(string $key): string
     {
-        return self::globals()->get_COOKIE($key);
+        return self::globals()->getCOOKIE($key);
     }
 
     /**
      * * Gets an input SERVER by its key
      *
      * @param string $key
+     *
      * @return string
      */
-    public static function get_SERVER(string $key): string
+    public static function getSERVER(string $key): string
     {
-        return self::globals()->get_SERVER($key);
+        return self::globals()->getSERVER($key);
+    }
+
+    /**
+     * * Gets an input FILES by its key
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public static function getFILES(string $key): mixed
+    {
+        return self::globals()->getFILES($key);
+    }
+
+    /**
+     * Sets a cookie without options
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return void
+     */
+    public function setCOOKIE(string $name, string $value): void
+    {
+        self::globals()->setCOOKIE($name, $value);
     }
 
 
@@ -180,77 +208,18 @@ trait Helpers
      */
     private static function env(): object
     {
-        return new Env;
+        return new Env();
     }
 
     /**
      * * Gets an input ENV by its key
      *
      * @param string $key
-     * 
+     *
      * @return mixed
      */
-    public static function get_ENV(string $key): mixed
+    public static function getENV(string $key): mixed
     {
         return self::env()->get($key);
     }
-
-
-    //////////////////////////////////////////
-    // Methods refering to Session class
-    //////////////////////////////////////////
-
-    /**
-     * Used to instanciate Session to refering session static methods
-     *
-     * @return object
-     */
-    private static function session(): object
-    {
-        return new Session;
-    }
-
-    /**
-     * Start a session
-     */
-    public static function sessionStart()
-    {
-        return self::session()->start();
-    }
-
-    /**
-     * * Gets an input SESSION by its key
-     *
-     * @param string $key
-     * 
-     * @return mixed
-     */
-    public static function get_SESSION(string $key): mixed
-    {
-        return self::session()->get($key);
-    }
-
-    /**
-     * Sets an input SESSION
-     *
-     * @param string $key
-     * @param string $value
-     * @return void
-     */
-    public function set_SESSION(string $key, string $value)
-    {
-        return self::session()->set($key, $value);
-    }
-
-    /**
-     * Return hub plateform: admin or client
-     *
-     * @return string
-     */
-    public static function hubFinder(): string
-    {
-        $globals = new Superglobals;
-
-        return (self::get_SESSION('hub') === 'admin') ? 'admin' : 'client';
-    }   
 }

@@ -1,50 +1,49 @@
 <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
-            <div class="container-fluid">
-                {% autoescape %}
-                <a class="navbar-brand" href="{{ constant('SITE_ADRESS') }}">
-                    <img src="{{ constant('SITE_ADRESS') }}/public/images/logo80px.png" alt="Logo" width="55" height="55">
-                    &lt; <span style="color: #fff;">{{ constant('SITE_NAME') }}</span> &gt;
-
-                </a>
-                {% endautoescape %}
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        {% autoescape %}
-                        <li class="nav-item align-middle">                            
-                            <a class="nav-link" href="{{ constant('SITE_ADRESS') }}">
-                                <i class="bi bi-house-fill"></i> Accueil
-                            </a>                          
-                        </li>
-                        <li class="nav-item">                            
-                            <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/articles/liste/tous/page-1">
-                                <i class="bi bi-book-half"></i> Articles
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/portfolio">
-                                <i class="bi bi-journal-album"></i> Portfolio
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/#about">
-                                <i class="bi bi-patch-question-fill"></i></i> A propos
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/#contact">
-                                <i class="bi bi-envelope"></i></i> Contact
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            {% include 'layouts/login-out-button.twig' %}
-                        </li>
-                        {% endautoescape %} 
-                    </ul>
-                </div>  
-            </div>
-        </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
+        <div class="container-fluid">
+            {% autoescape %}
+            <a class="navbar-brand" href="{{ constant('SITE_ADRESS') }}">
+                <img src="{{ constant('SITE_ADRESS') }}/public/images/logo80px.png" alt="Logo" width="55" height="55">
+                &lt; <span style="color: #fff;">{{ constant('SITE_NAME') }}</span> &gt;
+            </a>
+            {% endautoescape %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    {% autoescape %}
+                    <li class="nav-item align-middle">                            
+                        <a class="nav-link" href="{{ constant('SITE_ADRESS') }}">
+                            <i class="bi bi-house-fill"></i> Accueil
+                        </a>                          
+                    </li>
+                    <li class="nav-item">                            
+                        <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/articles/liste/tous/page-1">
+                            <i class="bi bi-book-half"></i> Articles
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/portfolio">
+                            <i class="bi bi-journal-album"></i> Portfolio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/#about">
+                            <i class="bi bi-patch-question-fill"></i></i> A propos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/#contact">
+                            <i class="bi bi-envelope"></i></i> Contact
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        {% include 'layouts/login-out-button.twig' %}
+                    </li>
+                    {% endautoescape %} 
+                </ul>
+            </div>  
+        </div>
+    </nav>
 </header>

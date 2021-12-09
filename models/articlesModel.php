@@ -9,18 +9,20 @@ use PDO;
  */
 class ArticlesModel extends MainModel
 {
+    use \Over_Code\Libraries\Helpers;
+
     /**
      * Get Title from article by id
      *
      * @param int $articleId : article id
-     * 
+     *
      * @return string
      */
     public function getTitle(int $articleId): string
     {
         $query = 'SELECT title from article WHERE id = :id';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
 
@@ -33,18 +35,33 @@ class ArticlesModel extends MainModel
      * Get one article details from its id
      *
      * @param int $articleId : article id
-     * 
+     *
      * @return array
      */
     public function getSingleArticle(int $articleId): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, a.created_at, a.last_update, a.chapo, a.content, a.img_path
+        $query = 'SELECT 
+            a.id,
+            u.first_name,
+            u.last_name,
+            a.title,
+            a.created_at,
+            a.last_update,
+            a.chapo, a.content,
+            a.img,
+            a.category_id,
+            c.category,
+            (SELECT COUNT(*)
+            FROM rating
+            WHERE article_id = :id) AS count_rating
         FROM article AS a
         JOIN user AS u
-            ON a.author_id = u.id
+            ON a.user_serial = u.serial
+        JOIN category AS c
+            ON a.category_id = c.id
         WHERE a.id = :id;';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
 
@@ -58,28 +75,28 @@ class ArticlesModel extends MainModel
      *
      * @param int $currentPage
      * @param int $perPage
-     * @param string $category_name 
-     * 
+     * @param string $categoryName
+     *
      * @return array
      */
-    public function getCategoryArticles(int $currentPage, int $perPage, string $category_name): array
+    public function getCategoryArticles(int $currentPage, int $perPage, string $categoryName): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category
+        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, a.chapo, a.img, a.created_at
         FROM article AS a 
         JOIN user as u 
-            ON a.author_id = u.id
+            ON a.user_serial = u.serial
         JOIN category AS c
             ON a.category_id = c.id
         WHERE c.category = :category
-        ORDER BY id DESC LIMIT :firstArticle, :perPage';
+        ORDER BY a.id DESC LIMIT :firstArticle, :perPage';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $firstArticle = ($currentPage * $perPage) - $perPage;
 
-        $stmt->bindValue(':firstArticle', $firstArticle, PDO::PARAM_INT);    
+        $stmt->bindValue(':firstArticle', $firstArticle, PDO::PARAM_INT);
         $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
-        $stmt->bindValue(':category', $category_name, PDO::PARAM_STR);
+        $stmt->bindValue(':category', $categoryName, PDO::PARAM_STR);
 
         $stmt->execute();
 
@@ -92,24 +109,24 @@ class ArticlesModel extends MainModel
      *
      * @param int $currentPage
      * @param int $perPage
-     * 
+     *
      * @return array
      */
     public function getAllArticles(int $currentPage, int $perPage): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at
+        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at, a.img
         FROM article AS a 
         JOIN user as u 
-            ON a.author_id = u.id
+            ON a.user_serial = u.serial
         JOIN category AS c
             ON a.category_id = c.id
-        ORDER BY id DESC LIMIT :firstArticle, :perPage';
+        ORDER BY a.id DESC LIMIT :firstArticle, :perPage';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $firstArticle = ($currentPage * $perPage) - $perPage;
 
-        $stmt->bindValue(':firstArticle', $firstArticle, PDO::PARAM_INT);    
+        $stmt->bindValue(':firstArticle', $firstArticle, PDO::PARAM_INT);
         $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
 
         $stmt->execute();
@@ -139,20 +156,20 @@ class ArticlesModel extends MainModel
      * Returns the x last articles
      *
      * @param integer $countNews : count of articles to retrun
-     * 
+     *
      * @return array
      */
     public function getNews(int $countNews): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at, a.img_path
+        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at, a.img
         FROM article AS a 
         JOIN user as u 
-            ON a.author_id = u.id
+            ON a.user_serial = u.serial
         JOIN category AS c
             ON a.category_id = c.id
-        ORDER BY id DESC LIMIT 0, :count_articles';
+        ORDER BY a.id DESC LIMIT 0, :count_articles';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':count_articles', $countNews, PDO::PARAM_INT);
 
@@ -167,14 +184,14 @@ class ArticlesModel extends MainModel
      * - id exist in table
      *
      * @param mixed $articleId : article id to check
-     * 
+     *
      * @return boolean
      */
     public function idExist(int $articleId): bool
     {
         $query = 'SELECT EXISTS (SELECT * from article WHERE id = :id)';
         
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
 
@@ -192,7 +209,7 @@ class ArticlesModel extends MainModel
     {
         $query = 'SELECT COUNT(*) FROM article';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->execute();
 
@@ -203,7 +220,7 @@ class ArticlesModel extends MainModel
      * Return count of articles from a given category
      *
      * @param string $category
-     * 
+     *
      * @return integer
      */
     public function getCategoryCount(string $category): int
@@ -214,7 +231,7 @@ class ArticlesModel extends MainModel
             ON a.category_id = c.id 
         WHERE c.category = :category';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':category', $category, PDO::PARAM_STR);
 
@@ -228,7 +245,7 @@ class ArticlesModel extends MainModel
      * all articles or category articles
      *
      * @param string $param
-     * 
+     *
      * @return integer
      */
     public function getCount(string $param): int
@@ -238,14 +255,13 @@ class ArticlesModel extends MainModel
         }
 
         return $this->getArchivesCount();
-
     }
 
     /**
      * Checks if an article category exists
-     * 
+     *
      * @param string $value : value to check
-     * 
+     *
      * @return boolean
      */
     public function categoryExist(string $value): bool
@@ -257,12 +273,157 @@ class ArticlesModel extends MainModel
                         ON a.category_id = c.id
                     WHERE c.category = :category)';
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->getPdo()->prepare($query);
 
         $stmt->bindValue(':category', $value, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetch()[0];
+    }
+
+    /**
+     * Return string corresponding to the biggest number name of
+     * articles image file
+     *
+     * @return string
+     */
+    public function biggestImg(): string
+    {
+        $query = 'SELECT img
+        FROM article
+        ORDER BY img DESC
+        LIMIT 1';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Create a new article
+     *
+     * @param integer $user user serial
+     * @param string $img integer part of image article name
+     *
+     * @return void
+     */
+    public function createArticle(int $user, string $img): void
+    {
+        $query = 'INSERT INTO article (
+            user_serial,
+            category_id,
+            title,
+            chapo,
+            content,
+            created_at,
+            img)
+        VALUES (
+            :user_serial,
+            :category_id,
+            :title,
+            :chapo,
+            :content,
+            NOW(),
+            :img)';
+        
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':user_serial', $user, PDO::PARAM_INT);
+        $stmt->bindValue(':category_id', $this->getPOST('category'), PDO::PARAM_INT);
+        $stmt->bindValue(':title', $this->getPOST('title'), PDO::PARAM_STR);
+        $stmt->bindValue(':chapo', $this->getPOST('chapo'), PDO::PARAM_STR);
+        $stmt->bindValue(':content', $this->getPOST('content'), PDO::PARAM_STR);
+        $stmt->bindValue(':img', $img, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
+    /**
+     *Delete an article and return false if failed
+     *
+     * @param integer $articleId
+     *
+     * @return boolean
+     */
+    public function deleteArticle(int $articleId): bool
+    {
+        $query = 'DELETE
+        FROM article
+        WHERE id = :id';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return !$this->idExist($articleId);
+    }
+
+    /**
+     * Update an article
+     *
+     * @param integer $articleId
+     *
+     * @return void
+     */
+    public function updateArticle(int $articleId): void
+    {
+        $query = 'UPDATE article
+        SET
+            category_id = :category_id,
+            title = :title,
+            chapo = :chapo,
+            content = :content
+        WHERE id = :id';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':category_id', $this->getPOST('category'), PDO::PARAM_INT);
+        $stmt->bindValue(':title', $this->getPOST('title'), PDO::PARAM_STR);
+        $stmt->bindValue(':chapo', $this->getPOST('chapo'), PDO::PARAM_STR);
+        $stmt->bindValue(':content', $this->getPOST('content'), PDO::PARAM_STR);
+        $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
+
+    public function getImg(int $articleId): string
+    {
+        $query = 'SELECT img
+        FROM article
+        WHERE id = :id';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':id', $articleId, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Uncategorized articles from a given category in setting their category id on 1,
+     * which correspond to uncategorized
+     *
+     * @param integer $categoryId
+     *
+     * @return void
+     */
+    public function uncategorized(int $categoryId): void
+    {
+        $query = 'UPDATE article
+        SET category_id = 1
+        WHERE category_id = :categoryId';
+
+        $stmt = $this->pdo->getPdo()->prepare($query);
+
+        $stmt->bindValue(':categoryId', $categoryId, PDO::PARAM_INT);
+
+        $stmt->execute();
     }
 }

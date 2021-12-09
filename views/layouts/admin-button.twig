@@ -1,0 +1,9 @@
+{% if admin == true %}
+    {% autoescape %}
+        <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/adminDashboard">
+            <button type="button" class="btn btn-danger">
+                <i class="bi bi-shield-lock"></i> ADMIN
+            </button>
+        </a>
+    {% endautoescape %}
+{% endif %}

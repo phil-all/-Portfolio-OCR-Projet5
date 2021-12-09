@@ -9,18 +9,30 @@ use Symfony\Component\Dotenv\Dotenv;
  */
 final class Env
 {
+    /**
+     * Instanciate Dontenv, load .env file and encapsulate sanitize ENV superglobal in ENV attributes
+     *
+     * @return void
+     */
     public function __construct()
     {
         $dotenv = new Dotenv();
         $dotenv->load('.env');
 
-        $this->ENV =filter_var_array($_ENV, FILTER_SANITIZE_STRING);
+        $this->ENV = filter_var_array($_ENV, FILTER_SANITIZE_STRING);
     }
 
-    public function get(string $key = NULL): mixed
+    /**
+     * ENV superglobal getter
+     *
+     * @param [type] $key
+     *
+     * @return mixed
+     */
+    public function get(string $key = null): mixed
     {
-        if ($key !== NULL) {
-            return strip_tags(htmlspecialchars($this->ENV[$key])) ?? NULL;
+        if ($key !== null) {
+            return strip_tags(htmlspecialchars($this->ENV[$key])) ?? null;
         }
 
         return $this->ENV;

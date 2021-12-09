@@ -3,6 +3,7 @@
 namespace Over_Code\Controllers\Client;
 
 use Over_Code\Models\ArticlesModel;
+use Over_Code\Libraries\Captcha\Captcha;
 use Over_Code\Controllers\MainController;
 
 /**
@@ -12,21 +13,30 @@ class AccueilController extends MainController
 {
     use \Over_code\Libraries\Helpers;
 
-    public function index()
+    /**
+     * Sets params and template to twig, about home page
+     *
+     * @return void
+     */
+    public function index(): void
     {
         $this->template = 'client' . DS . 'accueil.twig';
         
-        $lastNews = new ArticlesModel;
+        $lastNews = new ArticlesModel();
+        
         $this->lastNews = $lastNews->getNews(4);
 
-        foreach($this->lastNews as $key) { 
-            $key['slug'] = $this->toSlug($key['title']);            
+        foreach ($this->lastNews as $key) {
+            $key['slug'] = $this->toSlug($key['title']);
             array_shift($this->lastNews);
             array_push($this->lastNews, $key);
         }
 
+        $captcha = new Captcha();
+
         $this->params = array(
-            'lastNews' => $this->lastNews
-        );        
+            'lastNews' => $this->lastNews,
+            'captcha'  => $captcha->getB64EncodedCaptcha()
+        );
     }
 }

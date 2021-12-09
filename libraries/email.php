@@ -6,30 +6,71 @@ use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
 
+/**
+ * Contain method used to send e-mail
+ */
 class Email
 {
+    use \Over_Code\Libraries\Helpers;
+
+    /**
+     * Use in sending mails methods. Sets :
+     * - a transport
+     * - a mailer using created Transport
+     * - send the message
+     *
+     * @param Swift_Message $message contain informations to, from, title/subject, content
+     *
+     * @return void
+     */
+    private function send(Swift_Message $message): void
+    {
+        $transport = (new Swift_SmtpTransport($this->getENV('SMTP_SERVER'), $this->getENV('SMTP_PORT')))
+            ->setUsername($this->getENV('SMTP_USERNAME'))
+            ->setPassword($this->getENV('SMTP_PASSWORD'));
+        
+        $mailer = new Swift_Mailer($transport);
+
+        $mailer->send($message);
+    }
+
     /**
      * Send an HTML email
      *
-     * @param array $reciever address(es) targeted by this email, can be string or array if multiple
+     * @param array $reciever address(es) targeted by this email
      * @param string $title email title
      * @param string $body html email source code
-     * 
+     *
      * @return void
      */
-    public static function sendHtmlEmail(array $reciever, string $title, string $body): void
+    public function sendHtmlEmail(string $reciever, string $title, string $body): void
     {
-        $transport = (new Swift_SmtpTransport($_ENV['SMTP_SERVER'], $_ENV['SMTP_PORT']))
-            ->setUsername($_ENV['SMTP_USERNAME'])
-            ->setPassword($_ENV['SMTP_PASSWORD']);
-
-        $mailer = new Swift_Mailer($transport);
-
         $message = (new Swift_Message($title))
-            ->setFrom(['team.overcode@example.com' => 'Over_code Team'])
-            ->setTo($reciever)
-            ->setBody($body,'text/html');
+            ->setFrom([self::getENV('ADMIN_MAIL') => self::getENV('ADMIN_NAME')])
+            ->setTo([$reciever])
+            ->setBody($body, 'text/html');
 
-        $mailer->send($message);
+        $this->send($message);
+    }
+
+    /**
+     * Send a text email to site admin
+     *
+     * @param string $firstName first name
+     * @param string $lastName last name
+     * @param string $email
+     * @param string $subject
+     * @param string $content
+     *
+     * @return void
+     */
+    public function sendTextEmail(string $firstName, string $lastName, string $email, string $subject, string $content): void
+    {
+        $message = (new Swift_Message($subject))
+        ->setFrom([$email => $firstName . ' ' . $lastName])
+        ->setTo([self::getENV('ADMIN_MAIL') => self::getENV('ADMIN_NAME')])
+        ->setBody($content);
+
+        $this->send($message);
     }
 }

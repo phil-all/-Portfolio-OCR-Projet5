@@ -1,0 +1,19 @@
+{% extends 'layouts/layout.twig' %}
+
+{% block title %}
+    <title>{{ constant('SITE_NAME') }} - Message envoyé</title>
+{% endblock %}
+
+{% block body_class %} class="home min-vh-100"{% endblock %}
+
+{% block content %}
+    <main class="pt-5 pb-5">
+        <div class="container d-flex justify-content-center">
+            <dix class="px3 text-center">
+                <h1 class="mt-5 mb-5">Message <span class="green-txt">envoyé</span></h1>
+                <h2><i class="bi bi-bookmark-check"></i> </h2>
+            <h3 class="mt-5 mb-5">Merci de l'intérêt que vous portez à {% autoescape %}{{ constant('SITE_NAME') }}{% endautoescape %}, promis votre message sera lu au plus vite &#x1F609;</h3>
+            </dix>            
+        </div>
+    </main>    
+{% endblock %}

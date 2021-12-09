@@ -4,22 +4,22 @@
 }
 
 .page-link:hover {
-  color: #1abc9c;
+  color: #198754;
 }
 
 .page-item.active .page-link {
   color: #2c2c2c;
-  background-color: #1abc9c;
-  border-color: #1abc9c;
+  background-color: #198754;
+  border-color: #198754;
 }
 
 .bg-dark {
-  background-color: #0b0d0e !important;
+  background-color: #0b0d0e!important;
 }
 
 /* --- html --- */
 body {
-  background-color: #444;
+  background-color: #0b0d0e;
   color: #fff;
   font-family:
     -apple-system,
@@ -45,7 +45,7 @@ h1 {
 }
 
 .green-txt {
-  color: #1abc9c;
+  color: #198754;
 }
 
 /* --- header --- */
@@ -54,7 +54,7 @@ header {
 }
 
 header .navbar-dark .navbar-brand {
-  color: #1abc9c;
+  color: #198754;
   font-weight: 700;
   font-size: 30px;
 }
@@ -68,7 +68,7 @@ header nav .navbar-collapse {
 }
 
 header .navbar-dark .navbar-nav .nav-link {
-  color: #1abc9c;
+  color: #198754;
   padding: 0 35px;
   height: 100%;
   display: flex;
@@ -107,7 +107,7 @@ footer i {
 
 footer a:hover,
 footer ul li a:hover {
-  color: #1abc9c;
+  color: #198754;
 }
 
 /* --- header nav user button --- */
@@ -116,15 +116,15 @@ header .navbar-nav a .btn {
 }
 
 header .btn-success {
-  color: #1abc9c;
+  color: #198754;
   background-color: transparent;
-  border-color: #1abc9c;
+  border-color: #198754;
   border-radius: 25px;
 }
 
 header .btn-success:hover {
-  background-color: #1abc9c;
-  border-color: #1abc9c;
+  background-color: #198754;
+  border-color: #198754;
   color: #2c2c2c;
 }
 
@@ -142,7 +142,7 @@ header .btn-success:hover {
 
 .dark-card-body {
   color: #fff;
-  background-color: #131616;
+  background-color: #2c2c2c;
 }
 
 .card-title {
@@ -154,20 +154,20 @@ header .btn-success:hover {
 /* --- card button --- */
 .card .btn-light {
   background-color: transparent;
-  color: #1abc9c;
+  color: #198754;
   border-color: transparent;
   border-radius: 0;
   transition: color 0.22s ease-in-out, background-color 0.22s ease-in-out, border-color 0.22s ease-in-out, box-shadow 0.22s ease-in-out;
 }
 
 .card .btn-light:hover {
-  background-color: #1abc9c;
+  background-color: #198754;
   color: #fff;
 }
 
 /* --- signin-login-page --- */
 .user-landing main {
-  background-image: url(../images/member-log.jpg);
+  background-image: url(../images/member-log.jpg) !important;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -179,7 +179,7 @@ header .btn-success:hover {
 }
 
 .user-landing-form-link {
-  color: #1abc9c;
+  color: #198754;
 }
 
 .user-landing-form a:hover {
@@ -187,8 +187,8 @@ header .btn-success:hover {
 }
 
 .btn-dark-green {
-  background-color: #1abc9c;
-  border-color: #1abc9c;
+  background-color: #198754;
+  border-color: #198754;
   color: #2c2c2c;
 }
 
@@ -199,8 +199,8 @@ header .btn-success:hover {
 }
 
 .user-landing-form .form-check-input:checked {
-  background-color: #1abc9c;
-  border-color: #1abc9c;
+  background-color: #198754;
+  border-color: #198754;
 }
 
 /* --- home-page --- */
@@ -218,11 +218,9 @@ header .btn-success:hover {
 
 .home h1 {
   font-weight: 800;
-  font-size: 48px;
 }
 
 .home h2 {
-  font-size: 45px;
   line-height: 62px;
   letter-spacing: 0.17px;
   font-weight: 700;
@@ -230,10 +228,9 @@ header .btn-success:hover {
 }
 
 .home h3 {
-  font-size: 20px;
   padding-left: 20px;
-  border-left: 3px solid #1abc9c;
-  width: 580px;
+  border-left: 3px solid #198754;
+  max-width: 580px;
 }
 
 .home main .news {
@@ -253,7 +250,7 @@ header .btn-success:hover {
   display: flex;
   flex-direction: column;
   position: relative;
-  color: #1abc9c;
+  color: #198754;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 35px;
   font-weight: 600;
@@ -268,7 +265,7 @@ header .btn-success:hover {
   bottom: -20px;
   width: 35px;
   height: 8px;
-  background: #1abc9c;
+  background: #198754;
 }
 
 .contact1 {

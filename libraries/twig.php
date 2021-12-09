@@ -2,8 +2,13 @@
 
 namespace Over_Code\Libraries;
 
-use Twig\Extension\DebugExtension;
+use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Twig\Extension\DebugExtension;
+use Twig\Extra\Markdown\MarkdownRuntime;
+use Twig\Extra\Markdown\DefaultMarkdown;
+use Twig\Extra\Markdown\MarkdownExtension;
+use Twig\RuntimeLoader\RuntimeLoaderInterface;
 
 /**
  * Template rendering
@@ -24,16 +29,23 @@ class Twig
     {
         $loader = new FilesystemLoader(VIEWS_PATH);
 
-        $twig = new \Twig\Environment($loader, [
+        $twig = new Environment($loader, [
             'debug' => true,
             'cache' => false,
         ]);
 
-        if (isset($_SESSION['token'])) {            
-            $twig->addGlobal('session', $_SESSION);
-        }
-
         $twig->addExtension(new DebugExtension());
+
+        $twig->addExtension(new MarkdownExtension());
+
+        $twig->addRuntimeLoader(new class implements RuntimeLoaderInterface {
+            public function load($class)
+            {
+                if (MarkdownRuntime::class === $class) {
+                    return new MarkdownRuntime(new DefaultMarkdown());
+                }
+            }
+        });
 
         $this->twig = $twig;
     }
@@ -46,7 +58,7 @@ class Twig
      */
     public function twigRender(string $template, array $params = [])
     {
-        echo $this->twig->render($template, $params);
+        print_r($this->twig->render($template, $params));
     }
 
     /**

@@ -1,0 +1,83 @@
+{% extends 'layouts/layout.twig' %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="row">
+        {% include 'layouts/admin-menu.twig' %}
+        <main class="col-md-8 ms-sm-auto col-lg-9 col-xl-10 p-0" style="min-height: 100vh;">
+            <div class="container-fluid container-md p-5">
+                <section class="container mt-5 news">
+                    <div class="row mt-3">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <p class="green-txt mb-0 text-uppercase">Archives des articles</p>
+                                <h2 class="pb-5">Tous les articles</h2>
+                            </div>
+                            <div>
+                                {% autoescape %}
+                                <a class="nav-link active ms-2" href="{{ constant('SITE_ADRESS') }}/adminArticles/nouveau/{{ CSRF }}">
+                                    <button class="btn btn-primary">
+                                        nouveau
+                                    </button>
+                                </a>
+                                {% endautoescape %}
+                            </div>
+                        </div>
+                        {% for article in articles %}
+                        <article class="card mb-3 col-12 col-md-6 border-none">
+                            {% autoescape %}
+                            <img src="{{ constant('SITE_ADRESS') }}/public/uploads/article-{{ article.img }}.jpg" class="card-img-top" alt="...">
+                            {% endautoescape %}
+                            <div class="card-body">
+                                <p class="card-text"><small class="text-muted">date : {{ article.created_at }}</small></p>
+                                <h5 class="card-title">{{ article.title }}</h5>
+                                <p class="card-text">{{ article.chapo }}</p>                        
+                                <div  class="d-flex justify-content-between">
+                                    {% autoescape %}
+                                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/numero/{{ article.id }}/{{ article.slug }}/{{ CSRF }}">
+                                        <button type="button" class="btn btn-light"><i class="bi bi-arrow-right-square"></i> lire plus...</button>
+                                    </a>
+                                    {% endautoescape %}
+                                    {% autoescape %}
+                                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/modifier/{{ article.id }}/{{ CSRF }}">
+                                        <button type="button" class="btn btn-outline-success"><i class="bi bi-check-circle-fill"></i> Modifier</button>
+                                    </a>
+                                    {% endautoescape %}
+                                    {% autoescape %}
+                                    <a href="{{ constant('SITE_ADRESS') }}/adminArticles/delete/{{ article.id }}/{{ CSRF }}">
+                                        <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle-fill"></i> Supprimer</button>
+                                    </a>
+                                    {% endautoescape %}
+                                    {% autoescape %}
+                                    <div>
+                                        <span>Catégorie: </span><a href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/{{ article.category }}/page-1/{{ CSRF }}">{{ article.category }}</a>
+                                    </div>
+                                    {% endautoescape %}
+                                </div>                        
+                            </div>
+                        </article>            
+                        {% endfor %}            
+                    </div>        
+                </section><!--End articles list-->
+                <nav aria-label="Articles list pages">
+                    <ul class="pagination justify-content-center">
+                        {% autoescape %}
+                        <li class="page-item {{ statePrev }}">
+                            <a href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/tous/page-{{ prev }}/{{ CSRF }}" class="page-link"><i class="bi bi-caret-left-fill"></i></i></a>
+                        </li>
+                        {% for i in 1.. totalPages %}
+                            <li class="page-item {% if i == page %} active{% endif %}">
+                                <a href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/tous/page-{{ i }}/{{ CSRF }}" class="page-link">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+                        <li class="page-item {{ stateNext }}">
+                            <a href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/tous/page-{{ next }}/{{ CSRF }}" class="page-link"><i class="bi bi-caret-right-fill"></i></i></a>
+                        </li>                    
+                        {% endautoescape %}
+                    </ul>
+                </nav><!--End pagination-->
+            </div>
+        </main>
+    </div>
+</div>  
+{% endblock %}

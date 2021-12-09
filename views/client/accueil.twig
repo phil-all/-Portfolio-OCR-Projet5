@@ -11,9 +11,9 @@
         <section class="mt-1 mb-5">
             <div class="container d-flex justify-content-center hero">
                 <div class="px-3">
-                {% if session is defined %}
-                    <h1><span class="green-txt">Bon retour</span> {{ session.pseudo }}</h1>
-                    <h3>Heureux de vous revoir sur Over_Code. Votre dernière connexion: {{ session.token_datetime }}</h3>
+                {% if user is defined %}
+                    <h1><span class="green-txt">Bon retour</span> {{ user.pseudo }}</h1>
+                    <h3>Heureux de vous revoir.</h3>
                 {% else %}
                     <h1><span class="green-txt">Bienvenue</span> sur Over_Code</h1>
                     <h3>Ici on parle de code, mais pas seulement, on s'interresse aussi à l'informatique en général...</h3>
@@ -27,7 +27,7 @@
                 <h2 class="pb-5">Last news</h2>
                 {% for new in lastNews %}
                 <article class="card mb-3 col-12 col-md-6 border-none">
-                    <img src="./public/uploads/{{ new.img_path }}" class="card-img-top" alt="...">
+                    <img src="./public/uploads/article-{{ new.img }}.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                         <p class="card-text"><small class="text-muted">date : {{ new.created_at }}</small></p>
                         <h5 class="card-title">{{ new.title }}</h5>
@@ -60,7 +60,7 @@
                         <div class="card-body dark-card-body">
                             <p class="card-title">Philippe</p>
                             <p>Allard-Latour</p>
-                            <a href="#" class="btn btn-dark-green">consulter CV</a>
+                            <a {% autoescape %}href="{{ constant('SITE_ADRESS') }}/pdf/curriculum"{% endautoescape %} class="btn btn-dark-green">consulter CV</a>
                         </div>
                     </div>
                 </div><!--End card-->
@@ -77,29 +77,34 @@
                         <p>Toute suggestion, idée ou retour sera fortement apprécié. N'hésitez pas à m'écrire.</p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 p-5 contact2">
-                    <form action="#" method="POST">
+                <div class="col-12 col-md-6 p-3 contact2">
+                    <form {% autoescape %}action="{{ constant('SITE_ADRESS') }}/contact/mail"{% endautoescape %} method="POST">
                         <div class="row mb-3">
                             <div class="col-lg-6">
                                 <input  class="form-control" type="text" placeholder="Prénom" aria-label="Prénom" name="first_name">
                             </div>
                             <div class="col-lg-6">
-                                <input class="form-control" type="text" placeholder="Nom de famille" aria-label="Nom de famille" name="last_name">
+                                <input class="form-control" type="text" placeholder="Nom" aria-label="Nom" name="last_name">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" aria-describedby="email" placeholder="E-mail">
+                            <input type="text" class="form-control" aria-describedby="email" placeholder="e-mail" name="email">
                             <div id="emailHelp" class="form-text">Votre email ne sera communiqué à personne.</div>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control" placeholder="Sujet" name="subject">
                         </div>
                         <div class="mb-3">
-                            <textarea class="form-control" placeholder="Votre message" rows="5" name="message"></textarea>
+                            <textarea class="form-control" placeholder="Votre message" rows="8" name="content"></textarea>
                         </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="Check">
-                            <label class="form-check-label" for="Check">Je ne suis pas un robot !</label>
+                        <div class="row mb-3">
+                            <input id="bottrap" name="bottrap" type="hidden" value="">
+                            <div class="col-lg-6">
+                                <img src="data:image/jpeg;base64, {{ captcha }}"  width="250" height="38" class="rounded">
+                            </div>
+                            <div class="col-lg-6">
+                                <input  class="form-control" type="text" placeholder="Confirmez le nombre de gauche" aria-label="Prénom" name="captcha">
+                            </div>                            
                         </div>
                         <button type="submit" class="btn btn-primary">Envoyer</button>
                     </form>

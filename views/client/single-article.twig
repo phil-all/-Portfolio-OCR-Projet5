@@ -5,22 +5,112 @@
 {% endblock %}
 
 {% block content %}
-    <main class="container">
-        <h1>{{ title }}</h1>
-        <h3>{{ chapo }}</h3>
-        <p>Auteur : {{ first_name }} {{ last_name }}</p>
-        <p>Date : {{ created_at }}</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam maiores, laborum vitae est animi velit blanditiis
-            cum incidunt eum rem ipsa magnam suscipit iure! Harum voluptatem numquam magnam consectetur, temporibus ex
-            officia aperiam impedit accusamus quibusdam sint odit a molestias fugit animi non assumenda ad velit? Minus
-            ratione ipsum officia quis esse ullam magni doloremque eos unde porro cumque soluta quos accusantium quod quas
-            modi amet voluptatum, quibusdam commodi odit sequi blanditiis. Vel dolore accusantium earum necessitatibus
-            tempora! Tenetur dolorum beatae dolor quis, sequi laboriosam provident voluptatum. Minus nesciunt officiis
-            assumenda doloribus dicta hic veritatis alias incidunt earum repudiandae, ducimus soluta voluptatem. Non
-            consectetur quibusdam laboriosam officia itaque accusamus soluta facilis cumque in maxime vel dolorum molestiae,
-            beatae perspiciatis earum.</p>
-        {% autoescape %}
-        <a href="{{ constant('SITE_ADRESS') }}/articles/page-1">Tous les articles</a>     
-        {% endautoescape %}        
+    <main>
+        <article class="container col-md-8 justify-content-center">
+            <h1 class="mt-5">{{ title }}</h1>
+            <h3 class="mb-5">{{ chapo }}</h3>
+            <div {% autoescape %}style="
+                background-image: url({{ constant('SITE_ADRESS') }}/public/uploads/article-{{ img }}.jpg);
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.1);
+                height: 600px;
+            "{% endautoescape %}> </div>
+            <p>Auteur : {{ first_name }} {{ last_name }}</p>
+            <p>Date : {{ created_at }}</p>
+            <p class="mt-5">
+                {% apply markdown_to_html %}
+                    {{ content }}
+                {% endapply %}
+            </p>
+        </article>
+        <section><!-- start infos -->
+            <div class="container col-md-8 justify-content-center">
+                <div class="container">
+                    <div class="bg-white mb-1 px-5 py-2 rounded d-flex justify-content-between text-danger" style="height: 71px;">
+                        <div>
+                            <h1 class="p-0"><span class="badge bg-secondary"><i class="bi bi-chat"></i> {{ count_comment }}</span></h1>
+                        </div>
+                        {% if user is defined %}<!-- start like -->
+                            {% if rating == true %}
+                                <a {% autoescape %}href="{{ constant('SITE_ADRESS') }}/rating/"{% endautoescape %}>
+                                    <button type="button" class="btn btn-danger btn-lg" style="height: 51px;"><i class="bi bi-heart-fill"></i> {{ count_rating }}</button>
+                                </a> 
+                            {% else %}
+                                <a {% autoescape %}href="{{ constant('SITE_ADRESS') }}/rating/"{% endautoescape %}>
+                                    <button type="button" class="btn btn-outline-danger btn-lg" style="height: 51px;"><i class="bi bi-heart"></i> {{ count_rating }}</button>
+                                </a> 
+                            {% endif %}
+                        {% else %}
+                            <button type="button" class="btn btn-outline-danger btn-lg" style="height: 51px;" disabled><i class="bi bi-heart"></i> {{ count_rating }}</button>
+                        {% endif %}<!-- start like -->
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- end infos -->
+        <section><!-- start comments -->
+            <div class="container col-md-8 justify-content-center">
+                <div class="container">
+                    <div class="bg-white text-dark p-4 rounded">                        
+                        {% for comment in comments %}
+                            <!-- validated comments -->
+                            {% if comment.status == 'validate' %}
+                                <div class="m-2 d-flex flex-column comment-section">
+                                    <div class="shadow p-3 mb-3 mx-3 bg-body rounded">
+                                        <div class="d-flex flex-row user-info">
+                                            <img class="rounded-circle" {% autoescape %}src="{{ constant('SITE_ADRESS') }}/public/images/avatar/{{ comment.img_path }}" width="48">{% endautoescape %}                                         
+                                            <div class="d-flex flex-column justify-content-start ml-2">
+                                                <span class="d-block fw-bold text-success">{{ comment.pseudo }}</span>
+                                                <span class="date text-black-50">Publié le - {{ comment.created_at }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <p class="comment-text">{{ comment.content }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}<!-- End validated comments -->
+                        {% endfor %}
+                        {% for comment in comments %}
+                            <!-- pending comments -->
+                            {% if comment.status == 'pending' and comment.email == user.email%}
+                                <div class="m-2 d-flex flex-column comment-section">
+                                    <div class="shadow p-3 mb-3 mx-3 bg-body rounded">
+                                        <div class="d-flex flex-row user-info">
+                                            <img class="rounded-circle" {% autoescape %}src="{{ constant('SITE_ADRESS') }}/public/images/avatar/{{ comment.img_path }}" width="48">{% endautoescape %}                                         
+                                            <div class="d-flex flex-column justify-content-start ml-2">
+                                                <span class="d-block fw-bold text-success">{{ comment.pseudo }}</span>
+                                                <span class="d-block text-danger">en attente de validation</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <p class="comment-text">{{ comment.content }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}<!-- End pending comments-->
+                        {% endfor %}
+                        {% if user is defined %}
+                            <form class="mx-4 bg-light p-2 rounded" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/comment/post/{{CSRF}}"{% endautoescape %} method="POST" id="comment">
+                                <div class="d-flex flex-row align-items-start">
+                                    <img class="rounded-circle" {% autoescape %}src="{{ constant('SITE_ADRESS') }}/public/images/avatar/{{ user.img_path }}" width="30">{% endautoescape %}
+                                    <textarea name="comment" class="form-control ml-1 shadow-none textarea" placeholder="..." style="height: 100px"></textarea>
+                                </div>
+                                <div class="mt-2 text-right">
+                                    <button class="btn btn-secondary btn-sm" type="submit">Commenter</button>
+                                </div>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>            
+        </section><!-- end comments -->
+        <section class="container col-md-8 justify-content-center mt-5 mb-5">
+            {% autoescape %}
+            <a href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/tous/page-1" class="btn btn-success">Tous les articles</a>     
+            {% endautoescape %}   
+        </section>             
     </main>
 {% endblock %}

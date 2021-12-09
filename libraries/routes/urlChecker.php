@@ -7,16 +7,27 @@ use Over_Code\Libraries\Routes\UrlParser;
 /**
  * Checking Url conformity with controller classes
  */
-Class UrlChecker
+class UrlChecker
 {
     use \Over_Code\Libraries\Helpers;
 
+    /**
+     * Instanciates UrlChecker, and initializes following attributes:
+     * - hub : **client** for visitor or member and **admin** for admin
+     * - class
+     * - method
+     * - params
+     */
     public function __construct()
     {
         $this->uri = new UrlParser();
-        $this->hub = $this->hubFinder();        
-        $this->class = '\Over_Code\controllers\\' . $this->hub . '\\' . $this->uri->getControllerClass() . 'Controller';
-        $this->method = $this->undashedMethod($this->uri->getMethodName()); 
+
+        $class = $this->uri->getControllerClass();
+
+        $this->hub = (preg_match('~^Admin~', $class)) ? 'Admin' : 'Client';
+
+        $this->class  = '\\Over_Code\\Controllers\\' . $this->hub . '\\' . $class . 'Controller';
+        $this->method = $this->undashedMethod($this->uri->getMethodName());
         $this->params = $this->uri->getAttributesList();
     }
 

@@ -1,0 +1,107 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    {% autoescape %}
+    <link href="{{ public }}css/cv.css" rel="stylesheet"> 
+    {% endautoescape %}
+</head>
+<body class="text-white bg-dark">
+    <main>
+        <section class="bg-success">
+            <table style="width: 770px; padding: 30px 10px;">
+                <tr>
+                    <td style="width: 500px;">
+                        <table style="padding-bottom: 30px;">
+                            <tr>
+                                <td><h1>Philippe Allard-Latour</h1></td>
+                            </tr>
+                            <tr>
+                                <td><h4>Etudiant Développeur applications web PHP/Symfony</h4></td>
+                            </tr>
+                        </table>
+                        <table style="width: 480px;">
+                            <tr>
+                                <td>{% autoescape %}<img style="padding-right: 5px;"  width="14" src="{{ public }}/images/cv/location.png">{% endautoescape %}bassin Aix - Marseille</td>
+                                <td>{% autoescape %}<img style="padding-right: 5px;"  width="14" src="{{ public }}/images/cv/github.png">{% endautoescape %}https://github.com/phil-all</td>
+                            </tr>
+                            <tr>
+                                <td>{% autoescape %}<img style="padding-right: 5px;"  width="14" src="{{ public }}/images/cv/phone.png">{% endautoescape %}+33 6 64 13 20 71</td>
+                            </tr>
+                            <tr>
+                                <td>{% autoescape %}<img style="padding-right: 5px;"  width="14" src="{{ public }}/images/cv/mail.png">{% endautoescape %}allard.latour.philippe@gmail.com</td>
+                            </tr>
+                            <tr>
+                                <td><h4 style="margin-top: 30px;">Technologies et outils</h4></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% autoescape %}
+                                    <img style="padding: 5px; margin: 0;" src="{{ public }}/images/cv/linux.png">
+                                    <img style="padding: 5px; margin: 0;" src="{{ public }}/images/cv/php.png">
+                                    <img style="padding: 5px; margin: 0;" src="{{ public }}/images/cv/mysql.png">
+                                    <img style="padding: 5px; margin: 0;" src="{{ public }}/images/cv/git.png">
+                                    <img style="padding: 5px; margin: 0;" src="{{ public }}/images/cv/gimp.png">
+                                    {% endautoescape %}
+                                </td>
+                            </tr>
+                        </table>                    
+                    </td>
+                    <td>
+                        <div class="civil-pix"></div>
+                    </td>
+                </tr>
+            </table>
+        </section>
+        <section style="padding: 0 30px; width: 740px;">
+            <article>
+                <p>
+                    Piqué au virus de l'informatique dès l'enfance, j'ai saisi mes premières lignes de code en visual basic sur un bon vieux CPC 464 Schneider avec chargement à bande (ersatz de l'Amstrad de même référence).<br>
+                    Ces dernières années j'ai peu à peu délaissé la galaxie Windows, pour me plonger avec délectation dans la nébuleuse Linux. Ah! Les joies de la ligne de commande..<br>
+                    Polyvalent et pris d'intérêt par le développement web, je me suis tout d'abord attelé aux bases du front-end, puis des différentes étapes techniques de création d'un site web ou d'une application web, pour finalement étudier aujourd'hui le back-end au travers du SQL, du langage PHP et de son framework Symfony.
+                </p>
+            </article>
+            <article>
+                <h3 class="bg-success" style="margin-top: 20px">Formation</h3>
+                <table>
+                    <tr>
+                        <td style="padding: 0 10px; border: 2px solid #198754"><strong>2000</strong></td>
+                        <td  style="padding-left: 20px;">
+                            <td>
+                                <strong>BTS CPI (Conception de Produits Industriels - bureau d'études)</strong><br/>
+                                Lycée Jean Perrin - Marseille
+                            </td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 10px; border: 2px solid #198754"><strong>1998</strong></td>
+                        <td style="padding-left: 20px;">
+                            <td>
+                                <strong>Bac S (Option technologies industrielles)</strong><br/>
+                                Lycée Altitude - Briançon
+                            </td>
+                        </td>
+                    </tr>
+                </table>
+            </article>
+            <article>
+                <h3 class="bg-success" style="margin-top: 20px">Expériences</h3>
+                <p>
+                    Ma formation en bureau d'études m'a permise de travailler dans de nombreux secteurs d'activité, comme par exemple le domaine maritime et les chantiers de réparation navale, ou l'automobile.
+                </p>
+                <p>
+                    Etant musicien et intéressé par l'informatique musicale au service de la prise de son, j'ai eu la joie de travailler dans le domaine de la post production musicale, c'est à dire édition, mixage et mastering.
+                </p>
+            </article>
+            <article>
+                <h3 class="bg-success" style="margin-top: 20px">Soft skills</h3>
+                <p style="padding-left: 30px;">Empathie</p>
+                <p style="padding-left: 30px;">Curiosité</p>
+                <p style="padding-left: 30px;">Créativité</p>
+            </article>
+        </section>
+    </main>    
+</body>
+</html>

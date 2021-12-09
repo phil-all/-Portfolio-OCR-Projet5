@@ -11,28 +11,28 @@ final class Superglobals
     private array $POST;
     private array $COOKIE;
     private array $SERVER;
+    private array $FILES;
 
     /**
-     * Use collect_superglobals method
-     * to collect PHP superglobals and
+     * Use collectSuperglobals method, to collect PHP superglobals and
      * create a local copy
      */
     public function __construct()
     {
-        $this->collect_superglobals();
+        $this->collectSuperglobals();
     }
 
     /**
      * Returns a key value from $_GET
      *
      * @param string $key
-     * 
+     *
      * @return mixed
      */
-    public function get_GET(string $key = NULL): mixed
+    public function getGET(string $key = null): mixed
     {
-        if ($key !== NULL) {
-            return strip_tags(htmlspecialchars($this->GET[$key])) ?? NULL;
+        if ($key !== null) {
+            return strip_tags(htmlspecialchars($this->GET[$key])) ?? null;
         }
 
         return $this->GET;
@@ -42,13 +42,13 @@ final class Superglobals
      * Returns a key value from $_POST
      *
      * @param string $key
-     * 
+     *
      * @return mixed
      */
-    public function get_POST(string $key = NULL): mixed
+    public function getPOST(string $key = null): mixed
     {
-        if ($key !== NULL) {
-            return strip_tags(htmlspecialchars($this->POST[$key])) ?? NULL;
+        if ($key !== null) {
+            return strip_tags(htmlspecialchars($this->POST[$key])) ?? null;
         }
 
         return $this->POST;
@@ -58,13 +58,14 @@ final class Superglobals
      * Returns a key value from $_COOKIE
      *
      * @param string $key
-     * 
+     *
      * @return mixed
      */
-    public function get_COOKIE(string $key = NULL): mixed
+    public function getCOOKIE(string $key = null): mixed
     {
-        if ($key !== NULL) {
-            return strip_tags(htmlspecialchars($this->COOKIE[$key])) ?? NULL;
+        if ($key !== null) {
+            return (isset($_COOKIE[$key])) ? strip_tags(stripslashes(htmlspecialchars($_COOKIE[$key]))) : 'empty';
+            //var_dump($_COOKIE);
         }
 
         return $this->COOKIE;
@@ -74,23 +75,52 @@ final class Superglobals
      * Returns a key value from $_SERVER
      *
      * @param string $key
-     * 
+     *
      * @return mixed
      */
-    public function get_SERVER(string $key = NULL): mixed
+    public function getSERVER(string $key = null): mixed
     {
-        if ($key !== NULL) {
-            return strip_tags(htmlspecialchars($this->SERVER[$key])) ?? NULL;
+        if ($key !== null) {
+            return strip_tags(htmlspecialchars($this->SERVER[$key])) ?? null;
         }
 
         return $this->SERVER;
     }
 
     /**
+     * Returns a key value from $_FILES
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function getFILES(string $key = null): mixed
+    {
+        if ($key !== null) {
+            return $this->FILES[$key] ?? null;
+        }
+
+        return $this->FILES;
+    }
+
+    /**
+     * Sets a cookie, expired in 1 day
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return void
+     */
+    public function setCOOKIE(string $name, string $value): void
+    {
+        setcookie($name, $value, 0, '/', null, false, true);
+    }
+
+    /**
      * Collect PHP superglobals and
      * create a local copy
      */
-    private function collect_superglobals()
+    private function collectSuperglobals()
     {
         $this->GET = filter_input_array(INPUT_GET) ?? [];
 
@@ -99,5 +129,7 @@ final class Superglobals
         $this->COOKIE = filter_input_array(INPUT_COOKIE) ?? [];
 
         $this->SERVER = filter_input_array(INPUT_SERVER) ?? [];
+
+        $this->FILES = $_FILES ?? [];
     }
 }

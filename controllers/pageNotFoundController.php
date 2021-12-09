@@ -6,7 +6,12 @@ use Over_Code\Controllers\MainController;
 
 class PageNotFoundController extends MainController
 {
-    public function index()
+    /**
+     * Set page not found template
+     *
+     * @return void
+     */
+    public function index(): void
     {
         $this->template = 'pageNotFound.twig';
     }

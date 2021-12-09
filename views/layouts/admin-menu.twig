@@ -1,0 +1,94 @@
+<nav id="sidebarMenu" class="col-md-4 col-lg-3 col-xl-2 d-md-block bg-primary sidebar collapse">
+    <div class="position-sticky p-3">
+        <a class="navbar-brand" href="{{ constant('SITE_ADRESS') }}/adminDashboard">
+            <img src="{{ constant('SITE_ADRESS') }}/public/images/logo80px.png" alt="Logo" width="38" height="38">
+            <span class="text-white fs-3"> Admin</span>
+        </a>
+        <ul class="nav flex-column">
+            <li class="nav-item mt-4 mb-4">
+                {% autoescape %}
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminDashboard">
+                        <i class="bi bi-speedometer"></i> Dashboard
+                    </a>
+                {% endautoescape %}
+            </li>
+            <li class="nav-item mt-4 mb-4">
+                {% autoescape %}
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminArticles/liste/tous/page-1/{{ CSRF }}"><i class="bi bi-newspaper"></i> articles</a>
+                {% endautoescape %}
+            </li>
+            <li class="nav-item mt-4 mb-4">
+                {% autoescape %}
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminComment/liste/{{ CSRF }}"><i class="bi bi-back"></i> commentaires</a>
+                {% endautoescape %}
+            </li>
+            <li class="nav-item mt-4 mb-4">
+                {% autoescape %}
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminCategory/liste/{{ CSRF }}"><i class="bi bi-signpost-split-fill"></i> catégories</a>
+                {% endautoescape %}
+            </li>
+            <li class="nav-item mt-4 mb-4">
+                {% autoescape %}
+                    <a class="nav-link active  text-white" href="{{ constant('SITE_ADRESS') }}/adminUser/liste/{{ CSRF }}"><i class="bi bi-people-fill"></i> membres</a>
+                {% endautoescape %}
+            </li>
+            <li class="nav-item mt-4 mb-4">
+                <div class="accordion">
+                    <h2 class="accordion-header">
+                        <button class="btn btn-primary collapsed w-100 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+                            <div>
+                                <i class="bi bi-speedometer"></i> stats
+                            </div>
+                            <div>
+                                <i class="bi bi-caret-down-fill"></i>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    {% autoescape %}
+                                        <a class="nav-link active  text-white" href="#">membres</a>
+                                    {% endautoescape %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    {% autoescape %}
+                                        <a class="nav-link active  text-white" href="#">articles</a>
+                                    {% endautoescape %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    {% autoescape %}
+                                        <a class="nav-link active  text-white" href="#">CV</a>
+                                    {% endautoescape %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <a class="nav-link" {% autoescape %}href="{{ constant('SITE_ADRESS') }}"{% endautoescape %}>
+            <button type="button" class="btn btn-warning btn-sm col-12">
+                <i class="bi bi-globe"></i> Retour site
+            </button>
+        </a>
+        <a class="nav-link" {% autoescape %}href="{{ constant('SITE_ADRESS') }}/membres/deconnexion"{% endautoescape %}>
+            <button type="button" class="btn btn-danger btn-sm col-12">
+                <i class="bi bi-lightning-fill"></i> Déconnexion
+            </button>
+        </a>
+    </div>
+</nav>

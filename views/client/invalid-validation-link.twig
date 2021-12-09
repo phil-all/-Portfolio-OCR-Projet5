@@ -1,5 +1,19 @@
-<h1>Ooops</h1>
-<p>Désolés, le lien que vous avez suivi est corrompu. Nous ne pouvons faire suite à votre demande</p>
-<a {% autoescape %}href="{{ constant('SITE_ADRESS') }}"{% endautoescape %}>
-    Retour à l'accueil
-</a>
+{% extends 'layouts/layout.twig' %}
+
+{% block title %}
+    <title>Erreur</title>
+{% endblock %}
+
+{% block body_class %} class="home min-vh-100"{% endblock %}
+
+{% block content %}
+    <main class="pt-5 pb-5">
+        <section class="container-fluid col-md-8 justify-content-center mt-5 mb-5 text-center">
+            <h1>Erreur</h1>
+            <h2>&#128056;</h2>
+        </section>
+        <section class="container-fluid mt-5 mb-5 pt-5 col-11 col-sm-8 col-md-6 col-lg-4">
+            <h3 class="mb-5">Désolés, le lien que vous avez suivi est corrompu. Nous ne pouvons faire suite à votre demande</h3>       
+        </section>
+    </main>    
+{% endblock %}

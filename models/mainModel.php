@@ -2,7 +2,6 @@
 
 namespace Over_Code\Models;
 
-use PDO;
 use Over_Code\Db\DbConnect;
 
 abstract class MainModel
@@ -14,6 +13,6 @@ abstract class MainModel
      */
     public function __construct()
     {
-        $this->pdo = new DbConnect;
+        $this->pdo = new DbConnect();
     }
 }

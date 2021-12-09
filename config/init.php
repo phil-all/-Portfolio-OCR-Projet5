@@ -3,31 +3,31 @@
 namespace Over_Code\Config;
 
 /**
- * Define constants & Start session
+ * Define constants
  */
 class Init
 {
     use \Over_code\Libraries\Helpers;
+
     /**
-     * Run initialisation
+     * Initializes constants
      *
      * @return void
      */
     public static function start(): void
     {
-        // Start session
-        self::sessionStart();
+        $requestScheme = self::getSERVER('REQUEST_SCHEME');
 
-        $requestScheme = self::get_SERVER('REQUEST_SCHEME');
+        $serverName = self::getSERVER('SERVER_NAME');
 
-        $serverName = self::get_SERVER('SERVER_NAME');
-
-        $scriptName = self::get_SERVER('SCRIPT_NAME');
+        $scriptName = preg_replace('[\/index.php]', '', self::getSERVER('SCRIPT_NAME'));
 
         // Define site
         define('SITE_NAME', 'Over_Code');
 
-        define('SITE_ADRESS' , $requestScheme . '://' . $serverName . preg_replace('[\/index.php]', '', $scriptName));
+        define('SITE_ADRESS', $requestScheme . '://' . $serverName . $scriptName);
+
+        define('SINGLE_ARTICLE', SITE_ADRESS . '/articles/numero/');
         
         // Define path constants
         define('CONTROLLERS_PATH', ROOT_DS . 'controllers' . DS);

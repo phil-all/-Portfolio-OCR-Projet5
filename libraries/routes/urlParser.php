@@ -9,9 +9,12 @@ class UrlParser
 {
     use \Over_Code\Libraries\Helpers;
 
+    /**
+     * Sets uri attributes as an array containg uri params
+     */
     public function __construct()
     {
-        $this->uri = explode('/', trim($this->get_GET('url_params')));
+        $this->uri = explode('/', trim($this->getGET('url_params')));
     }
 
     /**
@@ -44,6 +47,6 @@ class UrlParser
      */
     public function getAttributesList(): ?array
     {
-        return (array_splice($this->uri,2)) ?? NULL;
+        return (array_splice($this->uri, 2)) ?? null;
     }
 }
