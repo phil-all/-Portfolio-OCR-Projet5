@@ -237,17 +237,27 @@ class MembresController extends UserController
             if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
                 $payload = $jwt->decodeDatas($token, 1);
 
-                $email = $payload['email'];
-                    
-                if ((time() < $payload['exp'])) {
-                    $this->newPassValidation($email);
-                    $this->template = 'client' . DS . 'pass/reset-password-confirmation.twig';
-                }
-
-                if (time() > $payload['exp']) {
-                    $this->template = 'client' . DS . 'validation-expired.twig';
-                }
+                $this->updatePassProcess($payload['exp'], $payload['email']);
             }
+        }
+    }
+
+    /**
+     * Update user password and set template.
+     *
+     * @param string $expiration
+     * @param string $email
+     * @return void
+     */
+    private function updatePassProcess(string $expiration, string $email): void
+    {
+        if (time() < $expiration) {
+            $this->newPassValidation($email);
+            $this->template = 'client' . DS . 'pass/reset-password-confirmation.twig';
+        }
+
+        if (time() > $expiration) {
+            $this->template = 'client' . DS . 'validation-expired.twig';
         }
     }
 }
