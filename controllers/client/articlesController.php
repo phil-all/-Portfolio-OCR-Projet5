@@ -31,41 +31,72 @@ class ArticlesController extends MainController
         $article = new ArticlesModel();
 
         if ($article->idExist($params[0])) {
-            $slug = $this->toSlug($article->getTitle((int)$params[0]));
-
-            if ($slug != $params[1]) {
-                $url = SITE_ADRESS . DS . 'articles' . DS . 'numero' . DS . $params[0] . DS . $slug;
-                $this->redirect($url);
-            }
+            $this->slugRedirection($params, $this->toSlug($article->getTitle((int)$params[0])));
 
             $this->params = $article->getSingleArticle($params[0]);
 
-            if (array_key_exists('user', $this->userToTwig)) {
-                $rating = new RatingModel();
+            $this->setRatingButton($params);
 
-                $this->params['rating'] = $rating->isUserRate(
-                    (int)$this->userToTwig['user']['serial'],
-                    (int)$params[0]
-                );
-            }
-
-            $comment = new CommentModel();
-
-            if (!empty($comment->readValidated($params[0]))) {
-                $this->comments = [
-                    'comments'      => $comment->readValidated($params[0]),
-                    'count_comment' => $comment->countOnArticle($params[0])
-                ];
-
-                $this->params = (array_merge($this->params, [
-                    'comments'      => $comment->readValidated($params[0]),
-                    'count_comment' => $comment->countOnArticle($params[0])
-                ]));
-            }
+            $this->displayComments($params);
 
             $this->preventCsrf();
 
             $this->template = 'client' . DS . 'single-article.twig';
+        }
+    }
+
+    /**
+     * Sets rating param for template.
+     * 
+     * Used by template to determinate rating button color if rates exists.
+     *
+     * @param array $params uri parameter
+     *
+     * @return void
+     */
+    private function setRatingButton(array $params): void
+    {
+        if (array_key_exists('user', $this->userToTwig)) {
+            $rating = new RatingModel();
+
+            $this->params['rating'] = $rating->isUserRate(
+                (int)$this->userToTwig['user']['serial'],
+                (int)$params[0]
+            );
+        }
+    }
+
+    /**
+     * Set comments to display if exists
+     *
+     * @param array $params uri parameters
+     *
+     * @return void
+     */
+    private function displayComments(array $params): void
+    {
+        $comment = new CommentModel();
+
+        if (!empty($comment->readValidated($params[0]))) {
+            $this->params['comments'] = $comment->readValidated($params[0]);
+            $this->params['count_comment'] = $comment->countOnArticle($params[0]);
+        }
+    }
+
+    /**
+     * Redirect with on correct uri if uri slug incorrect.
+     *
+     * @param array $uriParams
+     *
+     * @param string correctSlug
+     *
+     * @return void
+     */
+    private function slugRedirection(array $uriParams, string $correctSlug): void
+    {
+        if ($correctSlug != $uriParams[1]) {
+            $url = SITE_ADRESS . DS . 'articles' . DS . 'numero' . DS . $uriParams[0] . DS . $correctSlug;
+            $this->redirect($url);
         }
     }
 
@@ -102,15 +133,25 @@ class ArticlesController extends MainController
                 array_push($this->articles, $key);
             }
 
-            $this->params = array_merge($this->params, array(
-                'page'       => $this->currentPage,
-                'totalPages' => $this->totalPages,
-                'articles'   => $this->articles,
-                'statePrev'  => ($this->currentPage === 1) ? ' disabled' : '',
-                'stateNext'  => ($this->currentPage === $this->totalPages) ? ' disabled' : '',
-                'prev'       => ($this->currentPage === 1) ? 1 : $this->currentPage - 1,
-                'next'       => ($this->currentPage === $this->totalPages) ? $this->totalPages : $this->currentPage + 1
-            ));
+            $this->addPagination();
         }
+    }
+
+    /**
+     * Add pagination to parameters for template
+     *
+     * @return void
+     */
+    public function addPagination(): void
+    {
+        $this->params = array_merge($this->params, array(
+            'page'       => $this->currentPage,
+            'totalPages' => $this->totalPages,
+            'articles'   => $this->articles,
+            'statePrev'  => ($this->currentPage === 1) ? ' disabled' : '',
+            'stateNext'  => ($this->currentPage === $this->totalPages) ? ' disabled' : '',
+            'prev'       => ($this->currentPage === 1) ? 1 : $this->currentPage - 1,
+            'next'       => ($this->currentPage === $this->totalPages) ? $this->totalPages : $this->currentPage + 1
+        ));
     }
 }

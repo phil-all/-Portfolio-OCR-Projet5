@@ -5,12 +5,12 @@ namespace Over_Code\Controllers\Admin;
 use Over_Code\Models\CommentModel;
 use Over_Code\Models\ArticlesModel;
 use Over_Code\Models\CategoryModel;
-use Over_Code\Controllers\MainController;
+use Over_Code\Controllers\Client\ArticlesController;
 
 /**
  * Admin articles controller
  */
-class AdminArticlesController extends MainController
+class AdminArticlesController extends ArticlesController
 {
     use \Over_Code\Libraries\Upload;
 
@@ -82,7 +82,8 @@ class AdminArticlesController extends MainController
     }
 
     /**
-     * Sets params and template to twig, about list of articles:
+     * Sets params and template to twig, about list of articles.
+     * 
      * - all articles, uri : .../adminArticles/liste/tous/page..
      * - articles from a category, uri : .../adminArticles/liste/category_name/page..
      *
@@ -94,9 +95,7 @@ class AdminArticlesController extends MainController
     {
         $this->template = 'client' . DS . 'accueil.twig';
 
-        $paramsTest = count($params) === 3 && $params[2] === $this->getCOOKIE('CSRF');
-
-        if ($this->userToTwig['admin']  && $paramsTest) {
+        if ($this->isListeAccessible($params)) {
             $this->userToTwig['template'] = 'admin';
 
             $model = new ArticlesModel();
@@ -105,31 +104,59 @@ class AdminArticlesController extends MainController
             $this->totalPosts  = $model->getCount($params[0]);
             $this->totalPages  = ceil($this->totalPosts / $this->perPage);
     
-            if ($this->currentPage <= $this->totalPages && explode('-', $params[1])[0] === 'page') {
+            if ($this->paginationTest($params)) {
                 $this->articles = $model->getArticlesList($this->currentPage, $this->perPage, $params[0]);
                 $this->template = 'admin' . DS . 'articles.twig';
 
-                $this->setCategoryTemplate($model, $params[0]);
-            
-                foreach ($this->articles as $key) {
-                    $key['slug'] = $this->toSlug($key['title']);
-                    array_shift($this->articles);
-                    array_push($this->articles, $key);
-                }
-
+                $this->setCategoryTemplate($model, $params[0]);            
+                $this->slugify();
                 $this->preventCsrf();
     
-                $this->params = array_merge($this->params, array(
-                    'page'       => $this->currentPage,
-                    'totalPages' => $this->totalPages,
-                    'articles'   => $this->articles,
-                    'statePrev'  => ($this->currentPage === 1) ? ' disabled' : '',
-                    'stateNext'  => ($this->currentPage === $this->totalPages) ? ' disabled' : '',
-                    'prev'       => ($this->currentPage === 1) ? 1 : $this->currentPage - 1,
-                    'next' => ($this->currentPage === $this->totalPages) ? $this->totalPages : $this->currentPage + 1
-                ));
+                $this->addPagination();
             }
         }
+    }
+
+    /**
+     * Create a title slug key in article list array with slug of article title
+     *
+     * @return void
+     */
+    private function slugify(): void
+    {
+        foreach ($this->articles as $article) {
+            $article['slug'] = $this->toSlug($article['title']);
+
+            array_shift($this->articles);
+
+            array_push($this->articles, $article);
+        }
+    }
+
+    /**
+     * Checks if uri params are valids and user is admin.
+     *
+     * @param array $params uri parameters
+     *
+     * @return boolean
+     */
+    private function isListeAccessible(array $params): bool
+    {
+        return count($params) === 3 &&
+            $params[2] === $this->getCOOKIE('CSRF') &&
+            $this->userToTwig['admin'];
+    }
+
+    /**
+     * Checks if pagination parameters are corrects.
+     *
+     * @param array $params uri parameters
+     *
+     * @return boolean
+     */
+    private function paginationTest(array $params): bool
+    {
+        return $this->currentPage <= $this->totalPages && explode('-', $params[1])[0] === 'page';
     }
 
     /**
@@ -140,7 +167,7 @@ class AdminArticlesController extends MainController
      *
      * @return void
      */
-    public function setCategoryTemplate(ArticlesModel $model, string $param): void
+    private function setCategoryTemplate(ArticlesModel $model, string $param): void
     {
         if ($model->categoryExist($param)) {
             $this->template = 'admin' . DS . 'articles-by-category.twig';
@@ -158,32 +185,72 @@ class AdminArticlesController extends MainController
      */
     public function numero(array $params): void
     {
-        $this->template = 'client' . DS . 'accueil.twig';
-
-        $paramsTest = count($params) === 3 && $params[2] === $this->getCOOKIE('CSRF');
+        $this->template = 'client' . DS . 'accueil.twig';        
         
         $article = new ArticlesModel();
 
-        if ($this->userToTwig['admin'] && $article->idExist($params[0]) && $paramsTest) {
+        if ($this->isNumeroAccessible($params, $article)) {
             $this->userToTwig['template'] = 'admin';
-
-            $slug = $this->toSlug($article->getTitle((int)$params[0]));
-    
-            if ($slug != $params[1]) {
-                $url = SITE_ADRESS . DS . 'articles' . DS . 'numero' . DS . $params[0] . DS . $slug;
-                $this->redirect($url);
-            }
+            
+            $this->slugRedirection($params, $this->toSlug($article->getTitle((int)$params[0])));
 
             $this->template = 'admin' . DS . 'single-article.twig';
             $this->params   = $article->getSingleArticle($params[0]);
 
-            $comment = new CommentModel();
-            if (!empty($comment->readValidated($params[0]))) {
-                $this->params['comments'] =  $comment->readValidated($params[0]);
-            }
+            $this->displayComments($params);
 
             $this->preventCsrf();
         }
+    }
+
+    /**
+     * Set comments to display if exists
+     *
+     * @param array $params uri parameters
+     *
+     * @return void
+     */
+    private function displayComments(array $params): void
+    {
+        $comment = new CommentModel();
+
+        if (!empty($comment->readValidated($params[0]))) {
+            $this->params['comments'] =  $comment->readValidated($params[0]);
+        }
+    }
+
+    /**
+     * Redirect with on correct uri if uri slug incorrect.
+     *
+     * @param array $uriParams
+     *
+     * @param string correctSlug
+     *
+     * @return void
+     */
+    private function slugRedirection(array $uriParams, string $correctSlug): void
+    {
+        if ($correctSlug != $uriParams[1]) {
+            $url = SITE_ADRESS . DS . 'articles' . DS . 'numero' . DS . $uriParams[0] . DS . $correctSlug;
+            $this->redirect($url);
+        }
+    }
+
+    /**
+     * Checks if uri params are valids and user is admin.
+     *
+     * @param array $params uri parameters
+     *
+     * @param object $article
+     *
+     * @return boolean
+     */
+    private function isNumeroAccessible(array $params, ArticlesModel $article): bool
+    {
+        return count($params) === 3 &&
+        $params[2] === $this->getCOOKIE('CSRF') &&
+        $this->userToTwig['admin'] &&
+        $article->idExist($params[0]);
     }
 
     /**

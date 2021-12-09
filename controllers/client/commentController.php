@@ -15,7 +15,14 @@ class CommentController extends MainController
     use \Over_Code\Libraries\Helpers;
 
     /**
-     * Create an article comment from POST
+     * Uri parameters
+     *
+     * @var array
+     */
+    private $uriParams;
+
+    /**
+     * Create an article comment from POST.
      *
      * @param array $params
      *
@@ -23,43 +30,59 @@ class CommentController extends MainController
      */
     public function post(array $params): void
     {
-        $paramsTest = count($params) === 1 && $params[0] === $this->getCOOKIE('CSRF');
+        if ($this->validator()) {
+            $articleParam = $this->getArticleParams();
 
-        if ($paramsTest) {
-            $articleParam = preg_replace(
-                '~' . SINGLE_ARTICLE . '~',
-                '',
-                $this->getSERVER('HTTP_REFERER')
-            );
-
-            $token = (empty($this->getCOOKIE('token'))) ? '' : $this->getCOOKIE('token');
-
-            $jwt = new Jwt();
-            if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
-                $user = new UserModel();
+            $this->user->hydrate('renewal', $this->payload['email'], 900);
     
-                $payload  = $jwt->decodeDatas($token, 1);
-                $ipLog    = $user->readIpLog($payload['email']);
-                $remoteIp = $this->getSERVER('REMOTE_ADDR');
+            $this->setCOOKIE('token', $this->user->getToken());
+            $this->setCOOKIE('token_obj', 'renewal');
     
-                if ($jwt->isNotExpired($payload) && ($ipLog === $remoteIp)) {
-                    $user->hydrate('renewal', $payload['email'], 900); // exp 15 min
+            $content = $this->getPOST('comment');
+            $serial  = $this->user->getSerial();
+            $article = explode('/', $articleParam)[0];
     
-                    $this->setCOOKIE('token', $user->getToken());
-                    $this->setCOOKIE('token_obj', 'renewal');
-                }
+            $comment = new commentModel();
+            $comment->create($content, $serial, $article);
     
-                $content = $this->getPOST('comment');
-                $serial  = $user->getSerial();
-                $article = explode('/', $articleParam)[0];
-    
-                $comment = new commentModel();
-                $comment->create($content, $serial, $article);
-    
-                $this->redirect(SINGLE_ARTICLE . $articleParam . "/#comment");
-            }
+            $this->redirect(SINGLE_ARTICLE . $articleParam . "/#comment");
         }
         
         $this->redirect(SITE_ADRESS);
+    }
+
+    /**
+     * Gets parameters regarding article from the HTTP referer uri.
+     *
+     * @return string
+     */
+    private function getArticleParams(): string
+    {
+        return preg_replace(
+            '~' . SINGLE_ARTICLE . '~',
+            '',
+            $this->getSERVER('HTTP_REFERER')
+        );
+    }
+
+    /**
+     * Checks uri parameters.
+     *
+     * @return boolean
+     */
+    private function isUriValid(): bool
+    {
+        return count($this->uriParams) === 1 &&
+            $this->uriParams[0] === $this->getCOOKIE('CSRF');
+    }
+
+    /**
+     * Checks token, user IP and uri paramters
+     *
+     * @return boolean
+     */
+    protected function validator(): bool
+    {
+        return $this->tokenTest() && $this->ipTest() && $this->isUriValid();
     }
 }

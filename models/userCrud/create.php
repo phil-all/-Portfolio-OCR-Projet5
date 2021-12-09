@@ -11,6 +11,13 @@ use Over_Code\Db\DbConnect;
 trait Create
 {
     /**
+     * Query to create user
+     *
+     * @var string $query
+     */
+    private $query;
+
+    /**
      * Create in database an user with status on 'pending',
      * from getPOST datas
      *
@@ -26,7 +33,32 @@ trait Create
 
         $this->pdo = new DbConnect();
 
-        $query = 'INSERT INTO user (
+        $this->setQuery();
+
+        $stmt = $this->pdo->getPdo()->prepare($this->query);
+
+        $stmt->bindValue(':first_name', $this->getPOST('first_name'), PDO::PARAM_STR);
+        $stmt->bindValue(':last_name', $this->getPOST('last_name'), PDO::PARAM_STR);
+        $stmt->bindValue(':pseudo', $this->getPOST('pseudo'), PDO::PARAM_STR);
+        $stmt->bindValue(':email', $this->getPOST('email'), PDO::PARAM_STR);
+        $stmt->bindValue(':password', password_hash($this->getPOST('password'), $algo), PDO::PARAM_STR);
+        $stmt->bindValue(':avatar_id', (int)$this->getPOST('avatar_id'), PDO::PARAM_INT);
+        $stmt->bindValue(':token', $token, PDO::PARAM_STR);
+        $stmt->bindValue(':token_datetime', $dateTime, PDO::PARAM_STR);
+        $stmt->bindValue(':user_status_id', 1, PDO::PARAM_INT);
+        $stmt->bindValue(':created_at', $dateTime, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
+    /**
+     * Sets prepared query to create user
+     *
+     * @return void
+     */
+    private function setQuery(): void
+    {
+        $this->query = 'INSERT INTO user (
             first_name,
             last_name,
             pseudo,
@@ -48,20 +80,5 @@ trait Create
             :token_datetime,
             :user_status_id,
             :created_at)';
-
-        $stmt = $this->pdo->getPdo()->prepare($query);
-
-        $stmt->bindValue(':first_name', $this->getPOST('first_name'), PDO::PARAM_STR);
-        $stmt->bindValue(':last_name', $this->getPOST('last_name'), PDO::PARAM_STR);
-        $stmt->bindValue(':pseudo', $this->getPOST('pseudo'), PDO::PARAM_STR);
-        $stmt->bindValue(':email', $this->getPOST('email'), PDO::PARAM_STR);
-        $stmt->bindValue(':password', password_hash($this->getPOST('password'), $algo), PDO::PARAM_STR);
-        $stmt->bindValue(':avatar_id', (int)$this->getPOST('avatar_id'), PDO::PARAM_INT);
-        $stmt->bindValue(':token', $token, PDO::PARAM_STR);
-        $stmt->bindValue(':token_datetime', $dateTime, PDO::PARAM_STR);
-        $stmt->bindValue(':user_status_id', 1, PDO::PARAM_INT);
-        $stmt->bindValue(':created_at', $dateTime, PDO::PARAM_STR);
-
-        $stmt->execute();
     }
 }

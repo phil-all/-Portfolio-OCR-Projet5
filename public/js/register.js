@@ -55,7 +55,7 @@ function avatar() {
         alert("vous devez choisir un avatar");
         return false;
     }
-};
+}
 
 form.first_name.addEventListener("change", function() {
     validName(this, "prénom");
@@ -78,5 +78,5 @@ form.password.addEventListener("change", function() {
 });
 
 form.confirm_password.addEventListener("change", function() {
-    validConfirmPass(this)
+    validConfirmPass(this);
 });

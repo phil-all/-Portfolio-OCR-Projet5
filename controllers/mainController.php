@@ -17,10 +17,61 @@ abstract class MainController
     use \Over_Code\Libraries\Helpers;
     use \Over_Code\Libraries\User\Tests;
 
-    protected string $action;
-    protected array $params = [];
-    protected object $twig;
-    protected string $template = 'pageNotFound.twig';
+    /**
+     * Controller method called
+     *
+     * @var string $action
+     */
+    protected $action;
+
+    /**
+     * Parameters for template
+     *
+     * @var array $params
+     */
+    protected $params = [];
+
+    /**
+     * Template rendering object
+     *
+     * @var object $twig
+     */
+    protected $twig;
+
+    /**
+     * Twig template file
+     *
+     * @var string $template
+     */
+    protected $template = 'pageNotFound.twig';
+
+    /**
+     * Json Web Token manager
+     *
+     * @var object $jwt
+     */
+    protected $jwt;
+
+    /**
+     * User
+     *
+     * @var object $user
+     */
+    protected $user;
+
+    /**
+     * JWT token
+     *
+     * @var string $token
+     */
+    protected $token;
+
+    /**
+     * JWT token payload
+     *
+     * @var array $payloaod
+     */
+    protected $payload;
 
     /**
      * Call method action, passing parameters, and send it to the display method
@@ -32,39 +83,31 @@ abstract class MainController
      */
     public function __construct(string $action, array $params = [])
     {
-        $jwt = new Jwt();
+        $this->uriParams = $params;
 
-        $token = '';
-        
-        $this->userToTwig = [
-            'admin' => false
-        ];
+        $this->userToTwig['admin'] = false;
 
-        if (!empty($this->getCOOKIE('token'))) {
-            $token =  $this->getCOOKIE('token');
-        }
+        $this->getToken();
 
-        if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
-            $user = new UserModel();
+        $this->jwt = new Jwt();
 
-            $payload  = $jwt->decodeDatas($token, 1);
-            $ipLog    = $user->readIpLog($payload['email']);
-            $remoteIp = $this->getSERVER('REMOTE_ADDR');
+        $this->user = new UserModel();
 
-            if ($jwt->isNotExpired($payload) && ($ipLog === $remoteIp)) {
-                $user->hydrate('renewal', $payload['email'], 900); // exp 15 min
+        $this->setPayload();
 
-                $this->setCOOKIE('token', $user->getToken());
-                $this->setCOOKIE('token_obj', 'renewal');
+        if ($this->validator()) {
+            $this->user->hydrate('renewal', $this->payload['email'], 900); // exp 15 min
 
-                $this->uri = new UrlParser();
+            $this->setCOOKIE('token', $this->user->getToken());
+            $this->setCOOKIE('token_obj', 'renewal');
 
-                $this->userToTwig = array(
-                    'user'     => $user->userInArray($payload['email']),
-                    'admin'    => $this->isAdmin($payload['email']),
-                    'uriToken' => $jwt->tokenToUri($token)
-                );
-            }
+            $this->uri = new UrlParser();
+
+            $this->userToTwig = array(
+                'user'     => $this->user->userInArray($this->payload['email']),
+                'admin'    => $this->isAdmin($this->payload['email']),
+                'uriToken' => $this->jwt->tokenToUri($this->token)
+            );
         }
 
         $this->$action($params);
@@ -77,7 +120,17 @@ abstract class MainController
     }
 
     /**
-     * Set template to pageNotFound if method sent in constructor is not fpound
+     * Gets cookie token and set token attribute.
+     *
+     * @return void
+     */
+    protected function getToken(): void
+    {
+        $this->token = (empty($this->getCOOKIE('token'))) ? 'empty.token' : $this->getCOOKIE('token');
+    }
+
+    /**
+     * Set template to pageNotFound if method sent in constructor is not found.
      */
     public function methodNotFound()
     {
@@ -85,7 +138,7 @@ abstract class MainController
     }
 
     /**
-     * Sets a CSRF token and put it in CSRF twig param to be added to specific links
+     * Sets a CSRF token and put it in CSRF twig param to be added to specific links.
      *
      * @return void
      */
@@ -94,5 +147,60 @@ abstract class MainController
         $csrf = new Csrf();
 
         $this->params['CSRF'] = $csrf->get();
+    }
+
+    /**
+     * Checks token, user IP and uri paramters.
+     *
+     * @return boolean
+     */
+    protected function validator(): bool
+    {
+        return $this->tokenTest() && $this->ipTest();
+    }
+
+    /**
+     * Checks token validity and expiration.
+     *
+     * @return boolean
+     */
+    protected function tokenTest(): bool
+    {
+        return $this->isTokenCorrect() &&
+            $this->jwt->isNotExpired($this->payload);
+    }
+
+    /**
+     * Checks token validity.
+     *
+     * @return boolean
+     */
+    protected function isTokenCorrect(): bool
+    {
+        return $this->jwt->isJWT($this->token) &&
+            $this->jwt->isSignatureCorrect($this->token);
+    }
+
+    /**
+     * Checks user IP.
+     *
+     * @return boolean
+     */
+    protected function ipTest(): bool
+    {
+        $ipLog    = $this->user->readIpLog($this->payload['email']);
+        $remoteIp = $this->getSERVER('REMOTE_ADDR');
+
+        return $ipLog === $remoteIp;
+    }
+
+    /**
+     * Sets payload attribute.
+     *
+     * @return void
+     */
+    protected function setPayload()
+    {
+        $this->payload = ($this->isTokenCorrect()) ? $this->jwt->decodeDatas($this->token, 1) : null;
     }
 }
