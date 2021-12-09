@@ -64,4 +64,25 @@ class CommentController extends MainController
             $this->getSERVER('HTTP_REFERER')
         );
     }
+
+    /**
+     * Checks uri parameters.
+     *
+     * @return boolean
+     */
+    private function isUriValid(): bool
+    {
+        return count($this->uriParams) === 1 &&
+            $this->uriParams[0] === $this->getCOOKIE('CSRF');
+    }
+
+    /**
+     * Checks token, user IP and uri paramters
+     *
+     * @return boolean
+     */
+    protected function validator(): bool
+    {
+        return $this->tokenTest() && $this->ipTest() && $this->isUriValid();
+    }
 }

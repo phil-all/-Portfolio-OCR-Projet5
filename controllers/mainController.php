@@ -23,21 +23,21 @@ abstract class MainController
      * @var string $action
      */
     protected $action;
-    
+
     /**
      * Parameters for template
      *
      * @var array $params
      */
     protected $params = [];
-    
+
     /**
      * Template rendering object
      *
      * @var object $twig
      */
     protected $twig;
-    
+
     /**
      * Twig template file
      *
@@ -84,7 +84,7 @@ abstract class MainController
     public function __construct(string $action, array $params = [])
     {
         $this->uriParams = $params;
-        
+
         $this->userToTwig['admin'] = false;
 
         $this->getToken();
@@ -93,9 +93,9 @@ abstract class MainController
 
         $this->user = new UserModel();
 
-        $this->payload = $this->jwt->decodeDatas($this->token, 1);
+        $this->setPayload();
 
-        if ($this->validator()) {            
+        if ($this->validator()) {
             $this->user->hydrate('renewal', $this->payload['email'], 900); // exp 15 min
 
             $this->setCOOKIE('token', $this->user->getToken());
@@ -107,7 +107,7 @@ abstract class MainController
                 'user'     => $this->user->userInArray($this->payload['email']),
                 'admin'    => $this->isAdmin($this->payload['email']),
                 'uriToken' => $this->jwt->tokenToUri($this->token)
-            );            
+            );
         }
 
         $this->$action($params);
@@ -120,17 +120,17 @@ abstract class MainController
     }
 
     /**
-     * Gets cookie token end set token attribute.
+     * Gets cookie token and set token attribute.
      *
      * @return void
      */
     protected function getToken(): void
     {
-        $this->token = (empty($this->getCOOKIE('token'))) ? '' : $this->getCOOKIE('token');
+        $this->token = (empty($this->getCOOKIE('token'))) ? 'empty.token' : $this->getCOOKIE('token');
     }
 
     /**
-     * Set template to pageNotFound if method sent in constructor is not fpound
+     * Set template to pageNotFound if method sent in constructor is not found.
      */
     public function methodNotFound()
     {
@@ -138,7 +138,7 @@ abstract class MainController
     }
 
     /**
-     * Sets a CSRF token and put it in CSRF twig param to be added to specific links
+     * Sets a CSRF token and put it in CSRF twig param to be added to specific links.
      *
      * @return void
      */
@@ -150,33 +150,43 @@ abstract class MainController
     }
 
     /**
-     * Checks token, user IP and uri paramters
+     * Checks token, user IP and uri paramters.
      *
      * @return boolean
      */
     protected function validator(): bool
     {
-        return $this->tokenTest() && $this->ipTest() && $this->isUriValid();
+        return $this->tokenTest() && $this->ipTest();
     }
 
     /**
-     * Checks token
+     * Checks token validity and expiration.
      *
      * @return boolean
      */
-    private function tokenTest(): bool
+    protected function tokenTest(): bool
     {
-        return $this->jwt->isJWT($this->token) &&
-            $this->jwt->isSignatureCorrect($this->token) &&
+        return $this->isTokenCorrect() &&
             $this->jwt->isNotExpired($this->payload);
     }
 
     /**
-     * Checks user IP
+     * Checks token validity.
      *
      * @return boolean
      */
-    private function ipTest(): bool
+    protected function isTokenCorrect(): bool
+    {
+        return $this->jwt->isJWT($this->token) &&
+            $this->jwt->isSignatureCorrect($this->token);
+    }
+
+    /**
+     * Checks user IP.
+     *
+     * @return boolean
+     */
+    protected function ipTest(): bool
     {
         $ipLog    = $this->user->readIpLog($this->payload['email']);
         $remoteIp = $this->getSERVER('REMOTE_ADDR');
@@ -185,13 +195,12 @@ abstract class MainController
     }
 
     /**
-     * Checks uri parameters.
+     * Sets payload attribute.
      *
-     * @return boolean
+     * @return void
      */
-    private function isUriValid(): bool
+    protected function setPayload()
     {
-        return count($this->uriParams) === 1 &&
-            $this->uriParams[0] === $this->getCOOKIE('CSRF');
+        $this->payload = ($this->isTokenCorrect()) ? $this->jwt->decodeDatas($this->token, 1) : null;
     }
 }
