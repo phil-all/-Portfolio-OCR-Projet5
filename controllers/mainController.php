@@ -83,11 +83,13 @@ abstract class MainController
      */
     public function __construct(string $action, array $params = [])
     {
+        $this->uriParams = $params;
+        
         $this->userToTwig['admin'] = false;
 
         $this->getToken();
 
-        $jwt = new Jwt();
+        $this->jwt = new Jwt();
 
         $this->user = new UserModel();
 
@@ -104,7 +106,7 @@ abstract class MainController
             $this->userToTwig = array(
                 'user'     => $this->user->userInArray($this->payload['email']),
                 'admin'    => $this->isAdmin($this->payload['email']),
-                'uriToken' => $jwt->tokenToUri($this->token)
+                'uriToken' => $this->jwt->tokenToUri($this->token)
             );            
         }
 
@@ -162,7 +164,7 @@ abstract class MainController
      *
      * @return boolean
      */
-    protected function tokenTest(): bool
+    private function tokenTest(): bool
     {
         return $this->jwt->isJWT($this->token) &&
             $this->jwt->isSignatureCorrect($this->token) &&
@@ -174,7 +176,7 @@ abstract class MainController
      *
      * @return boolean
      */
-    protected function ipTest(): bool
+    private function ipTest(): bool
     {
         $ipLog    = $this->user->readIpLog($this->payload['email']);
         $remoteIp = $this->getSERVER('REMOTE_ADDR');

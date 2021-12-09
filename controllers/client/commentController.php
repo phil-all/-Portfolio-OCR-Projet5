@@ -30,8 +30,6 @@ class CommentController extends MainController
      */
     public function post(array $params): void
     {
-        $this->uriParams = $params;
-
         if ($this->validator()) {
             $articleParam = $this->getArticleParams();
 
