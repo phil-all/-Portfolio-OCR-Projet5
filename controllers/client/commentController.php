@@ -15,34 +15,6 @@ class CommentController extends MainController
     use \Over_Code\Libraries\Helpers;
 
     /**
-     * Json Web Token manager
-     *
-     * @var object $jwt
-     */
-    private $jwt;
-
-    /**
-     * User
-     *
-     * @var object $user
-     */
-    private $user;
-
-    /**
-     * JWT token
-     *
-     * @var string $token
-     */
-    private $token;
-
-    /**
-     * JWT token payload
-     *
-     * @var array $payloaod
-     */
-    private $payload;
-
-    /**
      * Uri parameters
      *
      * @var array
@@ -59,14 +31,6 @@ class CommentController extends MainController
     public function post(array $params): void
     {
         $this->uriParams = $params;
-
-        $this->getToken();
-
-        $this->jwt = new Jwt();
-
-        $this->user = new UserModel();
-
-        $this->payload = $this->jwt->decodeDatas($this->token, 1);
 
         if ($this->validator()) {
             $articleParam = $this->getArticleParams();
@@ -90,27 +54,6 @@ class CommentController extends MainController
     }
 
     /**
-     * Gets cookie token end set token attribute.
-     *
-     * @return void
-     */
-    private function getToken(): void
-    {
-        $this->token = (empty($this->getCOOKIE('token'))) ? '' : $this->getCOOKIE('token');
-    }
-
-    /**
-     * Checks uri parameters.
-     *
-     * @return boolean
-     */
-    private function isUriValid(): bool
-    {
-        return count($this->uriParams) === 1 &&
-            $this->uriParams[0] === $this->getCOOKIE('CSRF');
-    }
-
-    /**
      * Gets parameters regarding article from the HTTP referer uri.
      *
      * @return string
@@ -122,40 +65,5 @@ class CommentController extends MainController
             '',
             $this->getSERVER('HTTP_REFERER')
         );
-    }
-
-    /**
-     * Checks token and IP adress.
-     *
-     * @return boolean
-     */
-    private function validator(): bool
-    {
-        return $this->tokenTest() && $this->ipTest() && $this->isUriValid();
-    }
-    
-    /**
-     * Checks if token is valid.
-     *
-     * @return boolean
-     */
-    private function tokenTest(): bool
-    {
-        return $this->jwt->isJWT($this->token) &&
-            $this->jwt->isSignatureCorrect($this->token) &&
-            $this->jwt->isNotExpired($this->payload);
-    }
-
-    /**
-     * Verifies if user IP correspond to token stored IP.
-     *
-     * @return boolean
-     */
-    private function ipTest(): bool
-    {
-        $ipLog    = $this->user->readIpLog($this->payload['email']);
-        $remoteIp = $this->getSERVER('REMOTE_ADDR');
-
-        return $ipLog === $remoteIp;
     }
 }

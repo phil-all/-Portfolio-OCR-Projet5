@@ -17,10 +17,61 @@ abstract class MainController
     use \Over_Code\Libraries\Helpers;
     use \Over_Code\Libraries\User\Tests;
 
-    protected string $action;
-    protected array $params = [];
-    protected object $twig;
-    protected string $template = 'pageNotFound.twig';
+    /**
+     * Controller method called
+     *
+     * @var string $action
+     */
+    protected $action;
+    
+    /**
+     * Parameters for template
+     *
+     * @var array $params
+     */
+    protected $params = [];
+    
+    /**
+     * Template rendering object
+     *
+     * @var object $twig
+     */
+    protected $twig;
+    
+    /**
+     * Twig template file
+     *
+     * @var string $template
+     */
+    protected $template = 'pageNotFound.twig';
+
+    /**
+     * Json Web Token manager
+     *
+     * @var object $jwt
+     */
+    protected $jwt;
+
+    /**
+     * User
+     *
+     * @var object $user
+     */
+    protected $user;
+
+    /**
+     * JWT token
+     *
+     * @var string $token
+     */
+    protected $token;
+
+    /**
+     * JWT token payload
+     *
+     * @var array $payloaod
+     */
+    protected $payload;
 
     /**
      * Call method action, passing parameters, and send it to the display method
@@ -32,39 +83,29 @@ abstract class MainController
      */
     public function __construct(string $action, array $params = [])
     {
+        $this->userToTwig['admin'] = false;
+
+        $this->getToken();
+
         $jwt = new Jwt();
 
-        $token = '';
-        
-        $this->userToTwig = [
-            'admin' => false
-        ];
+        $this->user = new UserModel();
 
-        if (!empty($this->getCOOKIE('token'))) {
-            $token =  $this->getCOOKIE('token');
-        }
+        $this->payload = $this->jwt->decodeDatas($this->token, 1);
 
-        if ($jwt->isJWT($token) && $jwt->isSignatureCorrect($token)) {
-            $user = new UserModel();
+        if ($this->validator()) {            
+            $this->user->hydrate('renewal', $this->payload['email'], 900); // exp 15 min
 
-            $payload  = $jwt->decodeDatas($token, 1);
-            $ipLog    = $user->readIpLog($payload['email']);
-            $remoteIp = $this->getSERVER('REMOTE_ADDR');
+            $this->setCOOKIE('token', $this->user->getToken());
+            $this->setCOOKIE('token_obj', 'renewal');
 
-            if ($jwt->isNotExpired($payload) && ($ipLog === $remoteIp)) {
-                $user->hydrate('renewal', $payload['email'], 900); // exp 15 min
+            $this->uri = new UrlParser();
 
-                $this->setCOOKIE('token', $user->getToken());
-                $this->setCOOKIE('token_obj', 'renewal');
-
-                $this->uri = new UrlParser();
-
-                $this->userToTwig = array(
-                    'user'     => $user->userInArray($payload['email']),
-                    'admin'    => $this->isAdmin($payload['email']),
-                    'uriToken' => $jwt->tokenToUri($token)
-                );
-            }
+            $this->userToTwig = array(
+                'user'     => $this->user->userInArray($this->payload['email']),
+                'admin'    => $this->isAdmin($this->payload['email']),
+                'uriToken' => $jwt->tokenToUri($this->token)
+            );            
         }
 
         $this->$action($params);
@@ -74,6 +115,16 @@ abstract class MainController
         $this->params = array_merge($this->userToTwig, $this->params);
 
         $this->twig->twigRender($this->template, $this->params);
+    }
+
+    /**
+     * Gets cookie token end set token attribute.
+     *
+     * @return void
+     */
+    protected function getToken(): void
+    {
+        $this->token = (empty($this->getCOOKIE('token'))) ? '' : $this->getCOOKIE('token');
     }
 
     /**
@@ -94,5 +145,51 @@ abstract class MainController
         $csrf = new Csrf();
 
         $this->params['CSRF'] = $csrf->get();
+    }
+
+    /**
+     * Checks token, user IP and uri paramters
+     *
+     * @return boolean
+     */
+    protected function validator(): bool
+    {
+        return $this->tokenTest() && $this->ipTest() && $this->isUriValid();
+    }
+
+    /**
+     * Checks token
+     *
+     * @return boolean
+     */
+    protected function tokenTest(): bool
+    {
+        return $this->jwt->isJWT($this->token) &&
+            $this->jwt->isSignatureCorrect($this->token) &&
+            $this->jwt->isNotExpired($this->payload);
+    }
+
+    /**
+     * Checks user IP
+     *
+     * @return boolean
+     */
+    protected function ipTest(): bool
+    {
+        $ipLog    = $this->user->readIpLog($this->payload['email']);
+        $remoteIp = $this->getSERVER('REMOTE_ADDR');
+
+        return $ipLog === $remoteIp;
+    }
+
+    /**
+     * Checks uri parameters.
+     *
+     * @return boolean
+     */
+    private function isUriValid(): bool
+    {
+        return count($this->uriParams) === 1 &&
+            $this->uriParams[0] === $this->getCOOKIE('CSRF');
     }
 }
