@@ -112,7 +112,7 @@ footer ul li a:hover {
 
 /* --- header nav user button --- */
 header .navbar-nav a .btn {
-  padding: 5px 35px;
+  padding: 5px 15px;
 }
 
 header .btn-success {
