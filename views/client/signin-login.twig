@@ -17,22 +17,22 @@
                         <p>inscrivez-vous gratuitement</p>
                         <form {% autoescape %}action="{{ constant('SITE_ADRESS') }}/membres/register"{% endautoescape %} method="POST" class="row g-3 form-dark" id="registerForm" onsubmit="return avatar()">
                             <div class="col-lg-6">
-                                <input  class="form-control" type="text" placeholder="Prénom" aria-label="Prénom" name="first_name">
+                                <input  class="form-control" type="text" placeholder="Prénom" aria-label="Prénom" name="first_name" required="required">
                             </div>
                             <div class="col-lg-6">
-                                <input class="form-control" type="text" placeholder="Nom de famille" aria-label="Nom de famille" name="last_name">
+                                <input class="form-control" type="text" placeholder="Nom de famille" aria-label="Nom de famille" name="last_name" required="required">
                             </div>
                             <div class="col-12">
-                                <input class="form-control" type="text" placeholder="Veuillez choisir un pseudo" aria-label="Pseudo" name="pseudo">
+                                <input class="form-control" type="text" placeholder="Veuillez choisir un pseudo" aria-label="Pseudo" name="pseudo" required="required">
                             </div>
                             <div class="col-12">
-                                <input class="form-control" type="text" placeholder="e-mail" aria-label="e-mail" name="email">
+                                <input class="form-control" type="text" placeholder="e-mail" aria-label="e-mail" name="email" required="required">
                             </div>
                             <div class="col-12">
-                                <input class="form-control" type="text" placeholder="Mot de passe" aria-label="Mot de passe" name="password">
+                                <input class="form-control" type="text" placeholder="Mot de passe" aria-label="Mot de passe" name="password" required="required">
                             </div>
                             <div class="col-12">
-                                <input class="form-control" type="text" placeholder="Retapez votre mot de passe" aria-label="Mot de passe" name="confirm_password">
+                                <input class="form-control" type="text" placeholder="Retapez votre mot de passe" aria-label="Mot de passe" name="confirm_password" required="required">
                             </div>
                             <fielset class="row mb-3">
                                 <legend class="col-form-label col-12">Choisissez un avavtar</legend>
@@ -69,11 +69,11 @@
                         <form method="post" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/membres/login"{% endautoescape %} class="row g-3">                        
                             <div class="col-12">
                                 <label for="logmail" class="form-label">E-mail</label>
-                                <input type="text" class="form-control" id="logmail" name="logmail">
+                                <input type="text" class="form-control" id="logmail" name="logmail" required="required">
                             </div>
                             <div class="col-12">
                                 <label for="logpass" class="form-label">Mot de passe</label>
-                                <input type="text" class="form-control" id="logpass" name="logpass">
+                                <input type="text" class="form-control" id="logpass" name="logpass" required="required">
                             </div>
                             <div class="col-lg-6">
                                 <a {% autoescape %}href="{{ constant('SITE_ADRESS') }}/membres/forgottenPassword"{% endautoescape %} class="user-landing-form-link ">Mot de passe oublié ?</a>
