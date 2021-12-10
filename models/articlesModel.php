@@ -81,7 +81,7 @@ class ArticlesModel extends MainModel
      */
     public function getCategoryArticles(int $currentPage, int $perPage, string $categoryName): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, a.chapo, a.img, a.created_at
+        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, a.chapo, a.img, a.last_update
         FROM article AS a 
         JOIN user as u 
             ON a.user_serial = u.serial
@@ -114,7 +114,7 @@ class ArticlesModel extends MainModel
      */
     public function getAllArticles(int $currentPage, int $perPage): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at, a.img
+        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.last_update, a.img
         FROM article AS a 
         JOIN user as u 
             ON a.user_serial = u.serial
@@ -161,7 +161,7 @@ class ArticlesModel extends MainModel
      */
     public function getNews(int $countNews): array
     {
-        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.created_at, a.img
+        $query = 'SELECT a.id, u.first_name, u.last_name, a.title, c.category, a.chapo, a.last_update, a.img
         FROM article AS a 
         JOIN user as u 
             ON a.user_serial = u.serial
@@ -319,6 +319,7 @@ class ArticlesModel extends MainModel
             chapo,
             content,
             created_at,
+            last_update,
             img)
         VALUES (
             :user_serial,
@@ -326,6 +327,7 @@ class ArticlesModel extends MainModel
             :title,
             :chapo,
             :content,
+            NOW(),
             NOW(),
             :img)';
         
@@ -377,7 +379,8 @@ class ArticlesModel extends MainModel
             category_id = :category_id,
             title = :title,
             chapo = :chapo,
-            content = :content
+            content = :content,
+            last_update = NOW()
         WHERE id = :id';
 
         $stmt = $this->pdo->getPdo()->prepare($query);

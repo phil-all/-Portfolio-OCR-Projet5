@@ -17,7 +17,7 @@
                     <img src="{{ constant('SITE_ADRESS') }}/public/uploads/article-{{ article.img }}.jpg" class="card-img-top" alt="...">
                     {% endautoescape %}
                     <div class="card-body">
-                        <p class="card-text"><small class="text-muted">date : {{ article.created_at }}</small></p>
+                        <p class="card-text"><small class="text-muted">date : {{ article.last_update }}</small></p>
                         <h5 class="card-title">{{ article.title }}</h5>
                         <p class="card-text">{{ article.chapo }}</p>                        
                         <div  class="d-flex justify-content-between">
