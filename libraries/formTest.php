@@ -24,6 +24,7 @@ class FormTest
             $this->isPseudoValid($this->getPOST('pseudo')) &&
             $this->isMailValid($this->getPOST('email')) &&
             $this->isPassValid($this->getPOST('password')) &&
+            array_key_exists('avatar_id', $this->getPOST()) &&
             $this->isConfirmPassValid($this->getPOST('password'), $this->getPOST('confirm_password'))
         );
     }

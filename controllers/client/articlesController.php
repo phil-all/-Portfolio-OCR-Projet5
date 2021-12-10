@@ -133,25 +133,34 @@ class ArticlesController extends MainController
                 array_push($this->articles, $key);
             }
 
-            $this->addPagination();
+            $this->addPagination(array(
+                'current'  => $this->currentPage,
+                'total'    => $this->totalPages,
+                'articles' => $this->articles
+            ));
         }
     }
 
     /**
-     * Add pagination to parameters for template
+     * Add articles pagination to templatieng parameters.
+     *
+     * @param array $pagination pagination parameters:
+     *                          - curent is $this->currentPage
+     *                          - total is $this->totalPage
+     *                          - articles is $this->articles
      *
      * @return void
      */
-    public function addPagination(): void
+     public function addPagination(array $pagination): void
     {
         $this->params = array_merge($this->params, array(
-            'page'       => $this->currentPage,
-            'totalPages' => $this->totalPages,
-            'articles'   => $this->articles,
-            'statePrev'  => ($this->currentPage === 1) ? ' disabled' : '',
-            'stateNext'  => ($this->currentPage === $this->totalPages) ? ' disabled' : '',
-            'prev'       => ($this->currentPage === 1) ? 1 : $this->currentPage - 1,
-            'next'       => ($this->currentPage === $this->totalPages) ? $this->totalPages : $this->currentPage + 1
+            'page'       => $pagination['current'],
+            'totalPages' => $pagination['total'],
+            'articles'   => $pagination['articles'],
+            'statePrev'  => ($pagination['current'] === 1) ? ' disabled' : '',
+            'stateNext'  => ($pagination['current'] === $pagination['total']) ? ' disabled' : '',
+            'prev'       => ($pagination['current'] === 1) ? 1 : $pagination['current'] - 1,
+            'next'       => ($pagination['current'] === $pagination['total']) ? $pagination['total'] : $pagination['current'] + 1
         ));
     }
 }
