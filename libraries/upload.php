@@ -55,10 +55,12 @@ trait Upload
     public function uploadArticleImg(string $imgName = null): array
     {
         if ((null !== $this->getFILES('image')) && ($this->getFILES('image')['error'] === 0)) {
-            $message = 'format de fichier incorrect';
+            $this->message = 'format de fichier incorrect';
 
-            if ($this->isMimeAllowed && $this->isExtensionAllowed) {
-                $message = 2; // file too big
+            $this->setAllowed();
+
+            if ($this->isMimeAllowed() && $this->isExtensionAllowed()) {
+                $this->message = 2; // file too big
 
                 $this->uploadProcess($imgName);
             }
@@ -162,7 +164,7 @@ trait Upload
      */
     private function setImgName(?string $imgName): void
     {
-        $this->imgName = ($imgName === null) ? $this->setDefaulName() : $imgName;
+        $this->imgName = ($imgName === null) ? $this->setDefaultName() : $imgName;
     }
 
     /**
@@ -172,7 +174,7 @@ trait Upload
      *
      * @return string
      */
-    private function setDefaulName(): string
+    private function setDefaultName(): string
     {
         $imgName = (int)$this->article->biggestImg() + 1;
 
