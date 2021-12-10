@@ -1,0 +1,46 @@
+{% extends 'layouts/layout.twig' %}
+
+{% block title %}
+    <title>{{ constant('SITE_NAME') }} - En attente</title>
+{% endblock %}
+
+{% block body_class %} class="home min-vh-100"{% endblock %}
+
+{% block content %}
+    <main class="pt-5 pb-5">
+        <section class="container-fluid col-md-8 mt-5 text-center">
+                <h1>Info compte</h1>
+                
+        </section>
+        <section class="container-fluid mb-5 pt-5 col-11 col-sm-8 col-md-6 col-lg-4">
+            <h3 class="mb-5">Votre attention est requise</h3>
+        </section>
+        <section class="container">
+            <article class="container col-9 mt-5 mb-5 pt-5">
+                <h2 class="green-txt">Vérifiez vos e-mails</h2>
+                <p>Nous avons envoyé un e-mail de validation de compte.</p>            
+            </article>
+            <article class="container col-9 mt-5 mb-5 pt-5">
+                <h2 class="green-txt">Si vous n'avez pas reçu votre e-mail de validation</h2>
+                <p>Lorsque vous nous soumettez le formulaire d'inscription, nous vous envoyons un e-mail pour vous permettre de valider votre compte.</p>
+                <ol>
+                    <li>
+                        <h4>Recherchez l’e-mail</h4>
+                        <p>Vous pouvez effectuer une recherche rapide de l’e-mail en fonction de son expéditeur, « Over_code Team » en l’occurrence. Si le message n’apparaît pas dans votre boîte de réception, recherchez-le dans vos autres dossiers. Si un filtre de courrier indésirable ou une règle de messagerie a déplacé l’e-mail, celui-ci peut se trouver dans le dossier Spam, Indésirable, Corbeille, Éléments supprimés ou Archive.</p>
+                    </li>
+                    <li>
+                        <h4>Assurez-vous de consulter le compte de messagerie approprié</h4>
+                        <p>Si vous recherchez un e-mail de réinitialisation de mot de passe, assurez-vous de consulter la boîte de réception du compte de messagerie associé à votre profil Over_Code.</p>
+                    </li>
+                    <li>
+                        <h4>Assurez-vous de pouvoir recevoir des e-mails</h4>
+                        <p>Si vous ne recevez aucun e-mail, contactez votre fournisseur de messagerie pour obtenir une assistance.</p>
+                    </li>
+                </ol>            
+            </article>
+            <section class="container mt-5 mb-5 pt-5 text-center">
+                <p>Si vous avez la moindre question, contactez nous via le formulaire de contact présent en page d'accueil. Nous serons ravi de vous répondre.</p>
+            </section>
+        </section>
+    </main>    
+{% endblock %}
