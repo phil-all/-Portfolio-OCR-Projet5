@@ -169,12 +169,14 @@ class MembresController extends UserController
             'token' => $jwt->tokenToUri($token)
         ];
 
-        $mail = new Email();
-        $mail->sendHtmlEmail(
-            $this->getPOST('email'),
-            'Récupération de compte - [Ne pas répondre]',
-            $twigMail->getTwig()->render($mailTemplate, $params)
-        );
+        if (array_key_exists('email', $this->getPost())) {
+            $mail = new Email();
+            $mail->sendHtmlEmail(
+                $this->getPOST('email'),
+                'Récupération de compte - [Ne pas répondre]',
+                $twigMail->getTwig()->render($mailTemplate, $params)
+            );
+        }
 
         $this->template = 'client' . DS . 'pass/reset-password-enquiry-sent.twig';
     }
