@@ -7,9 +7,9 @@
 {% block body_class %} class="home"{% endblock %}
 
 {% block content %}
-    <main class="pt-5 pb-5">
+    <main class="py-1 py-md-3 py-lg-5 pt-5">
         <section class="mt-1 mb-5">
-            <div class="container d-flex justify-content-center hero">
+            <div class="container py-1 py-md-3 py-lg-5 d-flex justify-content-center hero">
                 <div class="px-3">
                 {% if user is defined %}
                     <h1><span class="green-txt">Bon retour</span> {{ user.pseudo }}</h1>
@@ -23,29 +23,39 @@
         </section><!--End hero-->
         <section class="container mt-5 news">
             <div class="row mt-3">
-                <p class="green-txt mb-0 text-uppercase">Articles récents</p>
-                <h2 class="pb-5">Last news</h2>
-                {% for new in lastNews %}
-                <article class="card mb-3 col-12 col-md-6 border-none">
-                    <img src="./public/uploads/article-{{ new.img }}.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text"><small class="text-muted">date : {{ new.created_at }}</small></p>
-                        <h5 class="card-title">{{ new.title }}</h5>
-                        <p class="card-text">{{ new.chapo }}</p>                        
-                        {% autoescape %}
-                        <a href="{{ constant('SITE_ADRESS') }}/articles/numero/{{ new.id }}/{{ new.slug }}">
-                        {% endautoescape %}
-                            <button type="button" class="btn btn-light"><i class="bi bi-arrow-right-square"></i> lire plus...</button>
-                        </a>
+                <div class="px-4">
+                    <p class="green-txt mb-0 text-uppercase">Articles récents</p>
+                    <h2 class="pb-1 pb-md-3 pb-lg-5">Last news</h2>
+                </div>
+                <div class="container-fluid bg-trasparent my-4 p-4 p-md-1 p-lg-0">
+                    <div class="row row-cols-1 row-cols-xs-2 row-cols-lg-2 g-3">
+                        {% for new in lastNews %}
+                        <article class="col">
+                            <div class="card h-100 shadow-sm">
+                                <img src="./public/uploads/article-{{ new.img }}.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <div class="card-body">
+                                        <p class="card-text"><small class="text-muted">date : {{ new.created_at }}</small></p>
+                                        <h5 class="card-title">{{ new.title }}</h5>
+                                            <p class="card-text">{{ new.chapo }}</p>                        
+                                            {% autoescape %}
+                                            <a href="{{ constant('SITE_ADRESS') }}/articles/numero/{{ new.id }}/{{ new.slug }}">
+                                            {% endautoescape %}
+                                                <button type="button" class="btn btn-light"><i class="bi bi-arrow-right-square"></i> lire plus...</button>
+                                            </a>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </article>
+                        {% endfor %}
                     </div>
-                </article>            
-                {% endfor %}            
+                </div>
             </div>        
         </section><!--End news-->
     </main>
-    <div class="secondary pt-5 pb-5">
+    <div class="secondary py-1 py-md-3 py-lg-5">
         <section class="container mt-5 mb-5">
-            <article class="row pt-5 pb-5" id="about">
+            <article class="row" id="about">
                 <div class="col-12 col-lg-8 col-xl-10  text-white">
                     <p class="green-txt mb-0 text-uppercase">about me</p>
                     <h2>Vers l'infini et au delà...</h2>
@@ -84,7 +94,7 @@
                                 <input  class="form-control" type="text" placeholder="Prénom" aria-label="Prénom" name="first_name">
                             </div>
                             <div class="col-lg-6">
-                                <input class="form-control" type="text" placeholder="Nom" aria-label="Nom" name="last_name">
+                                <input class="form-control mt-3 mt-lg-0" type="text" placeholder="Nom" aria-label="Nom" name="last_name">
                             </div>
                         </div>
                         <div class="mb-3">
@@ -99,11 +109,11 @@
                         </div>
                         <div class="row mb-3">
                             <input id="bottrap" name="bottrap" type="hidden" value="">
-                            <div class="col-lg-6">
+                            <div class="col-xl-6">
                                 <img src="data:image/jpeg;base64, {{ captcha }}"  width="250" height="38" class="rounded">
                             </div>
-                            <div class="col-lg-6">
-                                <input  class="form-control" type="text" placeholder="Confirmez le nombre de gauche" aria-label="Prénom" name="captcha">
+                            <div class="col-7 col-sm-6 col-md-9 col-lg-7 col-xl-6 mt-2 mt-xl-0">
+                                <input  class="form-control" type="text" placeholder="Confirmez le captcha" aria-label="Prénom" name="captcha">
                             </div>                            
                         </div>
                         <button type="submit" class="btn btn-primary">Envoyer</button>
