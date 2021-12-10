@@ -112,7 +112,11 @@ class AdminArticlesController extends ArticlesController
                 $this->slugify();
                 $this->preventCsrf();
     
-                $this->addPagination();
+                $this->addPagination(array(
+                    'current'  => $this->currentPage,
+                    'total'    => $this->totalPages,
+                    'articles' => $this->articles
+                ));
             }
         }
     }
