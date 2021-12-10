@@ -112,7 +112,7 @@ footer ul li a:hover {
 
 /* --- header nav user button --- */
 header .navbar-nav a .btn {
-  padding: 5px 35px;
+  padding: 5px 15px;
 }
 
 header .btn-success {
@@ -282,4 +282,10 @@ header .btn-success:hover {
   background-size: cover;
   background-repeat: no-repeat;
   box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.7);
+}
+
+@media screen and (max-width: 767px) {
+  .contact-title::after {
+    background: transparent;
+  }
 }
