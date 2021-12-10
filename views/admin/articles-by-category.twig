@@ -1,10 +1,10 @@
 {% extends 'layouts/layout.twig' %}
 
 {% block content %}
-<div class="container-fluid p-0">
-    <div class="row">
+<div class="container-fluid">
+    <div class="row flex-nowrap">
         {% include 'layouts/admin-menu.twig' %}
-        <main class="col-md-8 ms-sm-auto col-lg-9 col-xl-10 p-0" style="min-height: 100vh;">
+        <main class="col py-3">
             <div class="container-fluid container-md p-5">
                 <p>page {{ page }} / {{ totalPages }}</p>        
                 <section class="container mt-5 news">
