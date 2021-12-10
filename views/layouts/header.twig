@@ -11,29 +11,29 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav mb-5 my-lg-0">
                     {% autoescape %}
-                    <li class="nav-item align-middle">                            
-                        <a class="nav-link" href="{{ constant('SITE_ADRESS') }}">
+                    <li class="nav-item align-middle my-5 my-lg-0">                            
+                        <a class="nav-link px-lg-1 px-xl-3" href="{{ constant('SITE_ADRESS') }}">
                             <i class="bi bi-house-fill"></i> Accueil
                         </a>                          
                     </li>
-                    <li class="nav-item">                            
-                        <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/articles/liste/tous/page-1">
+                    <li class="nav-item my-5 my-lg-0">                            
+                        <a class="nav-link px-lg-2 px-xl-3" href="{{ constant('SITE_ADRESS') }}/articles/liste/tous/page-1">
                             <i class="bi bi-book-half"></i> Articles
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/#about">
+                    <li class="nav-item my-5 my-lg-0">
+                        <a class="nav-link px-lg-1 px-xl-3" href="{{ constant('SITE_ADRESS') }}/#about">
                             <i class="bi bi-patch-question-fill"></i></i> A propos
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ constant('SITE_ADRESS') }}/#contact">
+                    <li class="nav-item my-5 my-lg-0">
+                        <a class="nav-link px-lg-2 px-xl-3" href="{{ constant('SITE_ADRESS') }}/#contact">
                             <i class="bi bi-envelope"></i></i> Contact
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item my-5 my-lg-0">
                         {% include 'layouts/login-out-button.twig' %}
                     </li>
                     {% endautoescape %} 
