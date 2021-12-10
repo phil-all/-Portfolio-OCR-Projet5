@@ -1,4 +1,28 @@
-let form = document.querySelector("#registerForm");
+let form = document.querySelector('#registerForm');
+
+form.first_name.addEventListener("change", function() {
+    validName(this, "prénom");
+});
+
+form.last_name.addEventListener("change", function() {
+    validName(this, "nom");
+});
+
+form.pseudo.addEventListener("change", function() {
+    validPseudo(this);
+});
+
+form.email.addEventListener("change", function() {
+    validEmail(this);
+});
+
+form.password.addEventListener("change", function() {
+    validPass(this);
+});
+
+form.confirm_password.addEventListener("change", function() {
+    validConfirmPass(this);
+});
 
 const validName = function(inputName, type) {
     let nameRegexp = new RegExp("^(?=.*[A-Z])[a-zA-z\\s\\-\\']+$", "g");
@@ -51,32 +75,8 @@ const validConfirmPass = function() {
 };
 
 function avatar() {    
-    if(form.avatar_id.value !== 2 && form.avatar_id.value !== 3) {   
-        alert("vous devez choisir un avatar");
+    if(form.avatar_id.value != 2 && form.avatar_id.value != 3) {   
+        alert('vous devez choisir un avatar');
         return false;
     }
-}
-
-form.first_name.addEventListener("change", function() {
-    validName(this, "prénom");
-});
-
-form.last_name.addEventListener("change", function() {
-    validName(this, "nom");
-});
-
-form.pseudo.addEventListener("change", function() {
-    validPseudo(this);
-});
-
-form.email.addEventListener("change", function() {
-    validEmail(this);
-});
-
-form.password.addEventListener("change", function() {
-    validPass(this);
-});
-
-form.confirm_password.addEventListener("change", function() {
-    validConfirmPass(this);
-});
+}   

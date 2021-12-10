@@ -140,9 +140,9 @@ trait Helpers
      *
      * @param string $key
      *
-     * @return string
+     * @return mixed
      */
-    public static function getPOST(string $key): string
+    public static function getPOST(?string $key = null): mixed
     {
         return self::globals()->getPOST($key);
     }
