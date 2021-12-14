@@ -28,7 +28,7 @@ trait Delete
 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
-        $stmt->execute;
+        $stmt->execute();
     }
 
     /**
@@ -49,6 +49,6 @@ trait Delete
 
         $stmt->bindValue(':serial', $serial, PDO::PARAM_INT);
 
-        $stmt->execute;
+        $stmt->execute();
     }
 }
