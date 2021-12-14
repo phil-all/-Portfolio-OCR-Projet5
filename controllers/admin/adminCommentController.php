@@ -96,6 +96,6 @@ class AdminCommentController extends MainController
      */
     public function suspend(array $params): void
     {
-        $this->updateStatus($params[0], 3);
+        $this->updateStatus($params, 3);
     }
 }

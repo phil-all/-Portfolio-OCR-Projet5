@@ -19,7 +19,7 @@ class CommentController extends MainController
      *
      * @var array
      */
-    private $uriParams;
+    protected $uriParams;
 
     /**
      * Create an article comment from POST.
