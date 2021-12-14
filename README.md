@@ -1,6 +1,6 @@
 ![Library logo](public/images/github/logo.png)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f05cd994261045b99622abf7a8d7ccbf)](https://www.codacy.com/gh/phil-all/Portfolio-OCR-Projet5/dashboard?utm_source=github.com&utm_medium=referral&utm_content=phil-all/Portfolio-OCR-Projet5&utm_campaign=Badge_Grade) [![Code Grade](https://www.code-inspector.com/project/29630/score/svg)](https://frontend.code-inspector.com/project/29630/dashboard)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8697216ba08147f8a4b7180484b2416a)](https://www.codacy.com/gh/phil-all/Portfolio-OCR-Projet5/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=phil-all/Portfolio-OCR-Projet5&amp;utm_campaign=Badge_Grade) [![Code Grade](https://www.code-inspector.com/project/29630/score/svg)](https://frontend.code-inspector.com/project/29630/dashboard)
 
 ## Table of Contents
 
