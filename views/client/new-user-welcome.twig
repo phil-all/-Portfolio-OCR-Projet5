@@ -1,80 +1,86 @@
 {% extends 'layouts/layout.twig' %}
 
 {% block title %}
-    <title>Bienvenue</title>
+	<title>Bienvenue</title>
 {% endblock %}
 
-{% block body_class %} class="home min-vh-100 user-landing"{% endblock %}
+{% block body_class %}
+	class="home min-vh-100 user-landing"
+{% endblock %}
 
 {% block content %}
-<main class="pt-5 pb-5">
-    <section class="container-fluid col-md-8 justify-content-center text-center">
-        <h1>Bienvenue parmis les membres de la communauté Over_Blog</h1>
-        <p>Vous pouvez désormais vous connecter pour liker ou commenter les articles et signaler des commentaires malveillants</p>
-    </section>
-    <section class="container-fluid mb-5 col-md-8">
-        <div class="container pb-5">
-            <div class="row">
-                <!-- Start login form -->
-                <section class="col-10">
-                    <div class="m-1 p-3 user-landing-form">
-                        <h2>De retour parmis nous</h2>
-                        <p>connexion à votre compte</p>
-                        <form method="post" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/membres/login"{% endautoescape %} class="row g-3">                        
-                            <div class="col-12">
-                                <label for="logmail" class="form-label">E-mail</label>
-                                <input type="text" class="form-control" id="logmail" name="logmail">
-                            </div>
-                            <div class="col-12">
-                                <label for="logpass" class="form-label">Mot de passe</label>
-                                <input type="text" class="form-control" id="logpass" name="logpass">
-                            </div>
-                            <div class="col-lg-6">
-                                <a href="#" class="user-landing-form-link ">Mot de passe oublié ?</a>
-                            </div>
-                            <div class="col-lg-6">
-                                <button type="submit" class="btn btn-dark-green col-12">Se connecter</button>
-                            </div>
-                        </form>
-                    </div>
-                </section><!-- End login form -->
-            </div>
-        </div>
-    </section>
-</main>  
-    <main>
-        <section class="container-fluid col-md-8 justify-content-center mt-5 mb-5 text-center">
-            <h1>Bienvenue parmis les membres de la communauté Over_Blog</h1>
-            <h3>Vous povez désormais vous connecter pour liker ou commenter les articles et signaler des commentaires malveillants</h3>
-        </section>
-        <h1>Bienvenue parmis les membres de la communauté Over_Blog</h1>
-        <p>Vous povez désormais vous connecter pour liker ou commenter les articles et signaler des commentaires malveillants</p>
-        <div class="container pb-5 pt-5">
-            <div class="row">
-                <!-- Start login form -->
-                <section class="col-md-6">
-                    <div class="m-1 p-3 user-landing-form">
-                        <h2>De retour parmis nous</h2>
-                        <p>connexion à votre compte</p>
-                        <form method="post" {% autoescape %}action="{{ constant('SITE_ADRESS') }}/membres/login"{% endautoescape %} class="row g-3">                        
-                            <div class="col-12">
-                                <label for="logmail" class="form-label">E-mail</label>
-                                <input type="text" class="form-control" id="logmail" name="logmail">
-                            </div>
-                            <div class="col-12">
-                                <label for="logpass" class="form-label">Mot de passe</label>
-                                <input type="text" class="form-control" id="logpass" name="logpass">
-                            </div>
-                            <div class="col-lg-6">
-                                <a href="#" class="user-landing-form-link ">Mot de passe oublié ?</a>
-                            </div>
-                            <div class="col-lg-6">
-                                <button type="submit" class="btn btn-dark-green col-12">Se connecter</button>
-                            </div>
-                        </form>
-                    </div>
-                </section><!-- End login form -->
-            </div>
-        </div>
-    </main>
+	<main class="pt-5 pb-5">
+		<section class="container-fluid col-md-8 justify-content-center text-center">
+			<h1>Bienvenue parmis les membres de la communauté Over_Blog</h1>
+			<p>Vous pouvez désormais vous connecter pour liker ou commenter les articles et signaler des commentaires malveillants</p>
+		</section>
+		<section class="container-fluid mb-5 col-md-8">
+			<div class="container pb-5">
+				<div
+					class="row">
+					<!-- Start login form -->
+					<section class="col-10">
+						<div class="m-1 p-3 user-landing-form">
+							<h2>De retour parmis nous</h2>
+							<p>connexion à votre compte</p>
+							<form method="post" {% autoescape %} action="{{ constant('SITE_ADRESS') }}/membres/login" {% endautoescape %} class="row g-3">
+								<div class="col-12">
+									<label for="logmail" class="form-label">E-mail</label>
+									<input type="text" class="form-control" id="logmail" name="logmail">
+								</div>
+								<div class="col-12">
+									<label for="logpass" class="form-label">Mot de passe</label>
+									<input type="password" class="form-control" id="logpass" name="logpass">
+								</div>
+								<div class="col-lg-6">
+									<a href="#" class="user-landing-form-link ">Mot de passe oublié ?</a>
+								</div>
+								<div class="col-lg-6">
+									<button type="submit" class="btn btn-dark-green col-12">Se connecter</button>
+								</div>
+							</form>
+						</div>
+					</section>
+					<!-- End login form -->
+				</div>
+			</div>
+		</section>
+	</main>
+	<main>
+		<section class="container-fluid col-md-8 justify-content-center mt-5 mb-5 text-center">
+			<h1>Bienvenue parmis les membres de la communauté Over_Blog</h1>
+			<h3>Vous povez désormais vous connecter pour liker ou commenter les articles et signaler des commentaires malveillants</h3>
+		</section>
+		<h1>Bienvenue parmis les membres de la communauté Over_Blog</h1>
+		<p>Vous povez désormais vous connecter pour liker ou commenter les articles et signaler des commentaires malveillants</p>
+		<div class="container pb-5 pt-5">
+			<div
+				class="row">
+				<!-- Start login form -->
+				<section class="col-md-6">
+					<div class="m-1 p-3 user-landing-form">
+						<h2>De retour parmis nous</h2>
+						<p>connexion à votre compte</p>
+						<form method="post" {% autoescape %} action="{{ constant('SITE_ADRESS') }}/membres/login" {% endautoescape %} class="row g-3">
+							<div class="col-12">
+								<label for="logmail" class="form-label">E-mail</label>
+								<input type="text" class="form-control" id="logmail" name="logmail">
+							</div>
+							<div class="col-12">
+								<label for="logpass" class="form-label">Mot de passe</label>
+								<input type="text" class="form-control" id="logpass" name="logpass">
+							</div>
+							<div class="col-lg-6">
+								<a href="#" class="user-landing-form-link ">Mot de passe oublié ?</a>
+							</div>
+							<div class="col-lg-6">
+								<button type="submit" class="btn btn-dark-green col-12">Se connecter</button>
+							</div>
+						</form>
+					</div>
+				</section>
+				<!-- End login form -->
+			</div>
+		</div>
+	</main>
 {% endblock %}

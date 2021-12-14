@@ -29,10 +29,10 @@
                                 <input class="form-control" type="text" placeholder="e-mail" aria-label="e-mail" name="email" required="required">
                             </div>
                             <div class="col-12">
-                                <input class="form-control" type="text" placeholder="Mot de passe" aria-label="Mot de passe" name="password" required="required">
+                                <input class="form-control" type="password" placeholder="Mot de passe" aria-label="Mot de passe" name="password" required="required">
                             </div>
                             <div class="col-12">
-                                <input class="form-control" type="text" placeholder="Retapez votre mot de passe" aria-label="Mot de passe" name="confirm_password" required="required">
+                                <input class="form-control" type="password" placeholder="Retapez votre mot de passe" aria-label="Mot de passe" name="confirm_password" required="required">
                             </div>
                             <fielset class="row mb-3">
                                 <legend class="col-form-label col-12">Choisissez un avavtar</legend>
@@ -73,7 +73,7 @@
                             </div>
                             <div class="col-12">
                                 <label for="logpass" class="form-label">Mot de passe</label>
-                                <input type="text" class="form-control" id="logpass" name="logpass" required="required">
+                                <input type="password" class="form-control" id="logpass" name="logpass" required="required">
                             </div>
                             <div class="col-lg-6">
                                 <a {% autoescape %}href="{{ constant('SITE_ADRESS') }}/membres/forgottenPassword"{% endautoescape %} class="user-landing-form-link ">Mot de passe oublié ?</a>
