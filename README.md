@@ -58,7 +58,7 @@ This project is created with:
 
 > The `composer.json` file is needed by composer.
 
-If composer not yet installed on your system, follow the wiki: [Composer install and initialization](https://github.com/phil-all/Portfolio-OCR-Projet5/wiki/Composer-install).
+If composer not yet installed on your system, follow the wiki: [Composer install and initialization](https://github.com/phil-all/Portfolio-OCR-Projet5/wiki/Composer-install-and-use).
 
 ### .env file needed
 
